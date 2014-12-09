@@ -49,7 +49,7 @@ RTTPoint* point(short x, short y) {
     RTTPoint* otherPoint = (RTTPoint*)object;
     if (self == otherPoint) return YES;
     if (otherPoint == nil) return NO;
-
+    
     return (otherPoint.x == self.x) && (otherPoint.y == self.y);
 }
 

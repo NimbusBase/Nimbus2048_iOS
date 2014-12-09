@@ -24,15 +24,15 @@
 - (NSArray *(^)())mapTileArrayToReduceVectors {
     return ^{
         NSArray* result = [NSArray new];
-
+        
         short currentX = 0;
-
+        
         for (NSUInteger i = 0; i < [self count]; i++) {
             RTTTile* tile1 = self[i];
             RTTAssert(tile1.value > 0);
-
+            
             result = [result arrayByAddingObject:vector(tile1.point, point(currentX, tile1.point.y))];
-
+            
             if (i < [self count] - 1) {
                 RTTTile* tile2 = self[i + 1];
                 RTTAssert(tile2.value > 0);
@@ -43,7 +43,7 @@
             }
             currentX ++;
         }
-
+        
         return result.removeZeroVectors();
     };
 }

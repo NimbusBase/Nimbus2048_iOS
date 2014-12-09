@@ -22,19 +22,19 @@ static NSDictionary* reduceDic;
 + (void)initialize {
     if (self == [RTTMatrix class]) {
         reduceDic = @{
-                @(UISwipeGestureRecognizerDirectionLeft) : ^(RTTMatrix* matrix) {
-                    return matrix.getReduceVectors();
-                },
-                @(UISwipeGestureRecognizerDirectionRight) : ^(RTTMatrix* matrix) {
-                    return matrix.rotateRight().rotateRight().getReduceVectors().rotateRight().rotateRight();
-                },
-                @(UISwipeGestureRecognizerDirectionUp) : ^(RTTMatrix* matrix) {
-                    return matrix.rotateRight().rotateRight().rotateRight().getReduceVectors().rotateRight();
-                },
-                @(UISwipeGestureRecognizerDirectionDown) : ^(RTTMatrix* matrix) {
-                    return matrix.rotateRight().getReduceVectors().rotateRight().rotateRight().rotateRight();
-                },
-        };
+                      @(UISwipeGestureRecognizerDirectionLeft) : ^(RTTMatrix* matrix) {
+                          return matrix.getReduceVectors();
+                      },
+                      @(UISwipeGestureRecognizerDirectionRight) : ^(RTTMatrix* matrix) {
+                          return matrix.rotateRight().rotateRight().getReduceVectors().rotateRight().rotateRight();
+                      },
+                      @(UISwipeGestureRecognizerDirectionUp) : ^(RTTMatrix* matrix) {
+                          return matrix.rotateRight().rotateRight().rotateRight().getReduceVectors().rotateRight();
+                      },
+                      @(UISwipeGestureRecognizerDirectionDown) : ^(RTTMatrix* matrix) {
+                          return matrix.rotateRight().getReduceVectors().rotateRight().rotateRight().rotateRight();
+                      },
+                      };
     }
 }
 
@@ -45,7 +45,7 @@ static NSDictionary* reduceDic;
 - (instancetype)initWithDictionary:(NSDictionary*)dictionary {
     self = [super init];
     if (self) {
-       _matrix = dictionary;
+        _matrix = dictionary;
     }
     return self;
 }
@@ -118,24 +118,24 @@ RTTMatrix* emptyMatrix() {
         for (short y = 0; y < kMatrixSize; y++) {
             for (short x = 0; x < kMatrixSize; x++) {
                 int valueAtXY = self.valueAt(point(x, y));
-
+                
                 // if there is a zero value
                 if (valueAtXY == 0) {
                     return NO;
                 }
-
+                
                 // if there is a horizontal pair
                 if (x < kMatrixSize - 1 && valueAtXY == self.valueAt(point(x + 1, y))) {
                     return NO;
                 }
-
+                
                 // if there is a vertical pair
                 if (y < kMatrixSize - 1 && valueAtXY == self.valueAt(point(x, y + 1))) {
                     return NO;
                 }
             }
         }
-
+        
         return YES;
     };
 }
@@ -143,7 +143,7 @@ RTTMatrix* emptyMatrix() {
 - (RTTTile*(^)())getNewRandomTile {
     return ^{
         NSArray* emptyPoints = self.getEmptyPositions();
-        NSUInteger index = arc4random_uniform([emptyPoints count]);
+        NSUInteger index = arc4random_uniform((uint32_t)[emptyPoints count]);
         int value = (arc4random() % 100) > 90 ? 4 : 2;
         return tile(emptyPoints[index], value);
     };
@@ -155,9 +155,9 @@ RTTMatrix* emptyMatrix() {
     return ^(RTTPoint* p, int value) {
         RTTAssert(p.x < kMatrixSize && p.y < kMatrixSize && p.x >= 0 && p.y >= 0);
         RTTAssert(value % 2 == 0);
-
+        
         int newValue = value + self.valueAt(p);
-
+        
         // Check if power of two
         RTTAssert(newValue != 1 && (newValue & (newValue - 1)) == 0);
         NSMutableDictionary* copyDictionary = [self.matrix mutableCopy];

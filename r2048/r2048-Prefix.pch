@@ -33,13 +33,13 @@
 })
 
 static const short kMatrixSize = 4;
-static const float kTileGap = 10.0f;
-static const float kTileSize = 57.0f;
-static const float kTableSize = 4 * kTileSize + 5 * kTileGap;
-static const float kTileDelta = kTileSize + kTileGap;
+static const CGFloat kTileGap = 10.0f;
+static const CGFloat kTileSize = 57.0f;
+static const CGFloat kTableSize = 4 * kTileSize + 5 * kTileGap;
+static const CGFloat kTileDelta = kTileSize + kTileGap;
 
-static const float kSlideAnimDuration = 0.1f;
-static const float kScaleAnimDuration = 0.1f;
+static const CGFloat kSlideAnimDuration = 0.1f;
+static const CGFloat kScaleAnimDuration = 0.1f;
 
-static const float kButtonWidth = (kTableSize - kTileGap * 2.0f) / 3;
-static const float kButtonHeight = 40.0f;
+static const CGFloat kButtonWidth = (kTableSize - kTileGap * 2.0f) / 3;
+static const CGFloat kButtonHeight = 40.0f;

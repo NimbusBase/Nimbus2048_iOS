@@ -23,7 +23,7 @@ RTTTile* tile(RTTPoint* point, int value) {
         _point = point;
         _value = value;
     }
-
+    
     return self;
 }
 

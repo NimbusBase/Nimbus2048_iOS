@@ -13,7 +13,7 @@
 static NSString *const kBestScoreKey = @"RTTBestScore";
 
 @interface RTTMainViewController ()
-@property (nonatomic) int bestScore;
+@property (nonatomic) NSInteger bestScore;
 @end
 
 @implementation RTTMainViewController
@@ -21,15 +21,15 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 - (void)loadView {
     self.view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.view.backgroundColor = [UIColor fromHex:0xfaf8ef];
-
+    
     RTTMatrixViewController* matrixViewController = [RTTMatrixViewController new];
     matrixViewController.view.center = CGPointMake(self.view.center.x, self.view.center.y + 60.0f);
     [self.view addSubview:matrixViewController.view];
-
+    
     RTTAssert(matrixViewController.resetGameCommand);
-
+    
     float buttonY = CGRectGetMinY(matrixViewController.view.frame) - kButtonHeight - 20.0f;
-
+    
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 20.0f, self.view.bounds.size.width, 80.0f)];
     titleLabel.textColor = [UIColor fromHex:0x776e65];
     titleLabel.font = [UIFont boldSystemFontOfSize:40.0f];
@@ -37,7 +37,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     titleLabel.text = @"Reactive2048";
     [self.view addSubview:titleLabel];
-
+    
     RTTScoreView* scoreView = [[RTTScoreView alloc] initWithFrame:CGRectMake(CGRectGetMinX(matrixViewController.view.frame),
                                                                              buttonY,
                                                                              kButtonWidth,
@@ -45,14 +45,14 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                                                          andTitle:@"SCORE"];
     scoreView.animateChange = YES;
     [self.view addSubview:scoreView];
-
+    
     RTTScoreView* bestView = [[RTTScoreView alloc] initWithFrame:CGRectMake(CGRectGetMidX(matrixViewController.view.frame) - kButtonWidth * 0.5f,
                                                                             buttonY,
                                                                             kButtonWidth,
                                                                             kButtonHeight)
                                                         andTitle:@"BEST"];
     [self.view addSubview:bestView];
-
+    
     UIButton* resetGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [resetGameButton setTitle:@"New Game" forState:UIControlStateNormal];
     [resetGameButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
@@ -66,33 +66,33 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     resetGameButton.rac_command = matrixViewController.resetGameCommand;
     resetGameButton.showsTouchWhenHighlighted = YES;
     [self.view addSubview:resetGameButton];
-
+    
     // Scores
-
+    
     RACSignal* scoreSignal = RACObserve(matrixViewController, score);
     RACSignal* bestScoreSignal = RACObserve(self, bestScore);
-
+    
     RAC(self, bestScore) = [[[RACSignal
-            combineLatest:@[scoreSignal, bestScoreSignal]
-                   reduce:(id (^)()) ^NSNumber*(NSNumber* score, NSNumber* best) {
-                                          return @(MAX([score intValue], [best intValue]));
-                                      }]
-        distinctUntilChanged]
-        startWith:@([self savedBestScore])];
-
+                              combineLatest:@[scoreSignal, bestScoreSignal]
+                              reduce:(id (^)()) ^NSNumber*(NSNumber* score, NSNumber* best) {
+                                  return @(MAX([score intValue], [best intValue]));
+                              }]
+                             distinctUntilChanged]
+                            startWith:@([self savedBestScore])];
+    
     [self rac_liftSelector:@selector(saveBestScore:) withSignals:bestScoreSignal, nil];
-
+    
     // UI bindings
     RAC(scoreView, score) = scoreSignal;
     RAC(bestView, score) = bestScoreSignal;
 }
 
-- (void)saveBestScore:(int)score {
+- (void)saveBestScore:(NSInteger)score {
     [[NSUserDefaults standardUserDefaults] setInteger:score forKey:kBestScoreKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (int)savedBestScore {
+- (NSInteger)savedBestScore {
     return [[NSUserDefaults standardUserDefaults] integerForKey:kBestScoreKey];
 }
 

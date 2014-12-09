@@ -17,32 +17,32 @@ static NSDictionary* fgColorDic;
 + (void)initialize {
     if (self == [RTTTileView class]) {
         bgColorDic = @{
-                @2 : @0xeee4da,
-                @4 : @0xede0c8,
-                @8 : @0xf2b179,
-                @16 : @0xf59563,
-                @32 : @0xf67c5f,
-                @64 : @0xf65e3b,
-                @128 : @0xedcf72,
-                @256 : @0xedcc61,
-                @512 : @0xedc850,
-                @1024 : @0xedc53f,
-                @2048 : @0xedc22e
-        };
-
+                       @2 : @0xeee4da,
+                       @4 : @0xede0c8,
+                       @8 : @0xf2b179,
+                       @16 : @0xf59563,
+                       @32 : @0xf67c5f,
+                       @64 : @0xf65e3b,
+                       @128 : @0xedcf72,
+                       @256 : @0xedcc61,
+                       @512 : @0xedc850,
+                       @1024 : @0xedc53f,
+                       @2048 : @0xedc22e
+                       };
+        
         fgColorDic = @{
-                @2 : @0x776e65,
-                @4 : @0x776e65,
-                @8 : @0xf9f6f2,
-                @16 : @0xf9f6f2,
-                @32 : @0xf9f6f2,
-                @64 : @0xf9f6f2,
-                @128 : @0xf9f6f2,
-                @256 : @0xf9f6f2,
-                @512 : @0xf9f6f2,
-                @1024 : @0xf9f6f2,
-                @2048 : @0xf9f6f2
-        };
+                       @2 : @0x776e65,
+                       @4 : @0x776e65,
+                       @8 : @0xf9f6f2,
+                       @16 : @0xf9f6f2,
+                       @32 : @0xf9f6f2,
+                       @64 : @0xf9f6f2,
+                       @128 : @0xf9f6f2,
+                       @256 : @0xf9f6f2,
+                       @512 : @0xf9f6f2,
+                       @1024 : @0xf9f6f2,
+                       @2048 : @0xf9f6f2
+                       };
     }
 }
 
@@ -50,7 +50,7 @@ static NSDictionary* fgColorDic;
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor fromHex:0xeee4da alpha:0.35f];
-
+        
         if (tile.value != 0) {
             UILabel* label = [[UILabel alloc] initWithFrame:CGRectInset(self.bounds, 5.0f, 5.0f)];
             label.textColor = [UIColor fromHex:[fgColorDic[@(tile.value)] unsignedIntegerValue]];
@@ -61,7 +61,7 @@ static NSDictionary* fgColorDic;
             label.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
             label.text = [NSString stringWithFormat:@"%d", tile.value];
             [self addSubview:label];
-
+            
             self.backgroundColor = [UIColor fromHex:[bgColorDic[@(tile.value)] unsignedIntegerValue]];
         }
         _point = tile.point;
