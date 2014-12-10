@@ -10,6 +10,11 @@
 #import "RTTScoreView.h"
 #import "UIColor+RTTFromHex.h"
 
+#import "RTTAppDelegate.h"
+
+#import "NBTScore.h"
+#import "NSManagedObjectContext+Lazy.h"
+
 static NSString *const kBestScoreKey = @"RTTBestScore";
 
 @interface RTTMainViewController ()
@@ -85,19 +90,19 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     // UI bindings
     RAC(scoreView, score) = scoreSignal;
     RAC(bestView, score) = bestScoreSignal;
-    
-    [bestScoreSignal subscribeNext:^(NSNumber *newBestScore) {
-        NSLog(@"DB: \nRecord new best score: %@", newBestScore);
-    }];
 }
 
 - (void)saveBestScore:(NSInteger)score {
-    [[NSUserDefaults standardUserDefaults] setInteger:score forKey:kBestScoreKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
+    NBTScore *newBest = [NBTScore insertNewBestInMOC:moc];
+    [moc save];
+    NSLog(@"DB: \nRecorded new best score: %@", newBest.value);
 }
 
 - (NSInteger)savedBestScore {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:kBestScoreKey];
+    NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
+    NBTScore *best = [NBTScore bestInMOC:moc];
+    return best.value.integerValue;
 }
 
 

@@ -13,5 +13,6 @@
 @interface RTTAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic) UIWindow *window;
+@property (nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
