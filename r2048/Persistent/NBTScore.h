@@ -12,5 +12,3 @@
 + (instancetype)bestInMOC:(NSManagedObjectContext *)moc;
 
 @end
-
-#define APP_DELEGATE ((RTTAppDelegate *)[[UIApplication sharedApplication] delegate])

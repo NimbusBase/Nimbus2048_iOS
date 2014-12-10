@@ -16,3 +16,5 @@
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
+
+#define APP_DELEGATE ((RTTAppDelegate *)[[UIApplication sharedApplication] delegate])

@@ -15,6 +15,11 @@
 #import "UIColor+RTTFromHex.h"
 #import "UIView+RTTClear.h"
 
+#import "RTTAppDelegate.h"
+
+#import "NBTSnapshot.h"
+#import "NSManagedObjectContext+Lazy.h"
+
 @interface RTTMatrixViewController ()
 @property (nonatomic) RTTMatrix* matrix;
 @property (nonatomic, readwrite) int score;
@@ -98,24 +103,14 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     
     _resetGameCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal*(id input) {
         [self.gameView clear];
-        self.matrix = emptyMatrix();
         
-        if ([input isKindOfClass:[NSNull class]]) {
-            
-            RTTMatrix *matrix = emptyMatrix().addValue(point(0, 0), 16).addValue(point(3, 3), 32);
-            NSNumber *score = @16;
-            NSNumber *state = @NO;
-            
-            self.gameOverView.alpha = state.boolValue ? 1.0f : 0.0f;
-            self.score = (int) score.unsignedIntegerValue;
-            
-            return [RACSignal return:matrix];
+        if ([input isKindOfClass:[NBTSnapshot class]]) {
+            NBTSnapshot *snapshot = input;
+            [self recoverFromSnapshot:snapshot];
+            return [RACSignal return:snapshot.matrix];
         }
         else {
-            self.gameOverView.alpha = 0.0f;
-            self.score = 0;
-            
-            NSLog(@"DB: \nCleaned up");
+            [self reset];
             return [RACSignal return:[NSNull null]];
         }
     }];
@@ -271,10 +266,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     RACSignal* reducedMatrixSignal = [tilesAndVectorsSignal
                                       map:^id(NSArray* vectors) {
                                           RTTMatrix *reducedMatrix = self.matrix.applyReduceCommands(vectors);
-                                          NSUInteger score = self.score;
-                                          
-                                          NSLog(@"DB: \nTook a snapshot of score '%lu' and nmatrix %@", (unsigned long)score, reducedMatrix);
-                                          
+                                          [self takeSnapshotForMatrix:reducedMatrix score:self.score];
                                           return reducedMatrix;
                                       }];
     
@@ -347,5 +339,28 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
                      }];
 }
 
+- (void)recoverFromSnapshot:(NBTSnapshot *)snapshot {
+    self.matrix = emptyMatrix();
+    self.gameOverView.alpha = snapshot.state.boolValue ? 1.0f : 0.0f;
+    self.score = (int) snapshot.score.unsignedIntegerValue;
+}
+
+- (void)reset {
+    self.matrix = emptyMatrix();
+    self.gameOverView.alpha = 0.0f;
+    self.score = 0;
+    
+    NSLog(@"DB: \nReseted up");
+}
+
+- (NBTSnapshot *)takeSnapshotForMatrix:(RTTMatrix *)matrix score:(NSInteger)score {
+    NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
+    NBTSnapshot *snapshot = [NBTSnapshot insertInMOC:moc matrix:matrix score:@(score)];
+    [moc save];
+    
+    NSLog(@"DB: \nTook a snapshot of score %@ and nmatrix %@", snapshot.score, snapshot.matrix);
+    
+    return snapshot;
+}
 
 @end
