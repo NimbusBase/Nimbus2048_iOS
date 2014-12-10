@@ -14,7 +14,9 @@
     NSError *error = nil;
     [self save:&error];
     
-    NSLog(@"NSManagedObjectContext save error: \n%@", error);
+    if (error != nil) {
+        NSLog(@"NSManagedObjectContext save error: \n%@", error);
+    }
     
     return error;
 }

@@ -8,4 +8,6 @@
 
 + (instancetype)insertInMOC:(NSManagedObjectContext *)moc matrix:(RTTMatrix *)matrix score:(NSNumber *)score;
 
++ (instancetype)fetchLastInMOC:(NSManagedObjectContext *)moc;
+
 @end

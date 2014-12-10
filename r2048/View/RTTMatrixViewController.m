@@ -274,8 +274,9 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     RAC(self, matrix) = reducedMatrixSignal;
     
     // starts
-    id snapShot = [NSNull null];
-    [self.resetGameCommand execute:snapShot];
+    NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
+    NBTSnapshot *snapshot = [NBTSnapshot fetchLastInMOC:moc];
+    [self.resetGameCommand execute:snapshot];
 }
 
 - (void)animateTileViewsToCreate:(NSArray*)tileViewsToCreate
@@ -350,7 +351,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     self.gameOverView.alpha = 0.0f;
     self.score = 0;
     
-    NSLog(@"DB: \nReseted up");
+    NSLog(@"DB: \nReseted");
 }
 
 - (NBTSnapshot *)takeSnapshotForMatrix:(RTTMatrix *)matrix score:(NSInteger)score {

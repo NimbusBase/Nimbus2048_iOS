@@ -30,7 +30,7 @@
     return score;
 }
 
-+ (NSUInteger)leaveBestOnlyInMOC:(NSManagedObjectContext *)moc {
++ (NSUInteger)deleteAllExceptBestInMOC:(NSManagedObjectContext *)moc {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NBTScoreAttributes.value ascending:NO]];
     
@@ -48,7 +48,7 @@
     return counter;
 }
 
-+ (instancetype)bestInMOC:(NSManagedObjectContext *)moc {
++ (instancetype)fetchBestInMOC:(NSManagedObjectContext *)moc {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
     request.fetchLimit = 1;
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NBTScoreAttributes.value ascending:NO]];

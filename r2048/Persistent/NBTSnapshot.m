@@ -10,16 +10,18 @@
 
 static NSString *const key_maxtrix = @"matrix";
 
-@implementation NBTSnapshot
+@implementation NBTSnapshot {
+    RTTMatrix *_matrix;
+}
 
 - (RTTMatrix *)matrix {
     [self willAccessValueForKey:key_maxtrix];
     
-    RTTMatrix *matrix = [self primitiveValueForKey:key_maxtrix];
+    RTTMatrix *matrix = _matrix;
     
     if (matrix == nil) {
         matrix = [[RTTMatrix alloc] initWithString:self.points];
-        [self setPrimitiveValue:matrix forKey:key_maxtrix];
+        _matrix = matrix;
     }
     
     [self didAccessValueForKey:key_maxtrix];
@@ -37,6 +39,16 @@ static NSString *const key_maxtrix = @"matrix";
     snapshot.points = matrix.toString;
     
     return snapshot;
+}
+
++ (instancetype)fetchLastInMOC:(NSManagedObjectContext *)moc {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
+    request.fetchLimit = 1;
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NBTSnapshotAttributes.createAt ascending:NO]];
+    
+    NSError *error = nil;
+    NSArray *results = [moc executeFetchRequest:request error:&error];
+    return results.firstObject;
 }
 
 @end

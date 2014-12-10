@@ -44,6 +44,7 @@
 		BE807BB11A38408900A44CA5 /* _NBTSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BB01A38408900A44CA5 /* _NBTSnapshot.m */; };
 		BE807BB41A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BB31A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m */; };
 		BE807BB71A38575600A44CA5 /* NSDate+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */; };
+		BE807BC01A385AD300A44CA5 /* NSFileManager+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */; };
 		FB29F135505D40E38954771E /* libPods-r2048Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,8 @@
 		BE807BB31A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Lazy.m"; sourceTree = "<group>"; };
 		BE807BB51A38575600A44CA5 /* NSDate+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Lazy.h"; sourceTree = "<group>"; };
 		BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Lazy.m"; sourceTree = "<group>"; };
+		BE807BBE1A385AD300A44CA5 /* NSFileManager+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Lazy.h"; sourceTree = "<group>"; };
+		BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Lazy.m"; sourceTree = "<group>"; };
 		E4D02A75CA3A2BBBB4629C48 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-r2048Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -284,6 +287,8 @@
 				BE807BB31A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m */,
 				BE807BB51A38575600A44CA5 /* NSDate+Lazy.h */,
 				BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */,
+				BE807BBE1A385AD300A44CA5 /* NSFileManager+Lazy.h */,
+				BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -474,6 +479,7 @@
 			files = (
 				BE807BB11A38408900A44CA5 /* _NBTSnapshot.m in Sources */,
 				79B1DC2F18E469BB003BBBE7 /* main.m in Sources */,
+				BE807BC01A385AD300A44CA5 /* NSFileManager+Lazy.m in Sources */,
 				79B1DC3318E469BB003BBBE7 /* RTTAppDelegate.m in Sources */,
 				BE807BAE1A383F6300A44CA5 /* NBTSnapshot.m in Sources */,
 				7992F07618E481E90020B45A /* RTTMatrix.m in Sources */,

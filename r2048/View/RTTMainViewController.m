@@ -101,7 +101,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 
 - (NSInteger)savedBestScore {
     NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
-    NBTScore *best = [NBTScore bestInMOC:moc];
+    NBTScore *best = [NBTScore fetchBestInMOC:moc];
     return best.value.integerValue;
 }
 

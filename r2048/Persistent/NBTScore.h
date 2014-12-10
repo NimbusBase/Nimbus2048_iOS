@@ -6,8 +6,8 @@
 
 + (instancetype)insertNewBestInMOC:(NSManagedObjectContext *)moc value:(NSNumber *)value;
 
-+ (NSUInteger)leaveBestOnlyInMOC:(NSManagedObjectContext *)moc;
++ (NSUInteger)deleteAllExceptBestInMOC:(NSManagedObjectContext *)moc;
 
-+ (instancetype)bestInMOC:(NSManagedObjectContext *)moc;
++ (instancetype)fetchBestInMOC:(NSManagedObjectContext *)moc;
 
 @end

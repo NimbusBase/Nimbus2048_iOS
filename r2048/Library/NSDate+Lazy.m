@@ -11,7 +11,7 @@
 @implementation NSDate (Lazy)
 
 - (NSUInteger)milliseconds {
-    return self.timeIntervalSinceNow * 1000;
+    return self.timeIntervalSince1970 * 1000;
 }
 
 @end
