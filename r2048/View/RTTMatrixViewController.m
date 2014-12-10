@@ -18,6 +18,10 @@
 @interface RTTMatrixViewController ()
 @property (nonatomic) RTTMatrix* matrix;
 @property (nonatomic, readwrite) int score;
+
+@property (nonatomic, weak) UIView *gameView;
+@property (nonatomic, weak) UIView *gameOverView;
+
 @end
 
 static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
@@ -36,6 +40,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     self.view.layer.cornerRadius = 6.0f;
     
     UIView *gameView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.gameView = gameView;
     [self.view addSubview:gameView];
     
     // Game Over view
@@ -48,6 +53,8 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     titleLabel.text = @"Game Over!";
+    
+    self.gameOverView = gameOverView;
     [gameOverView addSubview:titleLabel];
     
     UIButton* retryButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -88,25 +95,50 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
      }];
     
     // game logic
+    
     _resetGameCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal*(id input) {
-        [gameView clear];
-        
-        gameOverView.alpha = 0.0f;
+        [self.gameView clear];
         self.matrix = emptyMatrix();
-        self.score = 0;
-        // TODO: Event Reset, empty table NBTSnapshot
-        return [RACSignal empty];
+        
+        if ([input isKindOfClass:[NSNull class]]) {
+            
+            RTTMatrix *matrix = emptyMatrix().addValue(point(0, 0), 16).addValue(point(3, 3), 32);
+            NSNumber *score = @16;
+            NSNumber *state = @NO;
+            
+            self.gameOverView.alpha = state.boolValue ? 1.0f : 0.0f;
+            self.score = (int) score.unsignedIntegerValue;
+            
+            return [RACSignal return:matrix];
+        }
+        else {
+            self.gameOverView.alpha = 0.0f;
+            self.score = 0;
+            
+            NSLog(@"DB: \nCleaned up");
+            return [RACSignal return:[NSNull null]];
+        }
     }];
     
     retryButton.rac_command = _resetGameCommand;
     
     // on reset button tap add two random tiles to the signal stream
-    RACSignal* createInitialTilesSignal = [self.resetGameCommand.executionSignals
-                                           map:^id(id value) {
-                                               RTTTile* firstRandomTile = self.matrix.getNewRandomTile();
-                                               RTTTile* secondRandomTile = self.matrix.applyReduceCommands(@[firstRandomTile]).getNewRandomTile();
-                                               return @[firstRandomTile, secondRandomTile];
-                                           }];
+    
+    RACSignal* createInitialTilesSignal = [[self.resetGameCommand.executionSignals map:^id(RACSignal *signal) {
+        return [signal map:^id(id value) {
+            if ([value isKindOfClass:[RTTMatrix class]]) {
+                RTTMatrix *matrix = value;
+                NSArray *titles = matrix.getNonZeroTitles();
+                self.matrix.applyReduceCommands(titles);
+                return titles;
+            }
+            else {
+                RTTTile* firstRandomTile = self.matrix.getNewRandomTile();
+                RTTTile* secondRandomTile = self.matrix.applyReduceCommands(@[firstRandomTile]).getNewRandomTile();
+                return @[firstRandomTile, secondRandomTile];
+            }
+        }];
+    }] switchToLatest];
     
     // add gesture recognizers
     NSArray* signalArray = [NSArray new];
@@ -250,7 +282,8 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     RAC(self, matrix) = reducedMatrixSignal;
     
     // starts
-    [self.resetGameCommand execute:nil];
+    id snapShot = [NSNull null];
+    [self.resetGameCommand execute:snapShot];
 }
 
 - (void)animateTileViewsToCreate:(NSArray*)tileViewsToCreate
@@ -313,5 +346,6 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
                          
                      }];
 }
+
 
 @end

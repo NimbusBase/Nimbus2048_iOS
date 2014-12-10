@@ -15,6 +15,7 @@ RTTMatrix* emptyMatrix();
 - (NSArray*(^)( NSNumber*))mapDirectionToReduceVectors;
 - (NSArray*(^)())getEmptyPositions;
 - (NSArray*(^)())getTiles;
+- (NSArray*(^)())getNonZeroTitles;
 - (BOOL(^)())isOver;
 - (RTTTile*(^)())getNewRandomTile;
 

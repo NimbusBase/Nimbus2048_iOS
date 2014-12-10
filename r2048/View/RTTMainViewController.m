@@ -85,6 +85,10 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     // UI bindings
     RAC(scoreView, score) = scoreSignal;
     RAC(bestView, score) = bestScoreSignal;
+    
+    [bestScoreSignal subscribeNext:^(NSNumber *newBestScore) {
+        NSLog(@"DB: \nRecord new best score: %@", newBestScore);
+    }];
 }
 
 - (void)saveBestScore:(NSInteger)score {

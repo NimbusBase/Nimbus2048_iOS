@@ -113,6 +113,22 @@ RTTMatrix* emptyMatrix() {
     };
 }
 
+- (NSArray*(^)())getNonZeroTitles {
+    return ^{
+        NSMutableArray *collector = [[NSMutableArray alloc] init];
+        for (short y = 0; y < kMatrixSize; y++) {
+            for (short x = 0; x < kMatrixSize; x++) {
+                RTTPoint* p = point(x, y);
+                int value = self.valueAt(p);
+                if (value > 0) {
+                    [collector addObject:tile(p, self.valueAt(p))];
+                }
+            }
+        }
+        return [[NSArray alloc] initWithArray:collector];
+    };
+}
+
 - (BOOL(^)())isOver {
     return ^{
         for (short y = 0; y < kMatrixSize; y++) {
