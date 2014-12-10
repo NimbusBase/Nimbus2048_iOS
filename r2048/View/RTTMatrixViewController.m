@@ -94,7 +94,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
         gameOverView.alpha = 0.0f;
         self.matrix = emptyMatrix();
         self.score = 0;
-        // TODO: Event empty Coordinate
+        // TODO: Event Reset, empty table NBTSnapshot
         return [RACSignal empty];
     }];
     
@@ -238,17 +238,16 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     // apply the changes to the matrix
     RACSignal* reducedMatrixSignal = [tilesAndVectorsSignal
                                       map:^id(NSArray* vectors) {
-                                          return self.matrix.applyReduceCommands(vectors);
+                                          RTTMatrix *reducedMatrix = self.matrix.applyReduceCommands(vectors);
+                                          NSUInteger score = self.score;
+                                          
+                                          NSLog(@"DB: \nTook a snapshot of score '%lu' and nmatrix %@", (unsigned long)score, reducedMatrix);
+                                          
+                                          return reducedMatrix;
                                       }];
     
     // assign the new matrix to itself
     RAC(self, matrix) = reducedMatrixSignal;
-    
-    // log
-    [matrixChangedSignal
-     subscribeNext:^(RTTMatrix* x) {
-         NSLog(@"matrix: %@", x);
-     }];
     
     // starts
     [self.resetGameCommand execute:nil];
