@@ -1,4 +1,5 @@
 #import "NBTSnapshot.h"
+#import "RTTMatrix.h"
 
 @interface NBTSnapshot ()
 
@@ -6,8 +7,37 @@
 
 @end
 
+static NSString *const key_maxtrix = @"matrix";
+
 @implementation NBTSnapshot
 
-// Custom logic goes here.
+- (RTTMatrix *)matrix {
+    [self willAccessValueForKey:key_maxtrix];
+    
+    RTTMatrix *matrix = [self primitiveValueForKey:key_maxtrix];
+    
+    if (matrix == nil) {
+        matrix = [[RTTMatrix alloc] initWithString:self.points];
+        [self setPrimitiveValue:matrix forKey:key_maxtrix];
+    }
+    
+    [self didAccessValueForKey:key_maxtrix];
+    
+    return matrix;
+}
+
++ (instancetype)insertInMOC:(NSManagedObjectContext *)moc matrix:(RTTMatrix *)matrix score:(NSNumber *)score {
+    NBTSnapshot *snapshot = [self insertInManagedObjectContext:moc];
+    
+    snapshot.createAt = @([[NSDate date] timeIntervalSince1970] * 1000);
+    snapshot.score = score;
+    snapshot.size = @(kMatrixSize);
+    snapshot.state = @(matrix.isOver());
+    snapshot.points = matrix.toString;
+    
+    return snapshot;
+}
 
 @end
+
+

@@ -265,4 +265,35 @@ RTTMatrix* emptyMatrix() {
     return [result copy];
 }
 
+#pragma mark - Serialize
+
+static NSString *const kSeparator = @",";
+
+- (NSString *)toString {
+    NSMutableArray *collector = [[NSMutableArray alloc] initWithCapacity:kMatrixSize ^ 2];
+    for (short x = 0; x < kMatrixSize; x++) {
+        for (short y = 0; y < kMatrixSize; y++) {
+            int value = self.valueAt(point(x, y));
+            [collector addObject:@(value).stringValue];
+        }
+    }
+    return [collector componentsJoinedByString:kSeparator];
+}
+
+- (instancetype)initWithString:(NSString *)string {
+    
+    NSMutableDictionary *matrix = [[NSMutableDictionary alloc] initWithCapacity:kMatrixSize ^ 2];
+    
+    NSArray *values = [string componentsSeparatedByString:kSeparator];
+    for (short x = 0; x < kMatrixSize; x++) {
+        for (short y = 0; y < kMatrixSize; y++) {
+            NSString *value = values[kMatrixSize * x + y];
+            matrix[(point(x, y))] = @(value.intValue);
+        }
+    }
+    
+    return [self initWithDictionary:[[NSDictionary alloc] initWithDictionary:matrix]];
+}
+
+
 @end

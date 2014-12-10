@@ -26,4 +26,7 @@ RTTMatrix* emptyMatrix();
 - (RTTMatrix*(^)())transpose;
 - (RTTMatrix*(^)())reverseRowWise;
 
+- (NSString *)toString;
+- (instancetype)initWithString:(NSString *)string;
+
 @end
