@@ -39,10 +39,10 @@
     
     __block NSUInteger counter = 0;
     [results enumerateObjectsUsingBlock:^(NBTScore *score, NSUInteger idx, BOOL *stop) {
-        if (idx > 0) {
-            [moc delete:score];
-            counter += 1;
-        }
+        if (idx < 1) { return; }
+        
+        [moc deleteObject:score];
+        counter += 1;
     }];
     
     return counter;

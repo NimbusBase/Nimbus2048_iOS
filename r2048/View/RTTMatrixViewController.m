@@ -357,6 +357,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
 - (NBTSnapshot *)takeSnapshotForMatrix:(RTTMatrix *)matrix score:(NSInteger)score {
     NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
     NBTSnapshot *snapshot = [NBTSnapshot insertInMOC:moc matrix:matrix score:@(score)];
+    [NBTSnapshot deleteAllInMOC:moc exceptLast:3];
     [moc save];
     
     NSLog(@"DB: \nTook a snapshot of score %@ and nmatrix %@", snapshot.score, snapshot.matrix);

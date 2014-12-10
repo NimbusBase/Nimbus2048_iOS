@@ -10,4 +10,6 @@
 
 + (instancetype)fetchLastInMOC:(NSManagedObjectContext *)moc;
 
++ (NSUInteger)deleteAllInMOC:(NSManagedObjectContext *)moc exceptLast:(NSUInteger)capacity;
+
 @end

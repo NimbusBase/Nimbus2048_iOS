@@ -41,6 +41,24 @@ static NSString *const key_maxtrix = @"matrix";
     return snapshot;
 }
 
++ (NSUInteger)deleteAllInMOC:(NSManagedObjectContext *)moc exceptLast:(NSUInteger)capacity {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NBTSnapshotAttributes.createAt ascending:NO]];
+    
+    NSError *error = nil;
+    NSArray *results = [moc executeFetchRequest:request error:&error];
+    
+    __block NSUInteger counter = 0;
+    [results enumerateObjectsUsingBlock:^(NBTSnapshot *snapshot, NSUInteger idx, BOOL *stop) {
+        if (idx < capacity) { return; }
+        
+        [moc deleteObject:snapshot];
+        counter += 1;
+    }];
+    
+    return counter;
+}
+
 + (instancetype)fetchLastInMOC:(NSManagedObjectContext *)moc {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
     request.fetchLimit = 1;
