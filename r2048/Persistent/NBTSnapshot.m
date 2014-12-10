@@ -1,5 +1,6 @@
 #import "NBTSnapshot.h"
 #import "RTTMatrix.h"
+#import "NSDate+Lazy.h"
 
 @interface NBTSnapshot ()
 
@@ -29,7 +30,7 @@ static NSString *const key_maxtrix = @"matrix";
 + (instancetype)insertInMOC:(NSManagedObjectContext *)moc matrix:(RTTMatrix *)matrix score:(NSNumber *)score {
     NBTSnapshot *snapshot = [self insertInManagedObjectContext:moc];
     
-    snapshot.createAt = @([[NSDate date] timeIntervalSince1970] * 1000);
+    snapshot.createAt = @([[NSDate date] milliseconds]);
     snapshot.score = score;
     snapshot.size = @(kMatrixSize);
     snapshot.state = @(matrix.isOver());

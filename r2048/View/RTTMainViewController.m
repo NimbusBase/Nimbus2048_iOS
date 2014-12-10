@@ -94,7 +94,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 
 - (void)saveBestScore:(NSInteger)score {
     NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
-    NBTScore *newBest = [NBTScore insertNewBestInMOC:moc];
+    NBTScore *newBest = [NBTScore insertNewBestInMOC:moc value:@(score)];
     [moc save];
     NSLog(@"DB: \nRecorded new best score: %@", newBest.value);
 }

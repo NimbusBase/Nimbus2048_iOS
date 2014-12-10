@@ -1,11 +1,10 @@
 #import "_NBTScore.h"
 
 @interface NBTScore : _NBTScore {}
-// Custom logic goes here.
 
 + (NSUInteger)deleteAllInMOC:(NSManagedObjectContext *)moc;
 
-+ (instancetype)insertNewBestInMOC:(NSManagedObjectContext *)moc;
++ (instancetype)insertNewBestInMOC:(NSManagedObjectContext *)moc value:(NSNumber *)value;
 
 + (NSUInteger)leaveBestOnlyInMOC:(NSManagedObjectContext *)moc;
 
