@@ -72,6 +72,22 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     resetGameButton.showsTouchWhenHighlighted = YES;
     [self.view addSubview:resetGameButton];
     
+    UIButton* settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [settingsButton setTitle:@"Settings" forState:UIControlStateNormal];
+    [settingsButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    settingsButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    settingsButton.backgroundColor = [UIColor fromHex:0x8f7a66];
+    settingsButton.showsTouchWhenHighlighted = YES;
+    settingsButton.layer.cornerRadius = 3.0f;
+    settingsButton.frame = CGRectMake(CGRectGetMaxX(matrixViewController.view.frame) - kButtonWidth,
+                                       buttonY - 50,
+                                       kButtonWidth,
+                                       kButtonHeight);
+    [self.view addSubview:settingsButton];
+    [settingsButton addTarget:self action:@selector(handleSettingsButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleSettingsButtonLongPressed:)];
+    [settingsButton addGestureRecognizer:longPress];
+    
     // Scores
     
     RACSignal* scoreSignal = RACObserve(matrixViewController, score);
@@ -129,6 +145,14 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     if (bestScore != self.bestScore) {
         self.bestScore = bestScore;
     }
+}
+
+- (void)handleSettingsButtonClicked:(UIButton *)button {
+    
+}
+
+- (void)handleSettingsButtonLongPressed:(UILongPressGestureRecognizer *)button {
+    
 }
 
 @end
