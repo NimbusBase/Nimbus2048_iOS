@@ -10,6 +10,9 @@
 #import "RTTMainViewController.h"
 #import <CoreData/CoreData.h>
 #import "NSFileManager+Lazy.h"
+#import "NimbusBase/NimbusBase.h"
+
+NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesNotification";
 
 @implementation RTTAppDelegate
 
@@ -41,7 +44,7 @@
     if (coordinator != nil) {
         _managedObjectContext = [[NSManagedObjectContext alloc] init];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-        //[coordinator.nimbusBase trackChangesOfMOContext:_managedObjectContext];
+        [coordinator.nimbusBase trackChangesOfMOContext:_managedObjectContext];
     }
     return _managedObjectContext;
 }
@@ -60,11 +63,14 @@
         return _persistentStoreCoordinator;
     }
     
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
-    /*
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel
-                                                                                     nimbusConfigs:self.nimbusBaseConfigs];
-     */
+    _persistentStoreCoordinator =
+    [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel
+                                                       nimbusConfigs:self.nimbusBaseConfigs];
+    NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
+    [ntfCntr addObserver:self
+                selector:@selector(handlePersistentStoreDidImportUbiquitousContentChangesNotification:)
+                    name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+                  object:_persistentStoreCoordinator];
     
     NSURL *storeURL = [[NSFileManager applicationDocumentsDirectoryURL] URLByAppendingPathComponent:@"Nimbus2048.sqlite"];
     
@@ -74,7 +80,6 @@
                                                              URL:storeURL
                                                          options:nil
                                                            error:&error]) {
-        
         NSLog(@"Unresolved error %@, \n%@", error, [error userInfo]);
         abort();
     }
@@ -87,12 +92,55 @@
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }
+}
+
+- (NSDictionary *)nimbusBaseConfigs
+{
+    static NSString *const kAppName = @"Nimbus 2048";
+    return @{
+             NCfgK_Servers: @[
+                     /*
+                     @{
+                         NCfgK_AppName: kAppName,
+                         NCfgK_Cloud: NCfgV_GDrive,
+                         NCfgK_AppID: @"467471168650-9v08j5mruji6gcskp2ovam903o6g6nsc.apps.googleusercontent.com",
+                         NCfgK_AppSecret: @"HgyksCpZ9g7m2wdOJHbB0tOs",
+                         },
+                      */
+                     @{
+                         NCfgK_AppName: kAppName,
+                         NCfgK_Cloud: NCfgV_Dropbox,
+                         NCfgK_AppID: @"sz3df7p1dr9tq7g",
+                         NCfgK_AppSecret: @"rwy8f452n0b16da",
+                         },
+                     @{
+                         NCfgK_AppName: kAppName,
+                         NCfgK_Cloud: NCfgV_Box,
+                         NCfgK_AppID: @"2xhcxhtuouujye1mjbc70c2h04mmnd9y",
+                         NCfgK_AppSecret: @"ae3s2pAFqmYAVcZ8IGOwRvM57Whqd6Zm",
+                         },
+                     ],
+             };
+}
+
+- (void)handlePersistentStoreDidImportUbiquitousContentChangesNotification:(NSNotification *)notification
+{
+    if (![NSThread isMainThread]) {
+        [self performSelectorOnMainThread:@selector(handlePersistentStoreDidImportUbiquitousContentChangesNotification:)
+                               withObject:notification
+                            waitUntilDone:NO];
+        return;
+    }
+    
+    NSManagedObjectContext *moc = self.managedObjectContext;
+    [moc mergeChangesFromContextDidSaveNotification:notification];
+    
+    NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
+    [ntfCntr postNotificationName:NBTDidMergeCloudChangesNotification object:moc];
 }
 
 @end

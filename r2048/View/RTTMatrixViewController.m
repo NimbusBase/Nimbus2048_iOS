@@ -272,6 +272,23 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     [self.resetGameCommand execute:snapshot];
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
+    [ntfCntr addObserver:self
+                selector:@selector(handleDidMergeCloudChangesNotification:)
+                    name:NBTDidMergeCloudChangesNotification
+                  object:APP_DELEGATE.managedObjectContext];
+}
+
+- (void)dealloc {
+    NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
+    [ntfCntr removeObserver:self
+                       name:NBTDidMergeCloudChangesNotification
+                     object:APP_DELEGATE.managedObjectContext];
+}
+
 - (void)animateTileViewsToCreate:(NSArray*)tileViewsToCreate
                             move:(NSArray*)tileViewsToMove
                            merge:(NSArray*)tileViewsToMerge
@@ -360,6 +377,11 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     NSLog(@"DB: \nTook a snapshot of score: '%@' and matrix: %@", snapshot.score, snapshot.matrix);
     
     return snapshot;
+}
+
+- (void)handleDidMergeCloudChangesNotification:(NSNotification *)notification
+{
+    
 }
 
 @end

@@ -91,6 +91,23 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     RAC(bestView, score) = bestScoreSignal;
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
+    [ntfCntr addObserver:self
+                selector:@selector(handleDidMergeCloudChangesNotification:)
+                    name:NBTDidMergeCloudChangesNotification
+                  object:APP_DELEGATE.managedObjectContext];
+}
+
+- (void)dealloc {
+    NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
+    [ntfCntr removeObserver:self
+                       name:NBTDidMergeCloudChangesNotification
+                     object:APP_DELEGATE.managedObjectContext];
+}
+
 - (void)saveBestScore:(NSInteger)score {
     NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
     NBTScore *newBest = [NBTScore insertNewBestInMOC:moc value:@(score)];
@@ -104,5 +121,11 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     return best.value.integerValue;
 }
 
+- (void)handleDidMergeCloudChangesNotification:(NSNotification *)notification
+{
+
+    
+    
+}
 
 @end

@@ -21,3 +21,4 @@
 @end
 
 #define APP_DELEGATE ((RTTAppDelegate *)[[UIApplication sharedApplication] delegate])
+extern NSString *const NBTDidMergeCloudChangesNotification;

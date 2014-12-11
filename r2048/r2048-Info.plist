@@ -37,6 +37,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>Box</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>boxsdk-eky66lnq5fnlmulhos7080u1c4a2isv2</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
