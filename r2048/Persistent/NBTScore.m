@@ -11,7 +11,7 @@
 
 + (NSUInteger)deleteAllInMOC:(NSManagedObjectContext *)moc {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
-    request.includesPendingChanges = NO;
+    request.includesPropertyValues = NO;
     
     NSError *error = nil;
     NSArray *results = [moc executeFetchRequest:request error:&error];
@@ -32,7 +32,8 @@
 
 + (NSUInteger)deleteAllExceptBestInMOC:(NSManagedObjectContext *)moc {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
-    request.includesPendingChanges = NO;
+    request.includesPropertyValues = NO;
+    request.includesPendingChanges = YES;
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NBTScoreAttributes.value ascending:NO]];
     
     NSError *error = nil;

@@ -45,6 +45,8 @@
 		BE807BB41A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BB31A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m */; };
 		BE807BB71A38575600A44CA5 /* NSDate+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */; };
 		BE807BC01A385AD300A44CA5 /* NSFileManager+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */; };
+		BEC3EFE11A39A37F0015F3E7 /* NimbusBaseResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */; };
+		BEC3F0371A39A6190015F3E7 /* libNimbusBaseMax.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC3EFF01A39A3C90015F3E7 /* libNimbusBaseMax.a */; };
 		FB29F135505D40E38954771E /* libPods-r2048Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +57,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 79B1DC1E18E469BB003BBBE7;
 			remoteInfo = r2048;
+		};
+		BEC3EFEB1A39A3C90015F3E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BEC6C14318793475003471DA;
+			remoteInfo = NimbusBase;
+		};
+		BEC3EFED1A39A3C90015F3E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BEC6C15318793475003471DA;
+			remoteInfo = NimbusBaseTests;
+		};
+		BEC3EFEF1A39A3C90015F3E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BED291ED18990177003E70E8;
+			remoteInfo = NimbusBaseMax;
+		};
+		BEC3EFF11A39A3C90015F3E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BEAB52E9187A2C73001841AF;
+			remoteInfo = NimbusBaseMin;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -117,6 +147,8 @@
 		BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Lazy.m"; sourceTree = "<group>"; };
 		BE807BBE1A385AD300A44CA5 /* NSFileManager+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Lazy.h"; sourceTree = "<group>"; };
 		BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Lazy.m"; sourceTree = "<group>"; };
+		BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NimbusBaseResources.bundle; sourceTree = "<group>"; };
+		BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NimbusBase.xcodeproj; path = ../../../NimbusBase_iOS/NimbusBase/NimbusBase.xcodeproj; sourceTree = "<group>"; };
 		E4D02A75CA3A2BBBB4629C48 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-r2048Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -126,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEC3F0371A39A6190015F3E7 /* libNimbusBaseMax.a in Frameworks */,
 				79B1DC2518E469BB003BBBE7 /* CoreGraphics.framework in Frameworks */,
 				79B1DC2718E469BB003BBBE7 /* UIKit.framework in Frameworks */,
 				79B1DC2318E469BB003BBBE7 /* Foundation.framework in Frameworks */,
@@ -199,6 +232,7 @@
 		79B1DC2818E469BB003BBBE7 /* r2048 */ = {
 			isa = PBXGroup;
 			children = (
+				BEC3EE8C1A39A37E0015F3E7 /* NimbusBase */,
 				BE807BA11A3837CF00A44CA5 /* Persistent */,
 				7992F07318E481E90020B45A /* Model */,
 				79B1DC3118E469BB003BBBE7 /* RTTAppDelegate.h */,
@@ -325,6 +359,26 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		BEC3EE8C1A39A37E0015F3E7 /* NimbusBase */ = {
+			isa = PBXGroup;
+			children = (
+				BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */,
+				BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */,
+			);
+			path = NimbusBase;
+			sourceTree = "<group>";
+		};
+		BEC3EFE31A39A3C90015F3E7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BEC3EFEC1A39A3C90015F3E7 /* NimbusBase.framework */,
+				BEC3EFEE1A39A3C90015F3E7 /* NimbusBaseTests.xctest */,
+				BEC3EFF01A39A3C90015F3E7 /* libNimbusBaseMax.a */,
+				BEC3EFF21A39A3C90015F3E7 /* libNimbusBaseMin.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -392,6 +446,12 @@
 			mainGroup = 79B1DC1618E469BB003BBBE7;
 			productRefGroup = 79B1DC2018E469BB003BBBE7 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BEC3EFE31A39A3C90015F3E7 /* Products */;
+					ProjectRef = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				79B1DC1E18E469BB003BBBE7 /* r2048 */,
@@ -400,11 +460,43 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		BEC3EFEC1A39A3C90015F3E7 /* NimbusBase.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NimbusBase.framework;
+			remoteRef = BEC3EFEB1A39A3C90015F3E7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BEC3EFEE1A39A3C90015F3E7 /* NimbusBaseTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = NimbusBaseTests.xctest;
+			remoteRef = BEC3EFED1A39A3C90015F3E7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BEC3EFF01A39A3C90015F3E7 /* libNimbusBaseMax.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libNimbusBaseMax.a;
+			remoteRef = BEC3EFEF1A39A3C90015F3E7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BEC3EFF21A39A3C90015F3E7 /* libNimbusBaseMin.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libNimbusBaseMin.a;
+			remoteRef = BEC3EFF11A39A3C90015F3E7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		79B1DC1D18E469BB003BBBE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEC3EFE11A39A37F0015F3E7 /* NimbusBaseResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

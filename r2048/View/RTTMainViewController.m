@@ -6,7 +6,7 @@
 #import "RTTMainViewController.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
-#import <NimbusBase/NimbusBase.h>
+#import "NimbusBase/NimbusBase.h"
 
 #import "RTTMatrixViewController.h"
 #import "RTTScoreView.h"
@@ -144,8 +144,10 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     NSManagedObjectContext *moc = notification.object;
     [NBTScore deleteAllExceptBestInMOC:moc];
     NBTScore *best = [NBTScore fetchBestInMOC:moc];
+    [moc save];
+    
     NSInteger bestScore = best.value.integerValue;
-    if (bestScore != self.bestScore) {
+    if (best != nil && bestScore > self.bestScore) {
         self.bestScore = bestScore;
     }
 }
