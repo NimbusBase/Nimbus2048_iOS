@@ -6,6 +6,8 @@
 #import "RTTMainViewController.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import <NimbusBase/NimbusBase.h>
+
 #import "RTTMatrixViewController.h"
 #import "RTTScoreView.h"
 #import "UIColor+RTTFromHex.h"
@@ -17,7 +19,7 @@
 
 static NSString *const kBestScoreKey = @"RTTBestScore";
 
-@interface RTTMainViewController ()
+@interface RTTMainViewController () <UIAlertViewDelegate>
 @property (nonatomic) NSInteger bestScore;
 @end
 
@@ -148,11 +150,45 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 }
 
 - (void)handleSettingsButtonClicked:(UIButton *)button {
-    
+    UIAlertView *alertView = [self.class alertViewWithServers:APP_DELEGATE.persistentStoreCoordinator.nimbusBase.servers
+                                                     delegate:self];
+    [alertView show];
 }
 
 - (void)handleSettingsButtonLongPressed:(UILongPressGestureRecognizer *)button {
     
+}
+
++ (UIAlertView *)alertViewWithServers:(NSArray *)servers delegate:(id<UIAlertViewDelegate>)delegate {
+    UIAlertView *alertView = [[UIAlertView alloc] init];
+    alertView.title = @"Clouds";
+    alertView.message = @"Select a cloud you'd like your data to be synced to.";
+    alertView.delegate = delegate;
+    
+    NSUInteger count = servers.count;
+    for (int index = 0; index <= count; index ++) {
+        if (index < count) {
+            NMBServer *server = servers[index];
+            [alertView addButtonWithTitle:server.cloud];
+        }
+        else {
+            [alertView addButtonWithTitle:@"Cancel"];
+            alertView.cancelButtonIndex = index;
+        }
+    }
+    
+    return alertView;
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSArray *servers = APP_DELEGATE.persistentStoreCoordinator.nimbusBase.servers;
+    BOOL notCanceled = buttonIndex < servers.count;
+    if (notCanceled) {
+        NMBServer *server = servers[buttonIndex];
+        [server authorizeWithController:self];
+    }
 }
 
 @end
