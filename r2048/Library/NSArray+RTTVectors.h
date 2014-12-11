@@ -5,6 +5,7 @@
 
 @interface NSArray (RTTVectors)
 
+@property (nonatomic, readonly) BOOL containsMove;
 - (NSArray *(^)())rotateRight;
 - (NSArray *(^)())removeZeroVectors;
 - (NSArray *(^)())filterMergePoints;

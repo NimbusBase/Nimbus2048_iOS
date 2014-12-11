@@ -55,4 +55,8 @@
     };
 }
 
+- (BOOL)containsMove {
+    return self.filterMoves().count > 0;
+}
+
 @end
