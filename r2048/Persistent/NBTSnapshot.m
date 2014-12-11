@@ -43,6 +43,7 @@ static NSString *const key_maxtrix = @"matrix";
 
 + (NSUInteger)deleteAllInMOC:(NSManagedObjectContext *)moc exceptLast:(NSUInteger)capacity {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
+    request.includesPendingChanges = NO;
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NBTSnapshotAttributes.createAt ascending:NO]];
     
     NSError *error = nil;
@@ -68,6 +69,21 @@ static NSString *const key_maxtrix = @"matrix";
     NSArray *results = [moc executeFetchRequest:request error:&error];
     return results.firstObject;
 }
+
++ (NSUInteger)deleteAllInMOC:(NSManagedObjectContext *)moc {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
+    request.includesPendingChanges = NO;
+    
+    NSError *error = nil;
+    NSArray *results = [moc executeFetchRequest:request error:&error];
+    
+    for (NSManagedObject * result in results) {
+        [moc deleteObject:result];
+    }
+    
+    return results.count;
+}
+
 
 @end
 

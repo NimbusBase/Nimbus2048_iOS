@@ -20,6 +20,11 @@
 #import "NBTSnapshot.h"
 #import "NSManagedObjectContext+Lazy.h"
 
+/*
+ createInitialTilesSignal ---------------------------------\
+ swipeSignal -> vectorSignal -> vectorsWithRandomTileSignal -> tilesAndVectorsSignal -> reducedMatrixSignal -> matrixChangedSignal
+ */
+
 @interface RTTMatrixViewController ()
 @property (nonatomic) RTTMatrix* matrix;
 @property (nonatomic, readwrite) int score;
@@ -338,6 +343,10 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     self.matrix = emptyMatrix();
     self.gameOverView.alpha = 0.0f;
     self.score = 0;
+    
+    NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
+    [NBTSnapshot deleteAllInMOC:moc];
+    [moc save];
     
     NSLog(@"DB: \nReseted");
 }

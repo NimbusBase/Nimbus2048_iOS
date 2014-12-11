@@ -32,6 +32,7 @@
 
 + (NSUInteger)deleteAllExceptBestInMOC:(NSManagedObjectContext *)moc {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
+    request.includesPendingChanges = NO;
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NBTScoreAttributes.value ascending:NO]];
     
     NSError *error = nil;
