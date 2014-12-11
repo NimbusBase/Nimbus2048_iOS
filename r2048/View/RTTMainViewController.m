@@ -128,6 +128,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 
 - (void)saveBestScore:(NSInteger)score {
     NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
+    [NBTScore deleteAllInMOC:moc];
     NBTScore *newBest = [NBTScore insertNewBestInMOC:moc value:@(score)];
     [moc save];
     NSLog(@"DB: \nRecorded new best score: %@", newBest.value);
@@ -156,7 +157,16 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 }
 
 - (void)handleSettingsButtonLongPressed:(UILongPressGestureRecognizer *)button {
-    
+    if (button.state == UIGestureRecognizerStateBegan) {
+        NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
+        NMBServer *server = base.defaultServer;
+        if (server != nil) {
+            NMBPromise *promise = [server synchronize];
+            [promise success:^(NMBPromise *promise, id response) {
+                
+            }];
+        }
+    }
 }
 
 + (UIAlertView *)alertViewWithServers:(NSArray *)servers delegate:(id<UIAlertViewDelegate>)delegate {

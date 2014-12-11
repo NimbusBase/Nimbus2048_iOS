@@ -33,6 +33,17 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     [self saveContext];
 }
 
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return [self.persistentStoreCoordinator.nimbusBase application:application
+                                                           openURL:url
+                                                 sourceApplication:sourceApplication
+                                                        annotation:annotation];
+}
+
 #pragma mark - Core Data stack
 
 - (NSManagedObjectContext *)managedObjectContext{
@@ -70,7 +81,7 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     [ntfCntr addObserver:self
                 selector:@selector(handlePersistentStoreDidImportUbiquitousContentChangesNotification:)
                     name:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-                  object:_persistentStoreCoordinator];
+                  object:nil];
     
     NSURL *storeURL = [[NSFileManager applicationDocumentsDirectoryURL] URLByAppendingPathComponent:@"Nimbus2048.sqlite"];
     
@@ -103,14 +114,12 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     static NSString *const kAppName = @"Nimbus 2048";
     return @{
              NCfgK_Servers: @[
-                     /*
                      @{
                          NCfgK_AppName: kAppName,
                          NCfgK_Cloud: NCfgV_GDrive,
                          NCfgK_AppID: @"467471168650-9v08j5mruji6gcskp2ovam903o6g6nsc.apps.googleusercontent.com",
                          NCfgK_AppSecret: @"HgyksCpZ9g7m2wdOJHbB0tOs",
                          },
-                      */
                      @{
                          NCfgK_AppName: kAppName,
                          NCfgK_Cloud: NCfgV_Dropbox,
