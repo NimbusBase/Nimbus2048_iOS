@@ -260,6 +260,7 @@
 		ADEAFE5708E6C286D6FE86C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BEC3EE811A394CB80015F3E7 /* Settings */,
 				ADEAFE33368A2955FFC338A8 /* RTTMainViewController.h */,
 				ADEAF5D908FD0E50CBB374C9 /* RTTMainViewController.m */,
 				ADEAFF53CFA68F77574D4DC5 /* RTTMatrixViewController.h */,
@@ -315,6 +316,13 @@
 				BE807BA71A383BFE00A44CA5 /* _NBTScore.m */,
 			);
 			path = Machine;
+			sourceTree = "<group>";
+		};
+		BEC3EE811A394CB80015F3E7 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

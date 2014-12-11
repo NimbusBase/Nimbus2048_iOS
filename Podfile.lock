@@ -4,8 +4,9 @@ PODS:
   - Kiwi/XCTest (2.2.4):
     - Kiwi/ARC
     - Kiwi/NonARC
+  - NimbusBase (0.2.3)
   - ReactiveCocoa (2.3):
-    - ReactiveCocoa/UI
+    - ReactiveCocoa/UI (= 2.3)
   - ReactiveCocoa/Core (2.3):
     - ReactiveCocoa/no-arc
   - ReactiveCocoa/no-arc (2.3)
@@ -14,10 +15,12 @@ PODS:
 
 DEPENDENCIES:
   - Kiwi/XCTest
+  - NimbusBase
   - ReactiveCocoa
 
 SPEC CHECKSUMS:
   Kiwi: c73667f2b84cbf36f1a3830267c5a4ae8dcbd8ba
+  NimbusBase: 02a662384df20020e9f869edb981d18ea2b472d8
   ReactiveCocoa: 2066583826c17dde8e90c41e489f682048cc57c9
 
-COCOAPODS: 0.34.1
+COCOAPODS: 0.35.0
