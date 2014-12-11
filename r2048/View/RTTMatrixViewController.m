@@ -379,9 +379,14 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     return snapshot;
 }
 
-- (void)handleDidMergeCloudChangesNotification:(NSNotification *)notification
-{
-    
+- (void)handleDidMergeCloudChangesNotification:(NSNotification *)notification {
+    NSManagedObjectContext *moc = notification.object;
+    [NBTSnapshot deleteAllInMOC:moc exceptLast:3];
+    NBTSnapshot *snapshot = [NBTSnapshot fetchLastInMOC:moc];
+    RTTMatrix *lastMatrix = snapshot.matrix;
+    if (![lastMatrix isEqual:self.matrix]) {
+        [self.resetGameCommand execute:snapshot];
+    }
 }
 
 @end

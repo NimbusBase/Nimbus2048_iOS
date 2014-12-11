@@ -121,11 +121,14 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     return best.value.integerValue;
 }
 
-- (void)handleDidMergeCloudChangesNotification:(NSNotification *)notification
-{
-
-    
-    
+- (void)handleDidMergeCloudChangesNotification:(NSNotification *)notification {
+    NSManagedObjectContext *moc = notification.object;
+    [NBTScore deleteAllExceptBestInMOC:moc];
+    NBTScore *best = [NBTScore fetchBestInMOC:moc];
+    NSInteger bestScore = best.value.integerValue;
+    if (bestScore != self.bestScore) {
+        self.bestScore = bestScore;
+    }
 }
 
 @end
