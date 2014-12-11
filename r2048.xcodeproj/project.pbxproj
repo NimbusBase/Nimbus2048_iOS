@@ -47,6 +47,7 @@
 		BE807BC01A385AD300A44CA5 /* NSFileManager+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */; };
 		BEC3EFE11A39A37F0015F3E7 /* NimbusBaseResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */; };
 		BEC3F0371A39A6190015F3E7 /* libNimbusBaseMax.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC3EFF01A39A3C90015F3E7 /* libNimbusBaseMax.a */; };
+		BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */; };
 		FB29F135505D40E38954771E /* libPods-r2048Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -149,6 +150,8 @@
 		BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Lazy.m"; sourceTree = "<group>"; };
 		BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NimbusBaseResources.bundle; sourceTree = "<group>"; };
 		BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NimbusBase.xcodeproj; path = ../../../NimbusBase_iOS/NimbusBase/NimbusBase.xcodeproj; sourceTree = "<group>"; };
+		BEC3F03E1A39CB790015F3E7 /* UIAlertView+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Lazy.h"; sourceTree = "<group>"; };
+		BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Lazy.m"; sourceTree = "<group>"; };
 		E4D02A75CA3A2BBBB4629C48 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-r2048Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -324,6 +327,8 @@
 				BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */,
 				BE807BBE1A385AD300A44CA5 /* NSFileManager+Lazy.h */,
 				BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */,
+				BEC3F03E1A39CB790015F3E7 /* UIAlertView+Lazy.h */,
+				BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -589,6 +594,7 @@
 				BE807BB71A38575600A44CA5 /* NSDate+Lazy.m in Sources */,
 				ADEAF8CF613EA6DE49687C8B /* RTTPoint.m in Sources */,
 				BE807BB41A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m in Sources */,
+				BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */,
 				ADEAF104E086F50642BC944A /* RTTVector.m in Sources */,
 				ADEAF227ACFDDB9C65219360 /* RTTTile.m in Sources */,
 				ADEAF9AACA387ED2D8370DC2 /* UIColor+RTTFromHex.m in Sources */,

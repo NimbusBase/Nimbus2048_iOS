@@ -16,11 +16,18 @@
 
 #import "NBTScore.h"
 #import "NSManagedObjectContext+Lazy.h"
+#import "UIAlertView+Lazy.h"
 
 static NSString *const kBestScoreKey = @"RTTBestScore";
 
 @interface RTTMainViewController () <UIAlertViewDelegate>
+
 @property (nonatomic) NSInteger bestScore;
+
+@property (nonatomic, weak) UIAlertView *alertRefClouds;
+@property (nonatomic, weak) UIAlertView *alertRefSettings;
+@property (nonatomic, weak) UIAlertView *alertRefSyncError;
+
 @end
 
 @implementation RTTMainViewController
@@ -117,6 +124,18 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                 selector:@selector(handleDidMergeCloudChangesNotification:)
                     name:NBTDidMergeCloudChangesNotification
                   object:APP_DELEGATE.managedObjectContext];
+    [ntfCntr addObserver:self
+                selector:@selector(handleDefaultServerDidChangeNotification:)
+                    name:NMBNotiDefaultServerDidChange
+                  object:APP_DELEGATE.persistentStoreCoordinator.nimbusBase];
+    [ntfCntr addObserver:self
+                selector:@selector(handleNMBServerSyncDidFail:)
+                    name:NMBNotiSyncDidFail
+                  object:nil];
+    [ntfCntr addObserver:self
+                selector:@selector(handleNMBServerSyncDidSuccess:)
+                    name:NMBNotiSyncDidSucceed
+                  object:nil];
 }
 
 - (void)dealloc {
@@ -124,6 +143,15 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [ntfCntr removeObserver:self
                        name:NBTDidMergeCloudChangesNotification
                      object:APP_DELEGATE.managedObjectContext];
+    [ntfCntr removeObserver:self
+                       name:NMBNotiDefaultServerDidChange
+                     object:APP_DELEGATE.persistentStoreCoordinator.nimbusBase];
+    [ntfCntr removeObserver:self
+                       name:NMBNotiSyncDidFail
+                     object:nil];
+    [ntfCntr removeObserver:self
+                       name:NMBNotiSyncDidSucceed
+                     object:nil];
 }
 
 - (void)saveBestScore:(NSInteger)score {
@@ -140,22 +168,24 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     return best.value.integerValue;
 }
 
-- (void)handleDidMergeCloudChangesNotification:(NSNotification *)notification {
-    NSManagedObjectContext *moc = notification.object;
-    [NBTScore deleteAllExceptBestInMOC:moc];
-    NBTScore *best = [NBTScore fetchBestInMOC:moc];
-    [moc save];
-    
-    NSInteger bestScore = best.value.integerValue;
-    if (best != nil && bestScore > self.bestScore) {
-        self.bestScore = bestScore;
-    }
-}
+
+#pragma mark - Events
 
 - (void)handleSettingsButtonClicked:(UIButton *)button {
-    UIAlertView *alertView = [self.class alertViewWithServers:APP_DELEGATE.persistentStoreCoordinator.nimbusBase.servers
-                                                     delegate:self];
-    [alertView show];
+    NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
+    NMBServer *server = base.defaultServer;
+    if (nil == server) {
+        UIAlertView *alertView = [self.class alertViewWithServers:base.servers
+                                                         delegate:self];
+        [alertView show];
+        self.alertRefClouds = alertView;
+    }
+    else {
+        UIAlertView *alertView = [self.class alertViewForSettingsServer:server
+                                                               delegate:self];
+        [alertView show];
+        self.alertRefSettings = alertView;
+    }
 }
 
 - (void)handleSettingsButtonLongPressed:(UILongPressGestureRecognizer *)button {
@@ -170,6 +200,42 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
         }
     }
 }
+
+#pragma mark - NimbusBase
+
+- (void)handleDidMergeCloudChangesNotification:(NSNotification *)notification {
+    NSManagedObjectContext *moc = notification.object;
+    [NBTScore deleteAllExceptBestInMOC:moc];
+    NBTScore *best = [NBTScore fetchBestInMOC:moc];
+    [moc save];
+    
+    NSInteger bestScore = best.value.integerValue;
+    if (best != nil && bestScore > self.bestScore) {
+        self.bestScore = bestScore;
+    }
+}
+
+- (void)handleDefaultServerDidChangeNotification:(NSNotification *)notification {
+    //light it on
+}
+
+- (void)handleNMBServerSyncDidSuccess:(NSNotification *)notification {
+    //Stop rotate
+}
+
+- (void)handleNMBServerSyncDidFail:(NSNotification *)notification {
+    NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
+    if (notification.object != base) return;
+    
+    NSError *error = notification.userInfo[NKeyNotiError];
+    
+    UIAlertView *alertView = [UIAlertView alertError:error];
+    [alertView show];
+    
+    self.alertRefSyncError = alertView;
+}
+
+#pragma mark - UI
 
 + (UIAlertView *)alertViewWithServers:(NSArray *)servers delegate:(id<UIAlertViewDelegate>)delegate {
     UIAlertView *alertView = [[UIAlertView alloc] init];
@@ -192,15 +258,45 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     return alertView;
 }
 
++ (UIAlertView *)alertViewForSettingsServer:(NMBServer *)server delegate:(id<UIAlertViewDelegate>)delegate {
+    UIAlertView *alertView = [[UIAlertView alloc] init];
+    alertView.title = @"Settings";
+    alertView.delegate = delegate;
+    
+    [alertView addButtonWithTitle:[NSString stringWithFormat:@"Sign out %@", server.cloud]];
+    
+    [alertView addButtonWithTitle:@"Cancel"];
+    alertView.cancelButtonIndex = 1;
+    
+    return alertView;
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSArray *servers = APP_DELEGATE.persistentStoreCoordinator.nimbusBase.servers;
-    BOOL notCanceled = buttonIndex < servers.count;
-    if (notCanceled) {
-        NMBServer *server = servers[buttonIndex];
-        [server authorizeWithController:self];
+    NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
+    
+    if (self.alertRefClouds == alertView) {
+        NSArray *servers = base.servers;
+        BOOL notCanceled = buttonIndex < servers.count;
+        if (notCanceled) {
+            NMBServer *server = servers[buttonIndex];
+            [server authorizeWithController:self];
+        }
     }
+    else if (self.alertRefSettings == alertView) {
+        switch (buttonIndex) {
+            case 0:
+                [base.defaultServer signOut];
+                break;
+            default:
+                break;
+        }
+    }
+    
+    self.alertRefClouds = nil;
+    self.alertRefSettings = nil;
+    self.alertRefSyncError = nil;
 }
 
 @end
