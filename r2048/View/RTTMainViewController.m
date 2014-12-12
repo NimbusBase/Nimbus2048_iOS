@@ -6,6 +6,7 @@
 #import "RTTMainViewController.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import "Masonry/Masonry.h"
 #import "NimbusBase/NimbusBase.h"
 
 #import "RTTMatrixViewController.h"
@@ -30,22 +31,44 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 @property (nonatomic, weak) UIAlertView *alertRefSettings;
 @property (nonatomic, weak) UIAlertView *alertRefSyncError;
 
+@property (nonatomic, strong) RTTMatrixViewController* matrixViewController;
+
+@property (nonatomic, weak) UILabel *titleLabel;
+@property (nonatomic, weak) RTTScoreView *scoreView;
+@property (nonatomic, weak) RTTScoreView *bestView;
+
+@property (nonatomic, weak) UIButton *settingsButton;
+@property (nonatomic, weak) UIButton *syncButton;
+@property (nonatomic, weak) UIButton *resetButton;
+@property (nonatomic, weak) UIButton *undoButton;
+
 @end
 
 @implementation RTTMainViewController
 
 - (void)loadView {
-    self.view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.view.backgroundColor = [UIColor fromHex:0xfaf8ef];
+    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.view = view;
     
-    RTTMatrixViewController* matrixViewController = [RTTMatrixViewController new];
-    matrixViewController.view.center = CGPointMake(self.view.center.x, self.view.center.y + 60.0f);
-    [self.view addSubview:matrixViewController.view];
+    view.backgroundColor = [UIColor fromHex:0xfaf8ef];
     
-    RTTAssert(matrixViewController.resetGameCommand);
+    RTTMatrixViewController *matrixViewController = self.matrixViewController = [RTTMatrixViewController new];
+    [view addSubview:matrixViewController.view];
+    RTTAssert(self.matrixViewController.resetGameCommand);
+
+    [self titleLabel];
+    [self scoreView];
+    [self bestScore];
+    [self settingsButton];
+    [self syncButton];
+    [self resetButton];
     
+    [self loadContraintsOnSuperview:view];
+
+    /*
     float buttonY = CGRectGetMinY(matrixViewController.view.frame) - kButtonHeight - 20.0f;
-    
+     */
+    /*
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 20.0f, self.view.bounds.size.width, 80.0f)];
     titleLabel.textColor = [UIColor fromHex:0x776e65];
     titleLabel.font = [UIFont boldSystemFontOfSize:40.0f];
@@ -53,7 +76,8 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     titleLabel.text = @"Reactive2048";
     [self.view addSubview:titleLabel];
-    
+    */
+    /*
     RTTScoreView* scoreView = [[RTTScoreView alloc] initWithFrame:CGRectMake(CGRectGetMinX(matrixViewController.view.frame),
                                                                              buttonY,
                                                                              kButtonWidth,
@@ -61,14 +85,16 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                                                          andTitle:@"SCORE"];
     scoreView.animateChange = YES;
     [self.view addSubview:scoreView];
-    
+    */
+    /*
     RTTScoreView* bestView = [[RTTScoreView alloc] initWithFrame:CGRectMake(CGRectGetMidX(matrixViewController.view.frame) - kButtonWidth * 0.5f,
                                                                             buttonY,
                                                                             kButtonWidth,
                                                                             kButtonHeight)
                                                         andTitle:@"BEST"];
     [self.view addSubview:bestView];
-    
+    */
+    /*
     UIButton* resetGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [resetGameButton setTitle:@"New Game" forState:UIControlStateNormal];
     [resetGameButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
@@ -82,7 +108,8 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     resetGameButton.rac_command = matrixViewController.resetGameCommand;
     resetGameButton.showsTouchWhenHighlighted = YES;
     [self.view addSubview:resetGameButton];
-    
+    */
+    /*
     UIButton* settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [settingsButton setTitle:@"Settings" forState:UIControlStateNormal];
     [settingsButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
@@ -95,13 +122,28 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                                        kButtonWidth,
                                        kButtonHeight);
     [self.view addSubview:settingsButton];
-    [settingsButton addTarget:self action:@selector(handleSettingsButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleSettingsButtonLongPressed:)];
-    [settingsButton addGestureRecognizer:longPress];
+     */
+
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // Buttons
+    
+    [self.settingsButton addTarget:self
+                            action:@selector(handleSettingsButtonClicked:)
+                  forControlEvents:UIControlEventTouchUpInside];
+    UILongPressGestureRecognizer *longPress =
+    [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                  action:@selector(handleSettingsButtonLongPressed:)];
+    [self.settingsButton addGestureRecognizer:longPress];
+    
+    self.resetButton.rac_command = self.matrixViewController.resetGameCommand;
     
     // Scores
     
-    RACSignal* scoreSignal = RACObserve(matrixViewController, score);
+    RACSignal* scoreSignal = RACObserve(self.matrixViewController, score);
     RACSignal* bestScoreSignal = RACObserve(self, bestScore);
     
     RAC(self, bestScore) =
@@ -114,12 +156,11 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [self rac_liftSelector:@selector(saveBestScore:) withSignals:[bestScoreSignal skip:1], nil];
     
     // UI bindings
-    RAC(scoreView, score) = scoreSignal;
-    RAC(bestView, score) = bestScoreSignal;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
+    
+    RAC(self.scoreView, score) = scoreSignal;
+    RAC(self.bestView, score) = bestScoreSignal;
+    
+    // Notification
     
     NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
     [ntfCntr addObserver:self
@@ -169,7 +210,6 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     NBTScore *best = [NBTScore fetchBestInMOC:moc];
     return best.value.integerValue;
 }
-
 
 #pragma mark - Events
 
@@ -235,6 +275,187 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 }
 
 #pragma mark - UI
+
+- (void)loadContraintsOnSuperview:(UIView *)superview {
+    UIView
+    *matrixView = self.matrixViewController.view,
+    *titleLabel = [self titleLabel],
+    *scoreView = [self scoreView],
+    *bestView = [self bestView],
+    *settingsButton = [self settingsButton],
+    *syncButton = [self syncButton],
+    *resetButton = [self resetButton],
+    *undoButton = [self undoButton];
+    
+    CGFloat
+    buttonHeight = kButtonHeight,
+    gapV = 10.0f,
+    marginH = 20.0f,
+    gapH = 10.0f;
+    
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(scoreView.mas_left);
+        make.right.equalTo(bestView.mas_right);
+        
+        make.top.equalTo(superview.mas_top).offset(50.0f);
+        make.height.mas_equalTo(buttonHeight);
+    }];
+    
+    [syncButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(titleLabel.mas_right).offset(gapH);
+        make.width.equalTo(undoButton.mas_width);
+        
+        make.centerY.equalTo(titleLabel.mas_centerY);
+        make.height.equalTo(titleLabel.mas_height);
+    }];
+    
+    [settingsButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(syncButton.mas_right).offset(gapH);
+        make.right.equalTo(superview.mas_right).offset(-marginH);
+        make.width.equalTo(resetButton.mas_width);
+
+        make.centerY.equalTo(titleLabel.mas_centerY);
+        make.height.equalTo(titleLabel.mas_height);
+    }];
+    
+    
+    [scoreView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(superview.mas_left).offset(marginH);
+        
+        make.top.equalTo(titleLabel.mas_bottom).offset(gapV);
+        make.height.equalTo(titleLabel.mas_height);
+    }];
+    
+    [bestView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(scoreView.mas_right).offset(gapH);
+        make.width.equalTo(scoreView.mas_width);
+        
+        make.centerY.equalTo(scoreView.mas_centerY);
+        make.height.equalTo(scoreView.mas_height);
+    }];
+    
+    [undoButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(bestView.mas_right).offset(gapH);
+        make.width.equalTo(scoreView.mas_width);
+        
+        make.centerY.equalTo(scoreView.mas_centerY);
+        make.height.equalTo(scoreView.mas_height);
+    }];
+    
+    [resetButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(undoButton.mas_right).offset(gapH);
+        make.right.equalTo(superview.mas_right).offset(-marginH);
+        make.width.equalTo(scoreView.mas_width);
+        
+        make.centerY.equalTo(scoreView.mas_centerY);
+        make.height.equalTo(scoreView.mas_height);
+    }];
+    
+    matrixView.center = CGPointMake(self.view.center.x, self.view.center.y + 60.0f);
+}
+
+- (RTTScoreView *)scoreView {
+    if (_scoreView != nil) return _scoreView;
+    
+    RTTScoreView* scoreView =
+    [[RTTScoreView alloc] initWithFrame:CGRectMake(0.0f,
+                                                   0.0f,
+                                                   kButtonWidth,
+                                                   kButtonHeight)
+                               andTitle:@"SCORE"];
+    scoreView.animateChange = YES;
+    
+    [self.view addSubview:scoreView];
+    return _scoreView = scoreView;
+}
+
+- (RTTScoreView *)bestView {
+    if (_bestView != nil) return _bestView;
+    
+    RTTScoreView* bestView =
+    [[RTTScoreView alloc] initWithFrame:CGRectMake(0.0f,
+                                                   0.0f,
+                                                   kButtonWidth,
+                                                   kButtonHeight)
+                               andTitle:@"BEST"];
+    
+    [self.view addSubview:bestView];
+    return _bestView = bestView;
+}
+
+- (UIButton *)settingsButton {
+    if (_settingsButton != nil) return _settingsButton;
+    
+    UIButton* settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [settingsButton setTitle:@"Settings" forState:UIControlStateNormal];
+    [settingsButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    settingsButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    settingsButton.backgroundColor = [UIColor fromHex:0x8f7a66];
+    settingsButton.showsTouchWhenHighlighted = YES;
+    settingsButton.layer.cornerRadius = 3.0f;
+
+    [self.view addSubview:settingsButton];
+    return _settingsButton = settingsButton;
+}
+
+- (UIButton *)resetButton {
+    if (_resetButton != nil) return _resetButton;
+    
+    UIButton* resetGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [resetGameButton setTitle:@"New" forState:UIControlStateNormal];
+    [resetGameButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    resetGameButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    resetGameButton.backgroundColor = [UIColor fromHex:0x8f7a66];
+    resetGameButton.layer.cornerRadius = 3.0f;
+    resetGameButton.showsTouchWhenHighlighted = YES;
+    
+    [self.view addSubview:resetGameButton];
+    return _resetButton = resetGameButton;
+}
+
+- (UIButton *)syncButton {
+    if (_syncButton != nil) return _syncButton;
+    
+    UIButton* resetGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [resetGameButton setTitle:@"Sync" forState:UIControlStateNormal];
+    [resetGameButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    resetGameButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    resetGameButton.backgroundColor = [UIColor fromHex:0x8f7a66];
+    resetGameButton.layer.cornerRadius = 3.0f;
+    resetGameButton.showsTouchWhenHighlighted = YES;
+    
+    [self.view addSubview:resetGameButton];
+    return _syncButton = resetGameButton;
+}
+
+- (UILabel *)titleLabel {
+    if (_titleLabel != nil) return _titleLabel;
+    
+    UILabel* titleLabel = [[UILabel alloc] init];
+    titleLabel.textColor = [UIColor fromHex:0x776e65];
+    titleLabel.font = [UIFont boldSystemFontOfSize:40.0f];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+    titleLabel.text = @"2048";
+    
+    [self.view addSubview:titleLabel];
+    return _titleLabel = titleLabel;
+}
+
+- (UIButton *)undoButton {
+    if (_undoButton != nil) return _undoButton;
+    
+    UIButton* resetGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [resetGameButton setTitle:@"Undo" forState:UIControlStateNormal];
+    [resetGameButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    resetGameButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    resetGameButton.backgroundColor = [UIColor fromHex:0x8f7a66];
+    resetGameButton.layer.cornerRadius = 3.0f;
+    resetGameButton.showsTouchWhenHighlighted = YES;
+    
+    [self.view addSubview:resetGameButton];
+    return _undoButton = resetGameButton;
+}
 
 + (UIAlertView *)alertViewWithServers:(NSArray *)servers delegate:(id<UIAlertViewDelegate>)delegate {
     UIAlertView *alertView = [[UIAlertView alloc] init];
