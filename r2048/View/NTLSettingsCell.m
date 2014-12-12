@@ -9,6 +9,8 @@
 #import "NTLSettingsCell.h"
 #import <Masonry/Masonry.h>
 
+#import "UIFont+NBT.h"
+
 @implementation NTLSettingsCell
 @synthesize titleLabel = _titleLabel;
 
@@ -52,6 +54,10 @@
 + (UIEdgeInsets)cellContentInsets
 {
     return UIEdgeInsetsMake(10.0f, 18.0f, 10.0f, 18.0f);
+}
+
++ (UIFont *)textFont {
+    return [UIFont defaultFont];
 }
 
 @end

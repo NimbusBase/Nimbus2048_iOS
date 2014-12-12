@@ -18,6 +18,8 @@
 
 @property (nonatomic, weak) UITableView *tableView;
 
++ (UIFont *)textFont;
+
 @end
 
 #define kNTLSettingsCellHeight 50.0f

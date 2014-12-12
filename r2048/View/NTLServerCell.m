@@ -50,11 +50,17 @@
                      context:nil];
         [server addObserver:self
                   forKeyPath:NMBServerProperties.isInitialized
-                     options:kvoOptNOI
-                     context:nil];
+                    options:kvoOptNOI
+                    context:nil];
         
-        self.cloudIcon.image = [UIImage imageNamed:server.iconName];
-        self.cloudName.text = server.cloudType;
+        NSDictionary *iconNamesByCloud =
+        @{
+          NCfgV_GDrive: @"cloudIcon_gdrive",
+          NCfgV_Dropbox: @"cloudIcon_dropbox",
+          NCfgV_Box: @"cloudIcon_box",
+          };
+        self.cloudIcon.image = [UIImage imageNamed:iconNamesByCloud[server.cloud]];
+        self.cloudName.text = server.cloud;
     }
 }
 
@@ -76,13 +82,6 @@
             [self configWithServer:server authState:server.authState initialized:newValue.boolValue];
         }
     }
-}
-
-+ (UIFont *)textFont
-{
-    UIFont *superFont = [super textFont];
-    return [UIFont fontWithName:superFont.fontName
-                           size:superFont.pointSize + 2.0f];
 }
 
 #pragma mark - Subviews

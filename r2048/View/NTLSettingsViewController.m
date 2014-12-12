@@ -15,6 +15,8 @@
 
 #import "NimbusBase/NimbusBase.h"
 
+#import <Masonry/Masonry.h>
+
 static NSString
 *const kReuseCellIDServer = @"S",
 *const kReuseCellIDAutoAync = @"A";
@@ -100,7 +102,9 @@ UITableViewDelegate
         case 0:{
             NTLServerCell *cell = (NTLServerCell *)[tableView cellForRowAtIndexPath:indexPath];
             NMBase *base = self.base;
-            NMBServer *crtSlctServer = base.selectedServer;
+            NMBServer
+            *crtSlctServer = base.defaultServer,
+            *newSlctServer = base.servers[indexPath.row];
             BOOL targetAuthIn = cell.authSwitch.on;
             if (targetAuthIn) {
                 // Sign out currently selected server
@@ -108,19 +112,18 @@ UITableViewDelegate
                     [crtSlctServer signOut];
                 
                 // Sign in new server
-                NMBServer *server = [base selectServerAtIndex:indexPath.row];
-                [server authorizeWithController:self];
+                [newSlctServer authorizeWithController:self];
             }
             else {
                 // Sign out the server
-                NMBServer *server = base.servers[indexPath.row];
-                if (server == crtSlctServer || crtSlctServer == nil)
-                    [server signOut];
+                if (newSlctServer == crtSlctServer || crtSlctServer == nil)
+                    [newSlctServer signOut];
             }
         } break;
         case 1:{
             NTLSettingsSwitchCell *cell = (NTLSettingsSwitchCell *)[tableView cellForRowAtIndexPath:indexPath];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            /*
             BOOL
             oldAutoSyncValue = defaults.autoSync,
             targetSyncValue = cell.stateSwitch.on;
@@ -129,6 +132,7 @@ UITableViewDelegate
                 [defaults synchronize];
             }
             [cell setOn:targetSyncValue animated:YES];
+             */
         } break;
         default:
             break;
@@ -209,49 +213,20 @@ UITableViewDelegate
          [tableView registerClass:cellClass forCellReuseIdentifier:reuseID];
      }];
     
-    // Header View
-    CGRect headerFrame = tableView.bounds;
-    headerFrame.size.height = [[UIApplication sharedApplication] statusBarHeight] + kNTLNavigationBarHeight;
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:headerFrame];
-    headerView.backgroundColor = [UIColor clearColor];
-    tableView.tableHeaderView = headerView;
-    
     tableView.translatesAutoresizingMaskIntoConstraints = NO;
     [superview addSubview:tableView];
     
     return tableView;
 }
 
-- (UILabel *)loadPullLabelOnSuperview:(UITableView *)tableView
-{
-    UIView *constraintView = tableView.tableHeaderView;
-    
-    UILabel *label = [[UILabel alloc] init];
-    label.font = [NTLServerCell textFont];
-    label.text = @"Continue pulling to go back";
-    
-    label.translatesAutoresizingMaskIntoConstraints = NO;
-    [constraintView addSubview:label];
-    
-    UIEdgeInsets cellInsets = [NTLSettingsCell cellContentInsets];
-    [constraintView constrainView:label
-                     byEdgeInsets:UIEdgeInsetsMake(0.0f, cellInsets.left, 0.0f, 0.0f)];
-    
-    return label;
-}
-
 - (void)loadConstraintsOnSuperview:(UIView *)superview
 {
-    UIView *tableView = self.tableView;
+    UIView
+    *tableView = self.tableView;
     
-    [superview constrainView:tableView
-                byEdgeInsets:
-     UIEdgeInsetsMake(0.0f,
-                      0.0f,
-                      0.0f,
-                      0.0f
-                      )];
+    [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(superview);
+    }];
 }
 
 @end

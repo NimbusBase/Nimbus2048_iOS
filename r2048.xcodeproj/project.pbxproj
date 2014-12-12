@@ -50,6 +50,9 @@
 		BE96A9F61A3A8CC6001A616D /* NTLSettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9F21A3A8CC6001A616D /* NTLSettingsCell.m */; };
 		BE96A9F71A3A8CC6001A616D /* NTLSettingsSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9F41A3A8CC6001A616D /* NTLSettingsSwitchCell.m */; };
 		BE96AA041A3AA27C001A616D /* UITableViewCell+CCO.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AA031A3AA27C001A616D /* UITableViewCell+CCO.m */; };
+		BE96AA151A3AA839001A616D /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE96AA141A3AA839001A616D /* Image.xcassets */; };
+		BE96AA191A3AA8A7001A616D /* UIFont+NBT.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AA181A3AA8A7001A616D /* UIFont+NBT.m */; };
+		BE96AA1C1A3AA8FB001A616D /* UIColor+NBT.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AA1B1A3AA8FB001A616D /* UIColor+NBT.m */; };
 		BEC3EFE11A39A37F0015F3E7 /* NimbusBaseResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */; };
 		BEC3F0371A39A6190015F3E7 /* libNimbusBaseMax.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC3EFF01A39A3C90015F3E7 /* libNimbusBaseMax.a */; };
 		BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */; };
@@ -164,6 +167,11 @@
 		BE96A9FE1A3A9DE6001A616D /* KVOUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KVOUtilities.h; sourceTree = "<group>"; };
 		BE96AA021A3AA27C001A616D /* UITableViewCell+CCO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+CCO.h"; sourceTree = "<group>"; };
 		BE96AA031A3AA27C001A616D /* UITableViewCell+CCO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+CCO.m"; sourceTree = "<group>"; };
+		BE96AA141A3AA839001A616D /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
+		BE96AA171A3AA8A7001A616D /* UIFont+NBT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+NBT.h"; sourceTree = "<group>"; };
+		BE96AA181A3AA8A7001A616D /* UIFont+NBT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+NBT.m"; sourceTree = "<group>"; };
+		BE96AA1A1A3AA8FB001A616D /* UIColor+NBT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+NBT.h"; sourceTree = "<group>"; };
+		BE96AA1B1A3AA8FB001A616D /* UIColor+NBT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+NBT.m"; sourceTree = "<group>"; };
 		BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NimbusBaseResources.bundle; sourceTree = "<group>"; };
 		BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NimbusBase.xcodeproj; path = ../../../NimbusBase_iOS/NimbusBase/NimbusBase.xcodeproj; sourceTree = "<group>"; };
 		BEC3F03E1A39CB790015F3E7 /* UIAlertView+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Lazy.h"; sourceTree = "<group>"; };
@@ -259,6 +267,7 @@
 				79B1DC2918E469BB003BBBE7 /* Supporting Files */,
 				ADEAFF91C031A036CB45EC7A /* Library */,
 				ADEAFE5708E6C286D6FE86C2 /* View */,
+				BE96AA161A3AA86E001A616D /* Resources */,
 			);
 			path = r2048;
 			sourceTree = "<group>";
@@ -374,6 +383,18 @@
 				BE807BA71A383BFE00A44CA5 /* _NBTScore.m */,
 			);
 			path = Machine;
+			sourceTree = "<group>";
+		};
+		BE96AA161A3AA86E001A616D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE96AA141A3AA839001A616D /* Image.xcassets */,
+				BE96AA171A3AA8A7001A616D /* UIFont+NBT.h */,
+				BE96AA181A3AA8A7001A616D /* UIFont+NBT.m */,
+				BE96AA1A1A3AA8FB001A616D /* UIColor+NBT.h */,
+				BE96AA1B1A3AA8FB001A616D /* UIColor+NBT.m */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		BEC3EE811A394CB80015F3E7 /* Settings */ = {
@@ -529,6 +550,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEC3EFE11A39A37F0015F3E7 /* NimbusBaseResources.bundle in Resources */,
+				BE96AA151A3AA839001A616D /* Image.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,10 +648,12 @@
 				BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */,
 				ADEAF104E086F50642BC944A /* RTTVector.m in Sources */,
 				ADEAF227ACFDDB9C65219360 /* RTTTile.m in Sources */,
+				BE96AA191A3AA8A7001A616D /* UIFont+NBT.m in Sources */,
 				ADEAF9AACA387ED2D8370DC2 /* UIColor+RTTFromHex.m in Sources */,
 				ADEAF9C06FFE9FE2B89A3F10 /* RTTMainViewController.m in Sources */,
 				BE807BAB1A383BFE00A44CA5 /* NBTScore.m in Sources */,
 				ADEAF6F5B6712A1CC0BA0ED6 /* RTTMatrixViewController.m in Sources */,
+				BE96AA1C1A3AA8FB001A616D /* UIColor+NBT.m in Sources */,
 				BE96AA041A3AA27C001A616D /* UITableViewCell+CCO.m in Sources */,
 				ADEAF7E0319197FDF371AC91 /* RTTTileView.m in Sources */,
 				BE96A9EA1A3A8C7E001A616D /* NTLSettingsViewController.m in Sources */,
