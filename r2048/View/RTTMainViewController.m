@@ -290,7 +290,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     CGFloat
     buttonHeight = kButtonHeight,
     gapV = 10.0f,
-    marginH = 20.0f,
+    marginH = 0.5 * (CGRectGetWidth(superview.bounds) - CGRectGetWidth(matrixView.frame)),
     gapH = 10.0f;
     
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -360,7 +360,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     RTTScoreView* scoreView =
     [[RTTScoreView alloc] initWithFrame:CGRectMake(0.0f,
                                                    0.0f,
-                                                   kButtonWidth,
+                                                   30.0f,
                                                    kButtonHeight)
                                andTitle:@"SCORE"];
     scoreView.animateChange = YES;
@@ -386,46 +386,46 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 - (UIButton *)settingsButton {
     if (_settingsButton != nil) return _settingsButton;
     
-    UIButton* settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [settingsButton setTitle:@"Settings" forState:UIControlStateNormal];
-    [settingsButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    settingsButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
-    settingsButton.backgroundColor = [UIColor fromHex:0x8f7a66];
-    settingsButton.showsTouchWhenHighlighted = YES;
-    settingsButton.layer.cornerRadius = 3.0f;
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"Settings" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    button.backgroundColor = [UIColor fromHex:0x8f7a66];
+    button.showsTouchWhenHighlighted = YES;
+    button.layer.cornerRadius = 3.0f;
 
-    [self.view addSubview:settingsButton];
-    return _settingsButton = settingsButton;
+    [self.view addSubview:button];
+    return _settingsButton = button;
 }
 
 - (UIButton *)resetButton {
     if (_resetButton != nil) return _resetButton;
     
-    UIButton* resetGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [resetGameButton setTitle:@"New" forState:UIControlStateNormal];
-    [resetGameButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    resetGameButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
-    resetGameButton.backgroundColor = [UIColor fromHex:0x8f7a66];
-    resetGameButton.layer.cornerRadius = 3.0f;
-    resetGameButton.showsTouchWhenHighlighted = YES;
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"New" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    button.backgroundColor = [UIColor fromHex:0x8f7a66];
+    button.layer.cornerRadius = 3.0f;
+    button.showsTouchWhenHighlighted = YES;
     
-    [self.view addSubview:resetGameButton];
-    return _resetButton = resetGameButton;
+    [self.view addSubview:button];
+    return _resetButton = button;
 }
 
 - (UIButton *)syncButton {
     if (_syncButton != nil) return _syncButton;
     
-    UIButton* resetGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [resetGameButton setTitle:@"Sync" forState:UIControlStateNormal];
-    [resetGameButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    resetGameButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
-    resetGameButton.backgroundColor = [UIColor fromHex:0x8f7a66];
-    resetGameButton.layer.cornerRadius = 3.0f;
-    resetGameButton.showsTouchWhenHighlighted = YES;
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"Sync" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    button.backgroundColor = [UIColor fromHex:0x8f7a66];
+    button.layer.cornerRadius = 3.0f;
+    button.showsTouchWhenHighlighted = YES;
     
-    [self.view addSubview:resetGameButton];
-    return _syncButton = resetGameButton;
+    [self.view addSubview:button];
+    return _syncButton = button;
 }
 
 - (UILabel *)titleLabel {
@@ -445,16 +445,18 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 - (UIButton *)undoButton {
     if (_undoButton != nil) return _undoButton;
     
-    UIButton* resetGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [resetGameButton setTitle:@"Undo" forState:UIControlStateNormal];
-    [resetGameButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    resetGameButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
-    resetGameButton.backgroundColor = [UIColor fromHex:0x8f7a66];
-    resetGameButton.layer.cornerRadius = 3.0f;
-    resetGameButton.showsTouchWhenHighlighted = YES;
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitle:@"Undo" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    button.backgroundColor = [UIColor fromHex:0x8f7a66];
+    button.layer.cornerRadius = 3.0f;
+    button.showsTouchWhenHighlighted = YES;
     
-    [self.view addSubview:resetGameButton];
-    return _undoButton = resetGameButton;
+    button.hidden = YES;
+    
+    [self.view addSubview:button];
+    return _undoButton = button;
 }
 
 + (UIAlertView *)alertViewWithServers:(NSArray *)servers delegate:(id<UIAlertViewDelegate>)delegate {
