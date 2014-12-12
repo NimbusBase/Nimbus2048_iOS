@@ -45,6 +45,11 @@
 		BE807BB41A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BB31A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m */; };
 		BE807BB71A38575600A44CA5 /* NSDate+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */; };
 		BE807BC01A385AD300A44CA5 /* NSFileManager+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */; };
+		BE96A9EA1A3A8C7E001A616D /* NTLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9E91A3A8C7E001A616D /* NTLSettingsViewController.m */; };
+		BE96A9F51A3A8CC6001A616D /* NTLServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9F01A3A8CC6001A616D /* NTLServerCell.m */; };
+		BE96A9F61A3A8CC6001A616D /* NTLSettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9F21A3A8CC6001A616D /* NTLSettingsCell.m */; };
+		BE96A9F71A3A8CC6001A616D /* NTLSettingsSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9F41A3A8CC6001A616D /* NTLSettingsSwitchCell.m */; };
+		BE96AA041A3AA27C001A616D /* UITableViewCell+CCO.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AA031A3AA27C001A616D /* UITableViewCell+CCO.m */; };
 		BEC3EFE11A39A37F0015F3E7 /* NimbusBaseResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */; };
 		BEC3F0371A39A6190015F3E7 /* libNimbusBaseMax.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC3EFF01A39A3C90015F3E7 /* libNimbusBaseMax.a */; };
 		BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */; };
@@ -148,6 +153,17 @@
 		BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Lazy.m"; sourceTree = "<group>"; };
 		BE807BBE1A385AD300A44CA5 /* NSFileManager+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Lazy.h"; sourceTree = "<group>"; };
 		BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Lazy.m"; sourceTree = "<group>"; };
+		BE96A9E81A3A8C7E001A616D /* NTLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLSettingsViewController.h; sourceTree = "<group>"; };
+		BE96A9E91A3A8C7E001A616D /* NTLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLSettingsViewController.m; sourceTree = "<group>"; };
+		BE96A9EF1A3A8CC6001A616D /* NTLServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLServerCell.h; sourceTree = "<group>"; };
+		BE96A9F01A3A8CC6001A616D /* NTLServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLServerCell.m; sourceTree = "<group>"; };
+		BE96A9F11A3A8CC6001A616D /* NTLSettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLSettingsCell.h; sourceTree = "<group>"; };
+		BE96A9F21A3A8CC6001A616D /* NTLSettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLSettingsCell.m; sourceTree = "<group>"; };
+		BE96A9F31A3A8CC6001A616D /* NTLSettingsSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLSettingsSwitchCell.h; sourceTree = "<group>"; };
+		BE96A9F41A3A8CC6001A616D /* NTLSettingsSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLSettingsSwitchCell.m; sourceTree = "<group>"; };
+		BE96A9FE1A3A9DE6001A616D /* KVOUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KVOUtilities.h; sourceTree = "<group>"; };
+		BE96AA021A3AA27C001A616D /* UITableViewCell+CCO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+CCO.h"; sourceTree = "<group>"; };
+		BE96AA031A3AA27C001A616D /* UITableViewCell+CCO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+CCO.m"; sourceTree = "<group>"; };
 		BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NimbusBaseResources.bundle; sourceTree = "<group>"; };
 		BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NimbusBase.xcodeproj; path = ../../../NimbusBase_iOS/NimbusBase/NimbusBase.xcodeproj; sourceTree = "<group>"; };
 		BEC3F03E1A39CB790015F3E7 /* UIAlertView+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Lazy.h"; sourceTree = "<group>"; };
@@ -313,6 +329,9 @@
 		ADEAFF91C031A036CB45EC7A /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				BE96AA021A3AA27C001A616D /* UITableViewCell+CCO.h */,
+				BE96AA031A3AA27C001A616D /* UITableViewCell+CCO.m */,
+				BE96A9FE1A3A9DE6001A616D /* KVOUtilities.h */,
 				ADEAFC01BD9E295C25FFC495 /* NSArray+RTTVectors.m */,
 				ADEAF1B52EF410A67E9A02F0 /* NSArray+RTTVectors.h */,
 				ADEAF60C985F34239C0516C6 /* UIColor+RTTFromHex.m */,
@@ -360,6 +379,14 @@
 		BEC3EE811A394CB80015F3E7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				BE96A9E81A3A8C7E001A616D /* NTLSettingsViewController.h */,
+				BE96A9E91A3A8C7E001A616D /* NTLSettingsViewController.m */,
+				BE96A9F11A3A8CC6001A616D /* NTLSettingsCell.h */,
+				BE96A9F21A3A8CC6001A616D /* NTLSettingsCell.m */,
+				BE96A9EF1A3A8CC6001A616D /* NTLServerCell.h */,
+				BE96A9F01A3A8CC6001A616D /* NTLServerCell.m */,
+				BE96A9F31A3A8CC6001A616D /* NTLSettingsSwitchCell.h */,
+				BE96A9F41A3A8CC6001A616D /* NTLSettingsSwitchCell.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -591,8 +618,10 @@
 				BE807BA41A3837F400A44CA5 /* Nimbus2048.xcdatamodeld in Sources */,
 				ADEAFA9A67C437391B036DFA /* NSArray+RTTVectors.m in Sources */,
 				BE807BAA1A383BFE00A44CA5 /* _NBTScore.m in Sources */,
+				BE96A9F71A3A8CC6001A616D /* NTLSettingsSwitchCell.m in Sources */,
 				BE807BB71A38575600A44CA5 /* NSDate+Lazy.m in Sources */,
 				ADEAF8CF613EA6DE49687C8B /* RTTPoint.m in Sources */,
+				BE96A9F61A3A8CC6001A616D /* NTLSettingsCell.m in Sources */,
 				BE807BB41A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m in Sources */,
 				BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */,
 				ADEAF104E086F50642BC944A /* RTTVector.m in Sources */,
@@ -601,8 +630,11 @@
 				ADEAF9C06FFE9FE2B89A3F10 /* RTTMainViewController.m in Sources */,
 				BE807BAB1A383BFE00A44CA5 /* NBTScore.m in Sources */,
 				ADEAF6F5B6712A1CC0BA0ED6 /* RTTMatrixViewController.m in Sources */,
+				BE96AA041A3AA27C001A616D /* UITableViewCell+CCO.m in Sources */,
 				ADEAF7E0319197FDF371AC91 /* RTTTileView.m in Sources */,
+				BE96A9EA1A3A8C7E001A616D /* NTLSettingsViewController.m in Sources */,
 				ADEAF11E61C512FCC60DBB48 /* NSArray+RTTTiles.m in Sources */,
+				BE96A9F51A3A8CC6001A616D /* NTLServerCell.m in Sources */,
 				ADEAFDE1DFD65B5F3397A476 /* RTTScoreView.m in Sources */,
 				ADEAF101549C309B24C4503F /* UIView+RTTClear.m in Sources */,
 			);
