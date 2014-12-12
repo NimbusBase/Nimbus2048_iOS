@@ -9,6 +9,8 @@
 #import "NimbusBase/NimbusBase.h"
 
 #import "RTTMatrixViewController.h"
+#import "NTLSettingsViewController.h"
+
 #import "RTTScoreView.h"
 #import "UIColor+RTTFromHex.h"
 
@@ -172,20 +174,13 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 #pragma mark - Events
 
 - (void)handleSettingsButtonClicked:(UIButton *)button {
-    NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
-    NMBServer *server = base.defaultServer;
-    if (nil == server) {
-        UIAlertView *alertView = [self.class alertViewWithServers:base.servers
-                                                         delegate:self];
-        [alertView show];
-        self.alertRefClouds = alertView;
-    }
-    else {
-        UIAlertView *alertView = [self.class alertViewForSettingsServer:server
-                                                               delegate:self];
-        [alertView show];
-        self.alertRefSettings = alertView;
-    }
+    NTLSettingsViewController *viewController = [[NTLSettingsViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    viewController.navigationItem.leftBarButtonItem =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                  target:self
+                                                  action:@selector(handleModelViewControllerCancelButtonClicked:)];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)handleSettingsButtonLongPressed:(UILongPressGestureRecognizer *)button {
@@ -199,6 +194,10 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
             }];
         }
     }
+}
+
+- (void)handleModelViewControllerCancelButtonClicked:(UIBarButtonItem *)button {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - NimbusBase

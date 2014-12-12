@@ -93,7 +93,6 @@
     UIView *superview = self.contentView;
     UIImageView *icon = [[UIImageView alloc] init];
     
-    icon.translatesAutoresizingMaskIntoConstraints = NO;
     [superview addSubview:icon];
 
     return _cloudIcon = icon;
@@ -105,10 +104,9 @@
     
     UIView *superview = self.contentView;
     UILabel *label = [[UILabel alloc] init];
-    
+
     label.font = [self.class textFont];
     
-    label.translatesAutoresizingMaskIntoConstraints = NO;
     [superview addSubview:label];
 
     return _titleLabel = label;
@@ -147,13 +145,13 @@
     [cloudIcon mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(iconSize);
         make.left.equalTo(superview).offset(insets.left);
-        make.right.equalTo(cloudName).offset(10.0f);
-        make.centerY.equalTo(cloudName);
+        make.centerY.equalTo(superview);
     }];
     
     [cloudName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(superview).offset(insets.right);
-        make.centerY.equalTo(cloudName);
+        make.left.equalTo(cloudIcon.mas_right).offset(10.0f);
+        make.right.equalTo(superview).offset(-insets.right);
+        make.centerY.equalTo(superview);
         make.height.mas_equalTo(kNTLSettingsCellHeight - insets.top - insets.bottom);
     }];
 }

@@ -10,9 +10,31 @@
 #import <Masonry/Masonry.h>
 
 #import "UIFont+NBT.h"
+#import "UITableViewCell+CCO.h"
 
 @implementation NTLSettingsCell
 @synthesize titleLabel = _titleLabel;
+
+- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier
+{
+    if (self = [super initWithStyle:UITableViewCellStyleDefault
+                    reuseIdentifier:reuseIdentifier])
+    {
+        [self initialize];
+    }
+    
+    return self;
+}
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self)
+    {
+        [self initialize];
+    }
+    return self;
+}
 
 - (void)initialize
 {
@@ -58,6 +80,14 @@
 
 + (UIFont *)textFont {
     return [UIFont defaultFont];
+}
+
+#pragma mark - Table View
+
+- (UITableView *)tableView
+{
+    if (_tableView) return _tableView;
+    return _tableView = [self findTableView];
 }
 
 @end

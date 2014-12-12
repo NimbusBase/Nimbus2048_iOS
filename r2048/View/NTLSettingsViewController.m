@@ -40,8 +40,7 @@ UITableViewDelegate
 {
     if (self = [super init])
     {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-        
+        self.edgesForExtendedLayout = UIRectEdgeNone;
         self.title = NSLocalizedString(@"Settings", @"Settings");
     }
     
@@ -73,9 +72,6 @@ UITableViewDelegate
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [self.navigationController setNavigationBarHidden:NO
-                                             animated:YES];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
