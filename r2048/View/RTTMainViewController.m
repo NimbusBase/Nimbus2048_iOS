@@ -23,13 +23,9 @@
 
 static NSString *const kBestScoreKey = @"RTTBestScore";
 
-@interface RTTMainViewController () <UIAlertViewDelegate>
+@interface RTTMainViewController ()
 
 @property (nonatomic) NSInteger bestScore;
-
-@property (nonatomic, weak) UIAlertView *alertRefClouds;
-@property (nonatomic, weak) UIAlertView *alertRefSettings;
-@property (nonatomic, weak) UIAlertView *alertRefSyncError;
 
 @property (nonatomic, strong) RTTMatrixViewController* matrixViewController;
 
@@ -64,66 +60,6 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [self resetButton];
     
     [self loadContraintsOnSuperview:view];
-
-    /*
-    float buttonY = CGRectGetMinY(matrixViewController.view.frame) - kButtonHeight - 20.0f;
-     */
-    /*
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 20.0f, self.view.bounds.size.width, 80.0f)];
-    titleLabel.textColor = [UIColor fromHex:0x776e65];
-    titleLabel.font = [UIFont boldSystemFontOfSize:40.0f];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    titleLabel.text = @"Reactive2048";
-    [self.view addSubview:titleLabel];
-    */
-    /*
-    RTTScoreView* scoreView = [[RTTScoreView alloc] initWithFrame:CGRectMake(CGRectGetMinX(matrixViewController.view.frame),
-                                                                             buttonY,
-                                                                             kButtonWidth,
-                                                                             kButtonHeight)
-                                                         andTitle:@"SCORE"];
-    scoreView.animateChange = YES;
-    [self.view addSubview:scoreView];
-    */
-    /*
-    RTTScoreView* bestView = [[RTTScoreView alloc] initWithFrame:CGRectMake(CGRectGetMidX(matrixViewController.view.frame) - kButtonWidth * 0.5f,
-                                                                            buttonY,
-                                                                            kButtonWidth,
-                                                                            kButtonHeight)
-                                                        andTitle:@"BEST"];
-    [self.view addSubview:bestView];
-    */
-    /*
-    UIButton* resetGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [resetGameButton setTitle:@"New Game" forState:UIControlStateNormal];
-    [resetGameButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    resetGameButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
-    resetGameButton.backgroundColor = [UIColor fromHex:0x8f7a66];
-    resetGameButton.frame = CGRectMake(CGRectGetMaxX(matrixViewController.view.frame) - kButtonWidth,
-                                       buttonY,
-                                       kButtonWidth,
-                                       kButtonHeight);
-    resetGameButton.layer.cornerRadius = 3.0f;
-    resetGameButton.rac_command = matrixViewController.resetGameCommand;
-    resetGameButton.showsTouchWhenHighlighted = YES;
-    [self.view addSubview:resetGameButton];
-    */
-    /*
-    UIButton* settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [settingsButton setTitle:@"Settings" forState:UIControlStateNormal];
-    [settingsButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    settingsButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
-    settingsButton.backgroundColor = [UIColor fromHex:0x8f7a66];
-    settingsButton.showsTouchWhenHighlighted = YES;
-    settingsButton.layer.cornerRadius = 3.0f;
-    settingsButton.frame = CGRectMake(CGRectGetMaxX(matrixViewController.view.frame) - kButtonWidth,
-                                       buttonY - 50,
-                                       kButtonWidth,
-                                       kButtonHeight);
-    [self.view addSubview:settingsButton];
-     */
-
 }
 
 - (void)viewDidLoad {
@@ -134,10 +70,14 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [self.settingsButton addTarget:self
                             action:@selector(handleSettingsButtonClicked:)
                   forControlEvents:UIControlEventTouchUpInside];
-    UILongPressGestureRecognizer *longPress =
-    [[UILongPressGestureRecognizer alloc] initWithTarget:self
-                                                  action:@selector(handleSettingsButtonLongPressed:)];
-    [self.settingsButton addGestureRecognizer:longPress];
+    [self.syncButton addTarget:self
+                        action:@selector(handleSyncButtonClicked:)
+              forControlEvents:UIControlEventTouchUpInside];
+    [self.class configSyncButton:self.syncButton
+                      withServer:nil
+                       authState:0
+                     initialized:NO
+                         syncing:NO];
     
     self.resetButton.rac_command = self.matrixViewController.resetGameCommand;
     
@@ -197,6 +137,8 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                      object:nil];
 }
 
+#pragma mark - Model
+
 - (void)saveBestScore:(NSInteger)score {
     NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
     [NBTScore deleteAllInMOC:moc];
@@ -223,16 +165,10 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [self presentViewController:navController animated:YES completion:nil];
 }
 
-- (void)handleSettingsButtonLongPressed:(UILongPressGestureRecognizer *)button {
-    if (button.state == UIGestureRecognizerStateBegan) {
-        NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
-        NMBServer *server = base.defaultServer;
-        if (server != nil) {
-            NMBPromise *promise = [server synchronize];
-            [promise success:^(NMBPromise *promise, id response) {
-                
-            }];
-        }
+- (void)handleSyncButtonClicked:(UIButton *)button {
+    NMBServer *server = APP_DELEGATE.persistentStoreCoordinator.nimbusBase.defaultServer;
+    if (server != nil) {
+        [server synchronize];
     }
 }
 
@@ -255,23 +191,41 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 }
 
 - (void)handleDefaultServerDidChangeNotification:(NSNotification *)notification {
-    //light it on
+    NMBServer *server = notification.userInfo[NSKeyValueChangeNewKey];
+    [self.class configSyncButton:self.settingsButton
+                      withServer:server
+                       authState:server.authState
+                     initialized:server.isInitialized
+                         syncing:server.isSynchronizing];
+    [RACObserve(server, isSynchronizing) subscribeNext:^(NSNumber *syncing) {
+        [self.class configSyncButton:self.syncButton
+                          withServer:server
+                           authState:server.authState
+                         initialized:server.isInitialized
+                             syncing:syncing.boolValue];
+    }];
 }
 
 - (void)handleNMBServerSyncDidSuccess:(NSNotification *)notification {
-    //Stop rotate
+    NMBServer *server = notification.object;
+    [self.class configSyncButton:self.settingsButton
+                      withServer:server
+                       authState:server.authState
+                     initialized:server.isInitialized
+                         syncing:server.isSynchronizing];
 }
 
 - (void)handleNMBServerSyncDidFail:(NSNotification *)notification {
-    NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
-    if (notification.object != base) return;
+    NMBServer *server = notification.object;
+    [self.class configSyncButton:self.settingsButton
+                      withServer:server
+                       authState:server.authState
+                     initialized:server.isInitialized
+                         syncing:server.isSynchronizing];
     
     NSError *error = notification.userInfo[NKeyNotiError];
-    
     UIAlertView *alertView = [UIAlertView alertError:error];
     [alertView show];
-    
-    self.alertRefSyncError = alertView;
 }
 
 #pragma mark - UI
@@ -459,66 +413,16 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     return _undoButton = button;
 }
 
-+ (UIAlertView *)alertViewWithServers:(NSArray *)servers delegate:(id<UIAlertViewDelegate>)delegate {
-    UIAlertView *alertView = [[UIAlertView alloc] init];
-    alertView.title = @"Clouds";
-    alertView.message = @"Select a cloud you'd like your data to be synced to.";
-    alertView.delegate = delegate;
++ (void)configSyncButton:(UIButton *)button
+              withServer:(NMBServer *)server
+               authState:(NMBAuthState)authState
+             initialized:(BOOL)initialized
+                 syncing:(BOOL)syncing {
     
-    NSUInteger count = servers.count;
-    for (int index = 0; index <= count; index ++) {
-        if (index < count) {
-            NMBServer *server = servers[index];
-            [alertView addButtonWithTitle:server.cloud];
-        }
-        else {
-            [alertView addButtonWithTitle:@"Cancel"];
-            alertView.cancelButtonIndex = index;
-        }
-    }
-    
-    return alertView;
-}
-
-+ (UIAlertView *)alertViewForSettingsServer:(NMBServer *)server delegate:(id<UIAlertViewDelegate>)delegate {
-    UIAlertView *alertView = [[UIAlertView alloc] init];
-    alertView.title = @"Settings";
-    alertView.delegate = delegate;
-    
-    [alertView addButtonWithTitle:[NSString stringWithFormat:@"Sign out %@", server.cloud]];
-    
-    [alertView addButtonWithTitle:@"Cancel"];
-    alertView.cancelButtonIndex = 1;
-    
-    return alertView;
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
-    
-    if (self.alertRefClouds == alertView) {
-        NSArray *servers = base.servers;
-        BOOL notCanceled = buttonIndex < servers.count;
-        if (notCanceled) {
-            NMBServer *server = servers[buttonIndex];
-            [server authorizeWithController:self];
-        }
-    }
-    else if (self.alertRefSettings == alertView) {
-        switch (buttonIndex) {
-            case 0:
-                [base.defaultServer signOut];
-                break;
-            default:
-                break;
-        }
-    }
-    
-    self.alertRefClouds = nil;
-    self.alertRefSettings = nil;
-    self.alertRefSyncError = nil;
+    BOOL enabled = server != nil && initialized && !syncing;
+    button.userInteractionEnabled = enabled;
+    button.alpha = initialized ? 1.0f : 0.5f;
+    [button setTitleColor:syncing ? [UIColor redColor] : [UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 @end
