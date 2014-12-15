@@ -340,9 +340,8 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     if (_settingsButton != nil) return _settingsButton;
     
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"Settings" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    [button setImage:[UIImage imageNamed:@"button_settings"] forState:UIControlStateNormal];
+    button.imageView.contentMode = UIViewContentModeScaleAspectFit;
     button.backgroundColor = [UIColor fromHex:0x8f7a66];
     button.showsTouchWhenHighlighted = YES;
     button.layer.cornerRadius = 3.0f;
@@ -355,9 +354,8 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     if (_resetButton != nil) return _resetButton;
     
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"New" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    [button setImage:[UIImage imageNamed:@"button_reset"] forState:UIControlStateNormal];
+    button.imageView.contentMode = UIViewContentModeScaleAspectFit;
     button.backgroundColor = [UIColor fromHex:0x8f7a66];
     button.layer.cornerRadius = 3.0f;
     button.showsTouchWhenHighlighted = YES;
