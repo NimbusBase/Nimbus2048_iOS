@@ -22,6 +22,9 @@
 #import "UIAlertView+Lazy.h"
 #import "NMBase+NBT.h"
 
+#import "NBTSyncButtonModel.h"
+#import "NBTSyncButton.h"
+
 static NSString *const kBestScoreKey = @"RTTBestScore";
 
 @interface RTTMainViewController ()
@@ -35,9 +38,11 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 @property (nonatomic, weak) RTTScoreView *bestView;
 
 @property (nonatomic, weak) UIButton *settingsButton;
-@property (nonatomic, weak) UIButton *syncButton;
+@property (nonatomic, weak) NBTSyncButton *syncButton;
 @property (nonatomic, weak) UIButton *resetButton;
 @property (nonatomic, weak) UIButton *undoButton;
+
+@property (nonatomic, strong) NBTSyncButtonModel *syncButtonModel;
 
 @end
 
@@ -52,15 +57,8 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     RTTMatrixViewController *matrixViewController = self.matrixViewController = [RTTMatrixViewController new];
     [view addSubview:matrixViewController.view];
     RTTAssert(self.matrixViewController.resetGameCommand);
-
-    [self titleLabel];
-    [self scoreView];
-    [self bestScore];
-    [self settingsButton];
-    [self syncButton];
-    [self resetButton];
     
-    [self loadContraintsOnSuperview:view];
+    [self loadSubviewsOnSuperview:view];
 }
 
 - (void)viewDidLoad {
@@ -71,6 +69,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [self.settingsButton addTarget:self
                             action:@selector(handleSettingsButtonClicked:)
                   forControlEvents:UIControlEventTouchUpInside];
+    /*
     [self.syncButton addTarget:self
                         action:@selector(handleSyncButtonClicked:)
               forControlEvents:UIControlEventTouchUpInside];
@@ -79,7 +78,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                        authState:0
                      initialized:NO
                          syncing:NO];
-    
+    */
     self.resetButton.rac_command = self.matrixViewController.resetGameCommand;
     
     // Scores
@@ -100,6 +99,8 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     
     RAC(self.scoreView, score) = scoreSignal;
     RAC(self.bestView, score) = bestScoreSignal;
+    NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
+    self.syncButtonModel = [[NBTSyncButtonModel alloc] initWithSyncButton:self.syncButton base:base];
     
     // Notification
     
@@ -108,6 +109,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                 selector:@selector(handleDidMergeCloudChangesNotification:)
                     name:NBTDidMergeCloudChangesNotification
                   object:APP_DELEGATE.managedObjectContext];
+    /*
     [ntfCntr addObserver:self
                 selector:@selector(handleDefaultServerDidChangeNotification:)
                     name:NMBNotiDefaultServerDidChange
@@ -120,6 +122,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                 selector:@selector(handleNMBServerSyncDidSuccess:)
                     name:NMBNotiSyncDidSucceed
                   object:nil];
+     */
 }
 
 - (void)dealloc {
@@ -127,6 +130,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [ntfCntr removeObserver:self
                        name:NBTDidMergeCloudChangesNotification
                      object:APP_DELEGATE.managedObjectContext];
+    /*
     [ntfCntr removeObserver:self
                        name:NMBNotiDefaultServerDidChange
                      object:APP_DELEGATE.persistentStoreCoordinator.nimbusBase];
@@ -136,6 +140,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [ntfCntr removeObserver:self
                        name:NMBNotiSyncDidSucceed
                      object:nil];
+     */
 }
 
 #pragma mark - Model
@@ -188,7 +193,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
         self.bestScore = bestScore;
     }
 }
-
+/*
 - (void)handleDefaultServerDidChangeNotification:(NSNotification *)notification {
     NMBServer *server = notification.userInfo[NSKeyValueChangeNewKey];
     [self.class configSyncButton:self.settingsButton
@@ -226,10 +231,10 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     UIAlertView *alertView = [UIAlertView alertError:error];
     [alertView show];
 }
-
+*/
 #pragma mark - UI
 
-- (void)loadContraintsOnSuperview:(UIView *)superview {
+- (void)loadSubviewsOnSuperview:(UIView *)superview {
     UIView
     *matrixView = self.matrixViewController.view,
     *titleLabel = [self titleLabel],
@@ -239,6 +244,10 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     *syncButton = [self syncButton],
     *resetButton = [self resetButton],
     *undoButton = [self undoButton];
+    
+    for (UIView *view in @[titleLabel, scoreView, bestView, settingsButton, syncButton, resetButton, undoButton]) {
+        [superview addSubview:view];
+    }
     
     CGFloat
     buttonHeight = kButtonHeight,
@@ -318,7 +327,6 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                                andTitle:@"SCORE"];
     scoreView.animateChange = YES;
     
-    [self.view addSubview:scoreView];
     return _scoreView = scoreView;
 }
 
@@ -332,7 +340,6 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                                                    kButtonHeight)
                                andTitle:@"BEST"];
     
-    [self.view addSubview:bestView];
     return _bestView = bestView;
 }
 
@@ -346,7 +353,6 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     button.showsTouchWhenHighlighted = YES;
     button.layer.cornerRadius = 3.0f;
 
-    [self.view addSubview:button];
     return _settingsButton = button;
 }
 
@@ -360,22 +366,20 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     button.layer.cornerRadius = 3.0f;
     button.showsTouchWhenHighlighted = YES;
     
-    [self.view addSubview:button];
     return _resetButton = button;
 }
 
-- (UIButton *)syncButton {
+- (NBTSyncButton *)syncButton {
     if (_syncButton != nil) return _syncButton;
     
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"Sync" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+    NBTSyncButton* button = [NBTSyncButton buttonWithType:UIButtonTypeCustom];
+    //[button setTitle:@"Sync" forState:UIControlStateNormal];
+    //[button setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
+    //button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
     button.backgroundColor = [UIColor fromHex:0x8f7a66];
     button.layer.cornerRadius = 3.0f;
     button.showsTouchWhenHighlighted = YES;
     
-    [self.view addSubview:button];
     return _syncButton = button;
 }
 
@@ -389,7 +393,6 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     titleLabel.text = @"2048";
     
-    [self.view addSubview:titleLabel];
     return _titleLabel = titleLabel;
 }
 
@@ -406,10 +409,9 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     
     button.hidden = YES;
     
-    [self.view addSubview:button];
     return _undoButton = button;
 }
-
+/*
 + (void)configSyncButton:(UIButton *)button
               withServer:(NMBServer *)server
                authState:(NMBAuthState)authState
@@ -421,5 +423,5 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     button.alpha = initialized ? 1.0f : 0.5f;
     [button setTitleColor:syncing ? [UIColor redColor] : [UIColor whiteColor] forState:UIControlStateNormal];
 }
-
+*/
 @end

@@ -55,6 +55,9 @@
 		BE96AA1C1A3AA8FB001A616D /* UIColor+NBT.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AA1B1A3AA8FB001A616D /* UIColor+NBT.m */; };
 		BEB76F461A3E7EAD00BA551B /* NSUserDefaults+NBT.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F451A3E7EAD00BA551B /* NSUserDefaults+NBT.m */; };
 		BEB76F501A3E810F00BA551B /* NMBase+NBT.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F4F1A3E810F00BA551B /* NMBase+NBT.m */; };
+		BEB76F531A3EC21500BA551B /* NTLCloudSyncView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F521A3EC21500BA551B /* NTLCloudSyncView.m */; };
+		BEB76F571A3EC5FD00BA551B /* NBTSyncButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F561A3EC5FD00BA551B /* NBTSyncButton.m */; };
+		BEB76F5A1A3ECBBA00BA551B /* NBTSyncButtonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F591A3ECBBA00BA551B /* NBTSyncButtonModel.m */; };
 		BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */; };
 		FB29F135505D40E38954771E /* libPods-r2048Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */; };
 /* End PBXBuildFile section */
@@ -148,6 +151,12 @@
 		BEB76F451A3E7EAD00BA551B /* NSUserDefaults+NBT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+NBT.m"; sourceTree = "<group>"; };
 		BEB76F4E1A3E810F00BA551B /* NMBase+NBT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NMBase+NBT.h"; sourceTree = "<group>"; };
 		BEB76F4F1A3E810F00BA551B /* NMBase+NBT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NMBase+NBT.m"; sourceTree = "<group>"; };
+		BEB76F511A3EC21500BA551B /* NTLCloudSyncView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLCloudSyncView.h; sourceTree = "<group>"; };
+		BEB76F521A3EC21500BA551B /* NTLCloudSyncView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLCloudSyncView.m; sourceTree = "<group>"; };
+		BEB76F551A3EC5FD00BA551B /* NBTSyncButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTSyncButton.h; sourceTree = "<group>"; };
+		BEB76F561A3EC5FD00BA551B /* NBTSyncButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTSyncButton.m; sourceTree = "<group>"; };
+		BEB76F581A3ECBBA00BA551B /* NBTSyncButtonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTSyncButtonModel.h; sourceTree = "<group>"; };
+		BEB76F591A3ECBBA00BA551B /* NBTSyncButtonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTSyncButtonModel.m; sourceTree = "<group>"; };
 		BEC3F03E1A39CB790015F3E7 /* UIAlertView+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Lazy.h"; sourceTree = "<group>"; };
 		BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Lazy.m"; sourceTree = "<group>"; };
 		E4D02A75CA3A2BBBB4629C48 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -295,6 +304,7 @@
 			isa = PBXGroup;
 			children = (
 				BEC3EE811A394CB80015F3E7 /* Settings */,
+				BEB76F541A3EC5BC00BA551B /* SyncButton */,
 				ADEAFE33368A2955FFC338A8 /* RTTMainViewController.h */,
 				ADEAF5D908FD0E50CBB374C9 /* RTTMainViewController.m */,
 				ADEAFF53CFA68F77574D4DC5 /* RTTMatrixViewController.h */,
@@ -371,6 +381,19 @@
 				BE96AA1B1A3AA8FB001A616D /* UIColor+NBT.m */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		BEB76F541A3EC5BC00BA551B /* SyncButton */ = {
+			isa = PBXGroup;
+			children = (
+				BEB76F511A3EC21500BA551B /* NTLCloudSyncView.h */,
+				BEB76F521A3EC21500BA551B /* NTLCloudSyncView.m */,
+				BEB76F551A3EC5FD00BA551B /* NBTSyncButton.h */,
+				BEB76F561A3EC5FD00BA551B /* NBTSyncButton.m */,
+				BEB76F581A3ECBBA00BA551B /* NBTSyncButtonModel.h */,
+				BEB76F591A3ECBBA00BA551B /* NBTSyncButtonModel.m */,
+			);
+			name = SyncButton;
 			sourceTree = "<group>";
 		};
 		BEC3EE811A394CB80015F3E7 /* Settings */ = {
@@ -573,14 +596,17 @@
 				ADEAF9C06FFE9FE2B89A3F10 /* RTTMainViewController.m in Sources */,
 				BE807BAB1A383BFE00A44CA5 /* NBTScore.m in Sources */,
 				ADEAF6F5B6712A1CC0BA0ED6 /* RTTMatrixViewController.m in Sources */,
+				BEB76F531A3EC21500BA551B /* NTLCloudSyncView.m in Sources */,
 				BE96AA1C1A3AA8FB001A616D /* UIColor+NBT.m in Sources */,
 				BE96AA041A3AA27C001A616D /* UITableViewCell+CCO.m in Sources */,
 				ADEAF7E0319197FDF371AC91 /* RTTTileView.m in Sources */,
 				BE96A9EA1A3A8C7E001A616D /* NTLSettingsViewController.m in Sources */,
+				BEB76F5A1A3ECBBA00BA551B /* NBTSyncButtonModel.m in Sources */,
 				ADEAF11E61C512FCC60DBB48 /* NSArray+RTTTiles.m in Sources */,
 				BE96A9F51A3A8CC6001A616D /* NTLServerCell.m in Sources */,
 				ADEAFDE1DFD65B5F3397A476 /* RTTScoreView.m in Sources */,
 				ADEAF101549C309B24C4503F /* UIView+RTTClear.m in Sources */,
+				BEB76F571A3EC5FD00BA551B /* NBTSyncButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
