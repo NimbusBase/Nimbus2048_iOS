@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class RTTMainViewController;
+@class Reachability;
 
 @interface RTTAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -17,6 +17,8 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+@property (readonly, strong, nonatomic) Reachability *internetReachability;
 
 @end
 

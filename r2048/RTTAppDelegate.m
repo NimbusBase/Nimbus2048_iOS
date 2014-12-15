@@ -8,9 +8,10 @@
 
 #import "RTTAppDelegate.h"
 #import "RTTMainViewController.h"
-#import <CoreData/CoreData.h>
 #import "NSFileManager+Lazy.h"
-#import "NimbusBase/NimbusBase.h"
+#import <CoreData/CoreData.h>
+#import <Reachability/Reachability.h>
+#import <NimbusBase/NimbusBase.h>
 
 NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesNotification";
 
@@ -19,9 +20,12 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize internetReachability = _internetReachability;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if (getenv("RTTUnitTest")) return YES;
+    
+    _internetReachability = [Reachability reachabilityForInternetConnection];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [RTTMainViewController new];
