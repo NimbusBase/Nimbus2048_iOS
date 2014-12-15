@@ -24,6 +24,13 @@
         self.button = button;
         self.base = base;
         
+        NMBServer *server = base.defaultServer;
+        NTLCloudSyncView *cloudView = button.cloudView;
+        BOOL syncing = server != nil && server.isSynchronizing;
+        cloudView.alpha = [self.class cloudViewAlphaWithServer:server initialized:server.isInitialized];
+        cloudView.arrowsHidden = !syncing;
+        cloudView.rotating = syncing;
+        
         NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
         [ntfCntr addObserver:self
                     selector:@selector(handleDefaultServerDidChangeNotification:)
@@ -60,21 +67,16 @@
 
 - (void)handleDefaultServerDidChangeNotification:(NSNotification *)notification {
     NMBServer *server = notification.userInfo[NSKeyValueChangeNewKey];
+    id null = [NSNull null];
     
     NTLCloudSyncView *cloudView = self.button.cloudView;
+    cloudView.alpha = [self.class cloudViewAlphaWithServer:server == null ? nil : server
+                                               initialized:server == null ? NO : server.isInitialized];
     
-    BOOL canSync = server != nil && server.isInitialized;
-    cloudView.alpha = canSync ? 1.0f : 0.5f;
-    
-    [RACObserve(server, isSynchronizing) subscribeNext:^(NSNumber *syncing) {
-        if (syncing.boolValue) {
-            [cloudView showSyncView];
-            cloudView.isRotating = YES;
-        }
-        else {
-            [cloudView hideSyncView];
-            cloudView.isRotating = NO;
-        }
+    [RACObserve(server, isSynchronizing) subscribeNext:^(NSNumber *syncingValue) {
+        BOOL syncing = syncingValue.boolValue;
+        [cloudView setArrowsHidden:!syncing animated:YES];
+        cloudView.rotating = syncing;
     }];
 }
 
@@ -89,6 +91,11 @@
 
 - (void)handleSyncButtonClicked:(UIButton *)button {
     [self.base syncDefaultServer];
+}
+
++ (CGFloat)cloudViewAlphaWithServer:(NMBServer *)server initialized:(BOOL)initialized {
+    BOOL canSync = server != nil && initialized;
+    return canSync ? 1.0f : 0.5f;
 }
 
 @end

@@ -10,10 +10,10 @@
 
 @interface NTLCloudSyncView : UIView
 
-@property (nonatomic, assign) BOOL isRotating;
+@property (nonatomic, assign, getter=isRotating) BOOL rotating;
+@property (nonatomic, assign, getter=areArrowsHidden) BOOL arrowsHidden;
 
-- (void)showSyncView;
-- (void)hideSyncView;
+- (void)setArrowsHidden:(BOOL)arrowsHidden animated:(BOOL)animated;
 
 @property (nonatomic, weak) UIImageView *syncView;
 @property (nonatomic, weak) UIImageView *cloudView;

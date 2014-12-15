@@ -208,9 +208,25 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     }
 }
 
+#pragma mark - Evnets
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if ([NMBServerProperties.isInitialized isEqualToString:keyPath]) {
+        [self handleDefaultServer:object initializedChange:change];
+    }
+}
+
 #pragma mark - Global state
 
 - (void)registerObserversWithCenter:(NSNotificationCenter *)center {
+    [center addObserver:self
+               selector:@selector(handleDefaultServerDidChange:)
+                   name:NMBNotiDefaultServerDidChange
+                 object:nil];
     [center addObserver:self
                selector:@selector(handleUserDefaultsDidChange:)
                    name:NSUserDefaultsDidChangeNotification
@@ -218,6 +234,9 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
 }
 
 - (void)unregisterObserversWithCenter:(NSNotificationCenter *)center {
+    [center removeObserver:self
+                      name:NMBNotiDefaultServerDidChange
+                    object:nil];
     [center removeObserver:self
                       name:NSUserDefaultsDidChangeNotification
                     object:nil];

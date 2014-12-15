@@ -10,6 +10,7 @@
 #import <Masonry/Masonry.h>
 
 #define kDefaultAnimationDuration 0.3f
+static NSString *const kRotateAnimationKey = @"rotationAnimation";
 
 @implementation NTLCloudSyncView
 {
@@ -36,93 +37,52 @@
     [self loadSubviewsOnSuperview:self];
 }
 
-
 #pragma mark - Rotate
 
-- (void)setIsRotating:(BOOL)isRotating
-{
-    if (_isRotating == isRotating) return;
-    
-    _isRotating = isRotating;
+- (BOOL)isRotating {
+    return [self.syncView.layer animationForKey:kRotateAnimationKey] != nil;
 }
 
-- (void)startRotating
-{
-    CABasicAnimation* animation;
-    animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    animation.toValue = @( M_PI * 2.0f );
-    animation.duration = 0.5f;
-    animation.cumulative = YES;
-    animation.removedOnCompletion = YES;
-    
-    [self.syncView.layer addAnimation:animation
-                               forKey:@"rotationAnimation"];
-}
-
-- (void)animationDidStop:(CAAnimation *)theAnimation
-                finished:(BOOL)flag
-{
-    if (self.isRotating)
-    {
-        [self startRotating];
+- (void)setRotating:(BOOL)rotating {
+    CALayer *layer = self.syncView.layer;
+    CABasicAnimation *animation = (CABasicAnimation *)[layer animationForKey:kRotateAnimationKey];
+    if (rotating && animation == nil) {
+        animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        animation.toValue = @( M_PI * 2.0f );
+        animation.duration = 1.5f;
+        animation.cumulative = YES;
+        animation.removedOnCompletion = YES;
+        animation.repeatCount = CGFLOAT_MAX;
+        
+        [layer addAnimation:animation
+                     forKey:kRotateAnimationKey];
+    }
+    else if (!rotating && animation != nil) {
+        [layer removeAnimationForKey:kRotateAnimationKey];
     }
 }
 
 #pragma mark - Sync
 
-- (void)showSyncView
-{
-    BOOL hideGap = !_isSyncVisible;
-    _isSyncVisible = YES;
-
-    if (hideGap)
-        [self setCloudGapVisible:NO
-                           delay:0.0f];
-    
-    [self setSyncViewVisible:_isSyncVisible
-                       delay:kDefaultAnimationDuration];
-    
-    if (!self.isRotating)
-        [self startRotating];
+- (void)setArrowsHidden:(BOOL)arrowsHidden {
+    self.syncView.alpha = arrowsHidden ? 0.0f : 1.0f;
+    self.cloudGapView.alpha = arrowsHidden ? 1.0f : 0.0f;
 }
 
-- (void)hideSyncView
-{
-    BOOL showGap = _isSyncVisible;
-    _isSyncVisible = NO;
-    
-    [self setSyncViewVisible:_isSyncVisible
-                       delay:0.0f];
-    
-    if (showGap)
-        [self setCloudGapVisible:YES
-                           delay:kDefaultAnimationDuration];
-}
-
-- (void)setCloudGapVisible:(BOOL)isVisible
-                     delay:(NSTimeInterval)delay
-{
-    [UIView animateWithDuration:kDefaultAnimationDuration
-                          delay:delay
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:
-     ^{
-         self.cloudGapView.alpha = isVisible ? 1.0f : 0.0f;
-     }
-                              completion:nil];
-}
-
-- (void)setSyncViewVisible:(BOOL)visible
-                     delay:(NSTimeInterval)delay
-{
-    [UIView animateKeyframesWithDuration:kDefaultAnimationDuration
-                                   delay:0.0f
-                                 options:UIViewKeyframeAnimationOptionBeginFromCurrentState
-                              animations:
-     ^{
-         self.syncView.alpha = visible ? 1.0f : 0.0f;
-     }
-                              completion:nil];
+- (void)setArrowsHidden:(BOOL)arrowsHidden animated:(BOOL)animated {
+    void (^animation)()  = ^(){
+        self.arrowsHidden = arrowsHidden;
+    };
+    if (animated) {
+        [UIView animateWithDuration:kDefaultAnimationDuration
+                              delay:0.0f
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:animation
+                         completion:nil];
+    }
+    else {
+        animation();
+    }
 }
 
 #pragma mark - Subviews
@@ -171,7 +131,7 @@
     CGFloat size = 13.0f;
     [syncView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(size, size));
-        make.center.equalTo(superview).sizeOffset(CGSizeMake(0.0f, 5.5f));
+        make.center.equalTo(superview).centerOffset(CGPointMake(0.0f, 5.5f));
     }];
     
     [cloudView mas_makeConstraints:^(MASConstraintMaker *make) {
