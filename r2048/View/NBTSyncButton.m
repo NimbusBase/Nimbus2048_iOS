@@ -38,7 +38,7 @@
     
     [cloudView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(superview);
-        make.size.mas_equalTo(CGSizeMake(30.0f, 30.0f));
+        make.size.mas_equalTo(CGSizeMake(31.0f, 31.0f));
     }];
 }
 

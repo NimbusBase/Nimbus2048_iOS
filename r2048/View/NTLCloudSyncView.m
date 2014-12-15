@@ -128,9 +128,8 @@ static NSString *const kRotateAnimationKey = @"rotationAnimation";
         [superview addSubview:view];
     }
     
-    CGFloat size = 13.0f;
     [syncView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(size, size));
+        make.size.equalTo(superview).multipliedBy(0.43);
         make.center.equalTo(superview).centerOffset(CGPointMake(0.0f, 5.5f));
     }];
     
