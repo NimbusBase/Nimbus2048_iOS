@@ -59,8 +59,14 @@
           NCfgV_Dropbox: @"cloudIcon_dropbox",
           NCfgV_Box: @"cloudIcon_box",
           };
+        NSDictionary *cloudNameKeysByCloud =
+        @{
+          NCfgV_GDrive: @"cloud_gdrive",
+          NCfgV_Dropbox: @"cloud_dropbox",
+          NCfgV_Box: @"cloud_box",
+          };
         self.cloudIcon.image = [UIImage imageNamed:iconNamesByCloud[server.cloud]];
-        self.cloudName.text = server.cloud;
+        self.cloudName.text = NSLocalizedString(cloudNameKeysByCloud[server.cloud], server.cloud);
     }
 }
 

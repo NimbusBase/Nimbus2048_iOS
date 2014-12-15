@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  r2048
+
+  Created by William Remaerd on 12/15/14.
+  Copyright (c) 2014 NimbusBase. All rights reserved.
+*/
+
+"settings_auto_aync" = "Auto Sync";
+
+"cloud_gdrive" = "Google Drive";
+"cloud_dropbox" = "Dropbox";
+"cloud_box" = "Box";

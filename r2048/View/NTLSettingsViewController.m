@@ -177,7 +177,7 @@ UITableViewDelegate
         case 1:{
             NTLSettingsSwitchCell *autoSyncCell = [tableView dequeueReusableCellWithIdentifier:kReuseCellIDAutoAync
                                                                            forIndexPath:indexPath];
-            autoSyncCell.titleLabel.text = NSLocalizedString(@"settings_auto_aync", @"settings_auto_aync");
+            autoSyncCell.titleLabel.text = NSLocalizedString(@"settings_auto_aync", @"Auto SyncAuto Sync");
             [autoSyncCell setOn:[self valueOfAutoSync] animated:NO];
             
             cell = autoSyncCell;

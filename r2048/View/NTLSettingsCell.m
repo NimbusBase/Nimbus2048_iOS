@@ -39,11 +39,6 @@
 - (void)initialize
 {
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
-    //self.contentView.backgroundColor = [UIColor baseCellViewContentColor];
-    //self.backgroundColor = [UIColor baseCellViewContentColor];
-    
-    //[self addSeperatorsOnView:self];
-    
     [self loadConstraints];
 }
 
@@ -53,10 +48,7 @@
     UIView *superview = self.contentView;
     UILabel *label = [[UILabel alloc] init];
     
-    //label.font = [self.class textFont];
-    
     [superview addSubview:label];
-    
     return _titleLabel = label;
 }
 
