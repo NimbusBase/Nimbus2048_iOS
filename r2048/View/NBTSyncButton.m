@@ -46,6 +46,7 @@
     if (_cloudView != nil) return _cloudView;
     
     NTLCloudSyncView *cloudView = [[NTLCloudSyncView alloc] init];
+    cloudView.userInteractionEnabled = NO;
     
     return _cloudView = cloudView;
 }

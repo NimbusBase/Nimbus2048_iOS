@@ -69,15 +69,41 @@
     NMBServer *server = notification.userInfo[NSKeyValueChangeNewKey];
     id null = [NSNull null];
     
-    NTLCloudSyncView *cloudView = self.button.cloudView;
-    cloudView.alpha = [self.class cloudViewAlphaWithServer:server == null ? nil : server
-                                               initialized:server == null ? NO : server.isInitialized];
+    NBTSyncButton *button = self.button;
+    NTLCloudSyncView *cloudView = button.cloudView;
     
-    [RACObserve(server, isSynchronizing) subscribeNext:^(NSNumber *syncingValue) {
-        BOOL syncing = syncingValue.boolValue;
-        [cloudView setArrowsHidden:!syncing animated:YES];
-        cloudView.rotating = syncing;
-    }];
+    if (null != server) {
+        button.enabled = [self.class buttonEnableWithServer:server
+                                                initialized:server.isInitialized
+                                                    syncing:server.isSynchronizing];
+        cloudView.alpha = [self.class cloudViewAlphaWithServer:server
+                                                   initialized:server.isInitialized];
+        [[RACObserve(server, isSynchronizing) deliverOn:RACScheduler.mainThreadScheduler]
+         subscribeNext:^(NSNumber *syncingValue) {
+            BOOL syncing = syncingValue.boolValue;
+            [cloudView setArrowsHidden:!syncing animated:YES];
+            cloudView.rotating = syncing;
+            
+            button.enabled = [self.class buttonEnableWithServer:server
+                                                    initialized:server.isInitialized
+                                                        syncing:syncing];
+        }];
+        [[RACObserve(server, isInitialized) deliverOn:RACScheduler.mainThreadScheduler]
+         subscribeNext:^(NSNumber *initializedValue) {
+            BOOL initialized = initializedValue.boolValue;
+            button.enabled = [self.class buttonEnableWithServer:server
+                                                    initialized:initialized
+                                                        syncing:server.isSynchronizing];
+        }];
+        
+    }
+    else {
+        button.enabled = [self.class buttonEnableWithServer:nil
+                                                initialized:NO
+                                                    syncing:NO];
+        cloudView.alpha = [self.class cloudViewAlphaWithServer:nil
+                                                   initialized:NO];
+    }
 }
 
 - (void)handleNMBServerSyncDidSuccess:(NSNotification *)notification {
@@ -96,6 +122,10 @@
 + (CGFloat)cloudViewAlphaWithServer:(NMBServer *)server initialized:(BOOL)initialized {
     BOOL canSync = server != nil && initialized;
     return canSync ? 1.0f : 0.5f;
+}
+
++ (BOOL)buttonEnableWithServer:(NMBServer *)server initialized:(BOOL)initialized syncing:(BOOL)syncing {
+    return server != nil && initialized && !syncing;
 }
 
 @end
