@@ -12,6 +12,7 @@
 #import "NSFileManager+Lazy.h"
 #import "NMBase+NBT.h"
 #import "NSUserDefaults+NBT.h"
+#import "KVOUtilities.h"
 
 #import <CoreData/CoreData.h>
 #import <Reachability/Reachability.h>
@@ -32,6 +33,9 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     _internetReachability = [Reachability reachabilityForInternetConnection];
     
     [self registerObserversWithCenter:[NSNotificationCenter defaultCenter]];
+    
+    NMBase *base = self.persistentStoreCoordinator.nimbusBase;
+    [base loadFromUserDefaults];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [RTTMainViewController new];
@@ -169,6 +173,39 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     NSUserDefaults *userDefaults = notification.object;
     NMBase *base = self.persistentStoreCoordinator.nimbusBase;
     base.autoSync = userDefaults.autoSync;
+}
+
+#pragma mark - Default server
+
+- (void)handleDefaultServerDidChange:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    NMBServer
+    *oldServer = userInfo[NSKeyValueChangeOldKey],
+    *newServer = userInfo[NSKeyValueChangeNewKey];
+    NSNull *null = [NSNull null];
+    if ((id)oldServer != null)
+        [oldServer removeObserver:self
+                       forKeyPath:NMBServerProperties.isInitialized];
+    if ((id)newServer != null)
+        [newServer addObserver:self
+                    forKeyPath:NMBServerProperties.isInitialized
+                       options:kvoOptNOI
+                       context:nil];
+}
+
+- (void)handleDefaultServer:(NMBServer *)server initializedChange:(NSDictionary *)change
+{
+    BOOL
+    wasInit = [change[NSKeyValueChangeOldKey] boolValue],
+    isInit = [change[NSKeyValueChangeNewKey] boolValue];
+    
+    if (!wasInit && isInit) {
+        NMBase *base = self.persistentStoreCoordinator.nimbusBase;
+        if (base.autoSync) {
+            [base syncDefaultServer];
+        }
+    }
 }
 
 #pragma mark - Global state

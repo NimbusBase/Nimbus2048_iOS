@@ -40,17 +40,20 @@ static NSTimer *_autoSyncTimer = nil;
 
 - (void)handleAutoSyncFired:(NSTimer *)timer
 {
-    [self syncDefaultServer];
+    NMBServer *server = self.defaultServer;
+    Reachability *reachability = APP_DELEGATE.internetReachability;
+    if (server.isInitialized && !server.isSynchronizing && reachability.isReachable) {
+        [server synchronize];
+    }
 }
 
 - (NMBPromise *)syncDefaultServer
 {
-    NMBServer *server = self.defaultServer;
-    if (server != nil && server.isInitialized && !server.isSynchronizing) {
-        RTTAppDelegate *appDelegate = APP_DELEGATE;
-        if (appDelegate.internetReachability.isReachable) {
-            return [server synchronize];
-        }
+    if (self.autoSync && self.autoSyncTimer.isValid) {
+        [self.autoSyncTimer fire];
+    }
+    else {
+        [self handleAutoSyncFired:nil];
     }
     
     return nil;

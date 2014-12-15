@@ -6,8 +6,8 @@
 #import "RTTMainViewController.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
-#import "Masonry/Masonry.h"
-#import "NimbusBase/NimbusBase.h"
+#import <Masonry/Masonry.h>
+#import <NimbusBase/NimbusBase.h>
 
 #import "RTTMatrixViewController.h"
 #import "NTLSettingsViewController.h"
@@ -20,6 +20,7 @@
 #import "NBTScore.h"
 #import "NSManagedObjectContext+Lazy.h"
 #import "UIAlertView+Lazy.h"
+#import "NMBase+NBT.h"
 
 static NSString *const kBestScoreKey = @"RTTBestScore";
 
@@ -166,10 +167,8 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
 }
 
 - (void)handleSyncButtonClicked:(UIButton *)button {
-    NMBServer *server = APP_DELEGATE.persistentStoreCoordinator.nimbusBase.defaultServer;
-    if (server != nil) {
-        [server synchronize];
-    }
+    NMBase *base = APP_DELEGATE.persistentStoreCoordinator.nimbusBase;
+    [base syncDefaultServer];
 }
 
 - (void)handleModelViewControllerCancelButtonClicked:(UIBarButtonItem *)button {

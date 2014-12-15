@@ -15,4 +15,6 @@
 
 - (NMBPromise *)syncDefaultServer;
 
+- (void)loadFromUserDefaults;
+
 @end
