@@ -8,7 +8,11 @@
 
 #import "RTTAppDelegate.h"
 #import "RTTMainViewController.h"
+
 #import "NSFileManager+Lazy.h"
+#import "NMBase+NBT.h"
+#import "NSUserDefaults+NBT.h"
+
 #import <CoreData/CoreData.h>
 #import <Reachability/Reachability.h>
 #import <NimbusBase/NimbusBase.h>
@@ -27,6 +31,8 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     
     _internetReachability = [Reachability reachabilityForInternetConnection];
     
+    [self registerObserversWithCenter:[NSNotificationCenter defaultCenter]];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [RTTMainViewController new];
     [self.window makeKeyAndVisible];
@@ -35,6 +41,8 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
 
 - (void)applicationWillTerminate:(UIApplication *)application{
     [self saveContext];
+    
+    [self unregisterObserversWithCenter:[NSNotificationCenter defaultCenter]];
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -113,8 +121,7 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     }
 }
 
-- (NSDictionary *)nimbusBaseConfigs
-{
+- (NSDictionary *)nimbusBaseConfigs {
     static NSString *const kAppName = @"Nimbus 2048";
     return @{
              NCfgK_Servers: @[
@@ -140,8 +147,7 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
              };
 }
 
-- (void)handlePersistentStoreDidImportUbiquitousContentChangesNotification:(NSNotification *)notification
-{
+- (void)handlePersistentStoreDidImportUbiquitousContentChangesNotification:(NSNotification *)notification {
     if (![NSThread isMainThread]) {
         [self performSelectorOnMainThread:@selector(handlePersistentStoreDidImportUbiquitousContentChangesNotification:)
                                withObject:notification
@@ -154,6 +160,30 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     
     NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
     [ntfCntr postNotificationName:NBTDidMergeCloudChangesNotification object:moc];
+}
+
+#pragma mark - User Defaults
+
+- (void)handleUserDefaultsDidChange:(NSNotification *)notification
+{
+    NSUserDefaults *userDefaults = notification.object;
+    NMBase *base = self.persistentStoreCoordinator.nimbusBase;
+    base.autoSync = userDefaults.autoSync;
+}
+
+#pragma mark - Global state
+
+- (void)registerObserversWithCenter:(NSNotificationCenter *)center {
+    [center addObserver:self
+               selector:@selector(handleUserDefaultsDidChange:)
+                   name:NSUserDefaultsDidChangeNotification
+                 object:nil];
+}
+
+- (void)unregisterObserversWithCenter:(NSNotificationCenter *)center {
+    [center removeObserver:self
+                      name:NSUserDefaultsDidChangeNotification
+                    object:nil];
 }
 
 @end

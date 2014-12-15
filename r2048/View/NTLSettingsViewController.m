@@ -13,8 +13,10 @@
 #import "NTLServerCell.h"
 #import "NTLSettingsCell.h"
 
-#import "NimbusBase/NimbusBase.h"
+#import "NSUserDefaults+NBT.h"
+#import "NMBase+NBT.h"
 
+#import <NimbusBase/NimbusBase.h>
 #import <Masonry/Masonry.h>
 
 static NSString
@@ -82,8 +84,7 @@ UITableViewDelegate
 #pragma mark - Model
 
 - (BOOL)valueOfAutoSync{
-    return NO;
-    //return self.base.autoSync;
+    return self.base.autoSync;
 }
 
 - (NMBase *)base {
@@ -119,16 +120,16 @@ UITableViewDelegate
         case 1:{
             NTLSettingsSwitchCell *cell = (NTLSettingsSwitchCell *)[tableView cellForRowAtIndexPath:indexPath];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            /*
+            
             BOOL
-            oldAutoSyncValue = defaults.autoSync,
-            targetSyncValue = cell.stateSwitch.on;
-            if (oldAutoSyncValue != targetSyncValue) {
-                defaults.autoSync = targetSyncValue;
+            currentAutoSyncValue = defaults.autoSync,
+            targetAutoSyncValue = cell.stateSwitch.on;
+            if (currentAutoSyncValue != targetAutoSyncValue) {
+                defaults.autoSync = targetAutoSyncValue;
                 [defaults synchronize];
             }
-            [cell setOn:targetSyncValue animated:YES];
-             */
+            [cell setOn:targetAutoSyncValue animated:YES];
+            
         } break;
         default:
             break;
