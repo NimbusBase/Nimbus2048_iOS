@@ -8,9 +8,15 @@
 
 #import "RTTAppDelegate.h"
 #import "RTTMainViewController.h"
-#import <CoreData/CoreData.h>
+
 #import "NSFileManager+Lazy.h"
-#import "NimbusBase/NimbusBase.h"
+#import "NMBase+NBT.h"
+#import "NSUserDefaults+NBT.h"
+#import "KVOUtilities.h"
+
+#import <CoreData/CoreData.h>
+#import <Reachability/Reachability.h>
+#import <NimbusBase/NimbusBase.h>
 
 NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesNotification";
 
@@ -19,9 +25,17 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize internetReachability = _internetReachability;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if (getenv("RTTUnitTest")) return YES;
+    
+    _internetReachability = [Reachability reachabilityForInternetConnection];
+    
+    [self registerObserversWithCenter:[NSNotificationCenter defaultCenter]];
+    
+    NMBase *base = self.persistentStoreCoordinator.nimbusBase;
+    [base loadFromUserDefaults];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [RTTMainViewController new];
@@ -31,6 +45,8 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
 
 - (void)applicationWillTerminate:(UIApplication *)application{
     [self saveContext];
+    
+    [self unregisterObserversWithCenter:[NSNotificationCenter defaultCenter]];
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -109,8 +125,7 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     }
 }
 
-- (NSDictionary *)nimbusBaseConfigs
-{
+- (NSDictionary *)nimbusBaseConfigs {
     static NSString *const kAppName = @"Nimbus 2048";
     return @{
              NCfgK_Servers: @[
@@ -136,8 +151,7 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
              };
 }
 
-- (void)handlePersistentStoreDidImportUbiquitousContentChangesNotification:(NSNotification *)notification
-{
+- (void)handlePersistentStoreDidImportUbiquitousContentChangesNotification:(NSNotification *)notification {
     if (![NSThread isMainThread]) {
         [self performSelectorOnMainThread:@selector(handlePersistentStoreDidImportUbiquitousContentChangesNotification:)
                                withObject:notification
@@ -150,6 +164,82 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     
     NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
     [ntfCntr postNotificationName:NBTDidMergeCloudChangesNotification object:moc];
+}
+
+#pragma mark - User Defaults
+
+- (void)handleUserDefaultsDidChange:(NSNotification *)notification
+{
+    NSUserDefaults *userDefaults = notification.object;
+    NMBase *base = self.persistentStoreCoordinator.nimbusBase;
+    base.autoSync = userDefaults.autoSync;
+}
+
+#pragma mark - Default server
+
+- (void)handleDefaultServerDidChange:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    NMBServer
+    *oldServer = userInfo[NSKeyValueChangeOldKey],
+    *newServer = userInfo[NSKeyValueChangeNewKey];
+    NSNull *null = [NSNull null];
+    if ((id)oldServer != null)
+        [oldServer removeObserver:self
+                       forKeyPath:NMBServerProperties.isInitialized];
+    if ((id)newServer != null)
+        [newServer addObserver:self
+                    forKeyPath:NMBServerProperties.isInitialized
+                       options:kvoOptNOI
+                       context:nil];
+}
+
+- (void)handleDefaultServer:(NMBServer *)server initializedChange:(NSDictionary *)change
+{
+    BOOL
+    wasInit = [change[NSKeyValueChangeOldKey] boolValue],
+    isInit = [change[NSKeyValueChangeNewKey] boolValue];
+    
+    if (!wasInit && isInit) {
+        NMBase *base = self.persistentStoreCoordinator.nimbusBase;
+        if (base.autoSync) {
+            [base syncDefaultServer];
+        }
+    }
+}
+
+#pragma mark - Evnets
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if ([NMBServerProperties.isInitialized isEqualToString:keyPath]) {
+        [self handleDefaultServer:object initializedChange:change];
+    }
+}
+
+#pragma mark - Global state
+
+- (void)registerObserversWithCenter:(NSNotificationCenter *)center {
+    [center addObserver:self
+               selector:@selector(handleDefaultServerDidChange:)
+                   name:NMBNotiDefaultServerDidChange
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(handleUserDefaultsDidChange:)
+                   name:NSUserDefaultsDidChangeNotification
+                 object:nil];
+}
+
+- (void)unregisterObserversWithCenter:(NSNotificationCenter *)center {
+    [center removeObserver:self
+                      name:NMBNotiDefaultServerDidChange
+                    object:nil];
+    [center removeObserver:self
+                      name:NSUserDefaultsDidChangeNotification
+                    object:nil];
 }
 
 @end

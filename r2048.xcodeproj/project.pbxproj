@@ -45,8 +45,20 @@
 		BE807BB41A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BB31A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m */; };
 		BE807BB71A38575600A44CA5 /* NSDate+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */; };
 		BE807BC01A385AD300A44CA5 /* NSFileManager+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */; };
-		BEC3EFE11A39A37F0015F3E7 /* NimbusBaseResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */; };
-		BEC3F0371A39A6190015F3E7 /* libNimbusBaseMax.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC3EFF01A39A3C90015F3E7 /* libNimbusBaseMax.a */; };
+		BE96A9EA1A3A8C7E001A616D /* NTLSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9E91A3A8C7E001A616D /* NTLSettingsViewController.m */; };
+		BE96A9F51A3A8CC6001A616D /* NTLServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9F01A3A8CC6001A616D /* NTLServerCell.m */; };
+		BE96A9F61A3A8CC6001A616D /* NTLSettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9F21A3A8CC6001A616D /* NTLSettingsCell.m */; };
+		BE96A9F71A3A8CC6001A616D /* NTLSettingsSwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96A9F41A3A8CC6001A616D /* NTLSettingsSwitchCell.m */; };
+		BE96AA041A3AA27C001A616D /* UITableViewCell+CCO.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AA031A3AA27C001A616D /* UITableViewCell+CCO.m */; };
+		BE96AA151A3AA839001A616D /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE96AA141A3AA839001A616D /* Image.xcassets */; };
+		BE96AA191A3AA8A7001A616D /* UIFont+NBT.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AA181A3AA8A7001A616D /* UIFont+NBT.m */; };
+		BE96AA1C1A3AA8FB001A616D /* UIColor+NBT.m in Sources */ = {isa = PBXBuildFile; fileRef = BE96AA1B1A3AA8FB001A616D /* UIColor+NBT.m */; };
+		BEB76F461A3E7EAD00BA551B /* NSUserDefaults+NBT.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F451A3E7EAD00BA551B /* NSUserDefaults+NBT.m */; };
+		BEB76F501A3E810F00BA551B /* NMBase+NBT.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F4F1A3E810F00BA551B /* NMBase+NBT.m */; };
+		BEB76F531A3EC21500BA551B /* NTLCloudSyncView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F521A3EC21500BA551B /* NTLCloudSyncView.m */; };
+		BEB76F571A3EC5FD00BA551B /* NBTSyncButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F561A3EC5FD00BA551B /* NBTSyncButton.m */; };
+		BEB76F5A1A3ECBBA00BA551B /* NBTSyncButtonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F591A3ECBBA00BA551B /* NBTSyncButtonModel.m */; };
+		BEB76F5F1A3EEFF800BA551B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEB76F611A3EEFF800BA551B /* Localizable.strings */; };
 		BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */; };
 		FB29F135505D40E38954771E /* libPods-r2048Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */; };
 /* End PBXBuildFile section */
@@ -58,34 +70,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 79B1DC1E18E469BB003BBBE7;
 			remoteInfo = r2048;
-		};
-		BEC3EFEB1A39A3C90015F3E7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BEC6C14318793475003471DA;
-			remoteInfo = NimbusBase;
-		};
-		BEC3EFED1A39A3C90015F3E7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BEC6C15318793475003471DA;
-			remoteInfo = NimbusBaseTests;
-		};
-		BEC3EFEF1A39A3C90015F3E7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BED291ED18990177003E70E8;
-			remoteInfo = NimbusBaseMax;
-		};
-		BEC3EFF11A39A3C90015F3E7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BEAB52E9187A2C73001841AF;
-			remoteInfo = NimbusBaseMin;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -148,8 +132,33 @@
 		BE807BB61A38575600A44CA5 /* NSDate+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Lazy.m"; sourceTree = "<group>"; };
 		BE807BBE1A385AD300A44CA5 /* NSFileManager+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Lazy.h"; sourceTree = "<group>"; };
 		BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Lazy.m"; sourceTree = "<group>"; };
-		BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = NimbusBaseResources.bundle; sourceTree = "<group>"; };
-		BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NimbusBase.xcodeproj; path = ../../../NimbusBase_iOS/NimbusBase/NimbusBase.xcodeproj; sourceTree = "<group>"; };
+		BE96A9E81A3A8C7E001A616D /* NTLSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLSettingsViewController.h; sourceTree = "<group>"; };
+		BE96A9E91A3A8C7E001A616D /* NTLSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLSettingsViewController.m; sourceTree = "<group>"; };
+		BE96A9EF1A3A8CC6001A616D /* NTLServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLServerCell.h; sourceTree = "<group>"; };
+		BE96A9F01A3A8CC6001A616D /* NTLServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLServerCell.m; sourceTree = "<group>"; };
+		BE96A9F11A3A8CC6001A616D /* NTLSettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLSettingsCell.h; sourceTree = "<group>"; };
+		BE96A9F21A3A8CC6001A616D /* NTLSettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLSettingsCell.m; sourceTree = "<group>"; };
+		BE96A9F31A3A8CC6001A616D /* NTLSettingsSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLSettingsSwitchCell.h; sourceTree = "<group>"; };
+		BE96A9F41A3A8CC6001A616D /* NTLSettingsSwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLSettingsSwitchCell.m; sourceTree = "<group>"; };
+		BE96A9FE1A3A9DE6001A616D /* KVOUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KVOUtilities.h; sourceTree = "<group>"; };
+		BE96AA021A3AA27C001A616D /* UITableViewCell+CCO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+CCO.h"; sourceTree = "<group>"; };
+		BE96AA031A3AA27C001A616D /* UITableViewCell+CCO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+CCO.m"; sourceTree = "<group>"; };
+		BE96AA141A3AA839001A616D /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
+		BE96AA171A3AA8A7001A616D /* UIFont+NBT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+NBT.h"; sourceTree = "<group>"; };
+		BE96AA181A3AA8A7001A616D /* UIFont+NBT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+NBT.m"; sourceTree = "<group>"; };
+		BE96AA1A1A3AA8FB001A616D /* UIColor+NBT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+NBT.h"; sourceTree = "<group>"; };
+		BE96AA1B1A3AA8FB001A616D /* UIColor+NBT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+NBT.m"; sourceTree = "<group>"; };
+		BEB76F441A3E7EAD00BA551B /* NSUserDefaults+NBT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+NBT.h"; sourceTree = "<group>"; };
+		BEB76F451A3E7EAD00BA551B /* NSUserDefaults+NBT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+NBT.m"; sourceTree = "<group>"; };
+		BEB76F4E1A3E810F00BA551B /* NMBase+NBT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NMBase+NBT.h"; sourceTree = "<group>"; };
+		BEB76F4F1A3E810F00BA551B /* NMBase+NBT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NMBase+NBT.m"; sourceTree = "<group>"; };
+		BEB76F511A3EC21500BA551B /* NTLCloudSyncView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTLCloudSyncView.h; sourceTree = "<group>"; };
+		BEB76F521A3EC21500BA551B /* NTLCloudSyncView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTLCloudSyncView.m; sourceTree = "<group>"; };
+		BEB76F551A3EC5FD00BA551B /* NBTSyncButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTSyncButton.h; sourceTree = "<group>"; };
+		BEB76F561A3EC5FD00BA551B /* NBTSyncButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTSyncButton.m; sourceTree = "<group>"; };
+		BEB76F581A3ECBBA00BA551B /* NBTSyncButtonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTSyncButtonModel.h; sourceTree = "<group>"; };
+		BEB76F591A3ECBBA00BA551B /* NBTSyncButtonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTSyncButtonModel.m; sourceTree = "<group>"; };
+		BEB76F601A3EEFF800BA551B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BEC3F03E1A39CB790015F3E7 /* UIAlertView+Lazy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Lazy.h"; sourceTree = "<group>"; };
 		BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Lazy.m"; sourceTree = "<group>"; };
 		E4D02A75CA3A2BBBB4629C48 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -161,7 +170,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEC3F0371A39A6190015F3E7 /* libNimbusBaseMax.a in Frameworks */,
 				79B1DC2518E469BB003BBBE7 /* CoreGraphics.framework in Frameworks */,
 				79B1DC2718E469BB003BBBE7 /* UIKit.framework in Frameworks */,
 				79B1DC2318E469BB003BBBE7 /* Foundation.framework in Frameworks */,
@@ -235,14 +243,14 @@
 		79B1DC2818E469BB003BBBE7 /* r2048 */ = {
 			isa = PBXGroup;
 			children = (
-				BEC3EE8C1A39A37E0015F3E7 /* NimbusBase */,
-				BE807BA11A3837CF00A44CA5 /* Persistent */,
-				7992F07318E481E90020B45A /* Model */,
 				79B1DC3118E469BB003BBBE7 /* RTTAppDelegate.h */,
 				79B1DC3218E469BB003BBBE7 /* RTTAppDelegate.m */,
-				79B1DC2918E469BB003BBBE7 /* Supporting Files */,
+				BE807BA11A3837CF00A44CA5 /* Persistent */,
+				7992F07318E481E90020B45A /* Model */,
 				ADEAFF91C031A036CB45EC7A /* Library */,
 				ADEAFE5708E6C286D6FE86C2 /* View */,
+				BE96AA161A3AA86E001A616D /* Resources */,
+				79B1DC2918E469BB003BBBE7 /* Supporting Files */,
 			);
 			path = r2048;
 			sourceTree = "<group>";
@@ -298,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				BEC3EE811A394CB80015F3E7 /* Settings */,
+				BEB76F541A3EC5BC00BA551B /* SyncButton */,
 				ADEAFE33368A2955FFC338A8 /* RTTMainViewController.h */,
 				ADEAF5D908FD0E50CBB374C9 /* RTTMainViewController.m */,
 				ADEAFF53CFA68F77574D4DC5 /* RTTMatrixViewController.h */,
@@ -313,6 +322,9 @@
 		ADEAFF91C031A036CB45EC7A /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				BE96AA021A3AA27C001A616D /* UITableViewCell+CCO.h */,
+				BE96AA031A3AA27C001A616D /* UITableViewCell+CCO.m */,
+				BE96A9FE1A3A9DE6001A616D /* KVOUtilities.h */,
 				ADEAFC01BD9E295C25FFC495 /* NSArray+RTTVectors.m */,
 				ADEAF1B52EF410A67E9A02F0 /* NSArray+RTTVectors.h */,
 				ADEAF60C985F34239C0516C6 /* UIColor+RTTFromHex.m */,
@@ -329,6 +341,10 @@
 				BE807BBF1A385AD300A44CA5 /* NSFileManager+Lazy.m */,
 				BEC3F03E1A39CB790015F3E7 /* UIAlertView+Lazy.h */,
 				BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */,
+				BEB76F441A3E7EAD00BA551B /* NSUserDefaults+NBT.h */,
+				BEB76F451A3E7EAD00BA551B /* NSUserDefaults+NBT.m */,
+				BEB76F4E1A3E810F00BA551B /* NMBase+NBT.h */,
+				BEB76F4F1A3E810F00BA551B /* NMBase+NBT.m */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -357,31 +373,45 @@
 			path = Machine;
 			sourceTree = "<group>";
 		};
+		BE96AA161A3AA86E001A616D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE96AA141A3AA839001A616D /* Image.xcassets */,
+				BEB76F611A3EEFF800BA551B /* Localizable.strings */,
+				BE96AA171A3AA8A7001A616D /* UIFont+NBT.h */,
+				BE96AA181A3AA8A7001A616D /* UIFont+NBT.m */,
+				BE96AA1A1A3AA8FB001A616D /* UIColor+NBT.h */,
+				BE96AA1B1A3AA8FB001A616D /* UIColor+NBT.m */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BEB76F541A3EC5BC00BA551B /* SyncButton */ = {
+			isa = PBXGroup;
+			children = (
+				BEB76F511A3EC21500BA551B /* NTLCloudSyncView.h */,
+				BEB76F521A3EC21500BA551B /* NTLCloudSyncView.m */,
+				BEB76F551A3EC5FD00BA551B /* NBTSyncButton.h */,
+				BEB76F561A3EC5FD00BA551B /* NBTSyncButton.m */,
+				BEB76F581A3ECBBA00BA551B /* NBTSyncButtonModel.h */,
+				BEB76F591A3ECBBA00BA551B /* NBTSyncButtonModel.m */,
+			);
+			name = SyncButton;
+			sourceTree = "<group>";
+		};
 		BEC3EE811A394CB80015F3E7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				BE96A9E81A3A8C7E001A616D /* NTLSettingsViewController.h */,
+				BE96A9E91A3A8C7E001A616D /* NTLSettingsViewController.m */,
+				BE96A9F11A3A8CC6001A616D /* NTLSettingsCell.h */,
+				BE96A9F21A3A8CC6001A616D /* NTLSettingsCell.m */,
+				BE96A9EF1A3A8CC6001A616D /* NTLServerCell.h */,
+				BE96A9F01A3A8CC6001A616D /* NTLServerCell.m */,
+				BE96A9F31A3A8CC6001A616D /* NTLSettingsSwitchCell.h */,
+				BE96A9F41A3A8CC6001A616D /* NTLSettingsSwitchCell.m */,
 			);
 			name = Settings;
-			sourceTree = "<group>";
-		};
-		BEC3EE8C1A39A37E0015F3E7 /* NimbusBase */ = {
-			isa = PBXGroup;
-			children = (
-				BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */,
-				BEC3EF721A39A37E0015F3E7 /* NimbusBaseResources.bundle */,
-			);
-			path = NimbusBase;
-			sourceTree = "<group>";
-		};
-		BEC3EFE31A39A3C90015F3E7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BEC3EFEC1A39A3C90015F3E7 /* NimbusBase.framework */,
-				BEC3EFEE1A39A3C90015F3E7 /* NimbusBaseTests.xctest */,
-				BEC3EFF01A39A3C90015F3E7 /* libNimbusBaseMax.a */,
-				BEC3EFF21A39A3C90015F3E7 /* libNimbusBaseMin.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -432,9 +462,9 @@
 		79B1DC1718E469BB003BBBE7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = RTT;
+				CLASSPREFIX = NBT;
 				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = "Viktor Belenyesi";
+				ORGANIZATIONNAME = NimbusBase;
 				TargetAttributes = {
 					79B1DC3918E469BB003BBBE7 = {
 						TestTargetID = 79B1DC1E18E469BB003BBBE7;
@@ -451,12 +481,6 @@
 			mainGroup = 79B1DC1618E469BB003BBBE7;
 			productRefGroup = 79B1DC2018E469BB003BBBE7 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = BEC3EFE31A39A3C90015F3E7 /* Products */;
-					ProjectRef = BEC3EFE21A39A3C90015F3E7 /* NimbusBase.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				79B1DC1E18E469BB003BBBE7 /* r2048 */,
@@ -465,43 +489,13 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		BEC3EFEC1A39A3C90015F3E7 /* NimbusBase.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = NimbusBase.framework;
-			remoteRef = BEC3EFEB1A39A3C90015F3E7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BEC3EFEE1A39A3C90015F3E7 /* NimbusBaseTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = NimbusBaseTests.xctest;
-			remoteRef = BEC3EFED1A39A3C90015F3E7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BEC3EFF01A39A3C90015F3E7 /* libNimbusBaseMax.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libNimbusBaseMax.a;
-			remoteRef = BEC3EFEF1A39A3C90015F3E7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BEC3EFF21A39A3C90015F3E7 /* libNimbusBaseMin.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libNimbusBaseMin.a;
-			remoteRef = BEC3EFF11A39A3C90015F3E7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
 		79B1DC1D18E469BB003BBBE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEC3EFE11A39A37F0015F3E7 /* NimbusBaseResources.bundle in Resources */,
+				BE96AA151A3AA839001A616D /* Image.xcassets in Resources */,
+				BEB76F5F1A3EEFF800BA551B /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,25 +580,37 @@
 				79B1DC2F18E469BB003BBBE7 /* main.m in Sources */,
 				BE807BC01A385AD300A44CA5 /* NSFileManager+Lazy.m in Sources */,
 				79B1DC3318E469BB003BBBE7 /* RTTAppDelegate.m in Sources */,
+				BEB76F461A3E7EAD00BA551B /* NSUserDefaults+NBT.m in Sources */,
 				BE807BAE1A383F6300A44CA5 /* NBTSnapshot.m in Sources */,
 				7992F07618E481E90020B45A /* RTTMatrix.m in Sources */,
 				BE807BA41A3837F400A44CA5 /* Nimbus2048.xcdatamodeld in Sources */,
 				ADEAFA9A67C437391B036DFA /* NSArray+RTTVectors.m in Sources */,
 				BE807BAA1A383BFE00A44CA5 /* _NBTScore.m in Sources */,
+				BE96A9F71A3A8CC6001A616D /* NTLSettingsSwitchCell.m in Sources */,
 				BE807BB71A38575600A44CA5 /* NSDate+Lazy.m in Sources */,
+				BEB76F501A3E810F00BA551B /* NMBase+NBT.m in Sources */,
 				ADEAF8CF613EA6DE49687C8B /* RTTPoint.m in Sources */,
+				BE96A9F61A3A8CC6001A616D /* NTLSettingsCell.m in Sources */,
 				BE807BB41A38411C00A44CA5 /* NSManagedObjectContext+Lazy.m in Sources */,
 				BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */,
 				ADEAF104E086F50642BC944A /* RTTVector.m in Sources */,
 				ADEAF227ACFDDB9C65219360 /* RTTTile.m in Sources */,
+				BE96AA191A3AA8A7001A616D /* UIFont+NBT.m in Sources */,
 				ADEAF9AACA387ED2D8370DC2 /* UIColor+RTTFromHex.m in Sources */,
 				ADEAF9C06FFE9FE2B89A3F10 /* RTTMainViewController.m in Sources */,
 				BE807BAB1A383BFE00A44CA5 /* NBTScore.m in Sources */,
 				ADEAF6F5B6712A1CC0BA0ED6 /* RTTMatrixViewController.m in Sources */,
+				BEB76F531A3EC21500BA551B /* NTLCloudSyncView.m in Sources */,
+				BE96AA1C1A3AA8FB001A616D /* UIColor+NBT.m in Sources */,
+				BE96AA041A3AA27C001A616D /* UITableViewCell+CCO.m in Sources */,
 				ADEAF7E0319197FDF371AC91 /* RTTTileView.m in Sources */,
+				BE96A9EA1A3A8C7E001A616D /* NTLSettingsViewController.m in Sources */,
+				BEB76F5A1A3ECBBA00BA551B /* NBTSyncButtonModel.m in Sources */,
 				ADEAF11E61C512FCC60DBB48 /* NSArray+RTTTiles.m in Sources */,
+				BE96A9F51A3A8CC6001A616D /* NTLServerCell.m in Sources */,
 				ADEAFDE1DFD65B5F3397A476 /* RTTScoreView.m in Sources */,
 				ADEAF101549C309B24C4503F /* UIView+RTTClear.m in Sources */,
+				BEB76F571A3EC5FD00BA551B /* NBTSyncButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +639,17 @@
 			targetProxy = 79B1DC3F18E469BB003BBBE7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BEB76F611A3EEFF800BA551B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BEB76F601A3EEFF800BA551B /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		79B1DC4918E469BB003BBBE7 /* Debug */ = {
