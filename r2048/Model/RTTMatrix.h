@@ -6,6 +6,12 @@
 @class RTTPoint;
 @class RTTTile;
 
+typedef NS_ENUM(NSInteger, RTTMatrixState) {
+    RTTMatrixStateLost = -1,
+    RTTMatrixStateNormal = 0,
+    RTTMatrixStateWin = 1,
+};
+
 @interface RTTMatrix : NSObject
 
 RTTMatrix* emptyMatrix();
@@ -16,8 +22,11 @@ RTTMatrix* emptyMatrix();
 - (NSArray*(^)())getEmptyPositions;
 - (NSArray*(^)())getTiles;
 - (NSArray*(^)())getNonZeroTitles;
-- (BOOL(^)())isOver;
 - (RTTTile*(^)())getNewRandomTile;
+
+- (BOOL(^)())isOver;
+- (BOOL(^)())isWin;
+- (RTTMatrixState(^)())state;
 
 - (RTTMatrix*(^)(RTTPoint*, int))addValue;
 - (RTTMatrix*(^)(RTTPoint*, int))subtractValue;

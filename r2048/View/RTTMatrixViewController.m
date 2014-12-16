@@ -30,7 +30,7 @@
 @property (nonatomic, readwrite) int score;
 
 @property (nonatomic, weak) UIView *gameView;
-@property (nonatomic, weak) UIView *gameOverView;
+@property (nonatomic, weak) UIView *overlayView;
 
 @end
 
@@ -54,32 +54,31 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     [self.view addSubview:gameView];
     
     // Game Over view
-    UIView* gameOverView = [[UIView alloc] initWithFrame:self.view.bounds];
-    gameOverView.backgroundColor = [UIColor fromHex:0xeee4da alpha:0.7f];
+    UIView* overlayView = [[UIView alloc] initWithFrame:self.view.bounds];
+    overlayView.backgroundColor = [UIColor fromHex:0xeee4da alpha:0.7f];
     
-    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 60.0f, gameOverView.bounds.size.width, 80.0f)];
+    UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 60.0f, overlayView.bounds.size.width, 80.0f)];
     titleLabel.textColor = [UIColor fromHex:0x776e65];
     titleLabel.font = [UIFont boldSystemFontOfSize:40.0f];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    titleLabel.text = @"Game Over!";
     
-    self.gameOverView = gameOverView;
-    [gameOverView addSubview:titleLabel];
+    self.overlayView = overlayView;
+    [overlayView addSubview:titleLabel];
     
     UIButton* retryButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [retryButton setTitle:@"Try again" forState:UIControlStateNormal];
     [retryButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
     retryButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
     retryButton.backgroundColor = [UIColor fromHex:0x8f7a66];
-    retryButton.frame = CGRectMake((CGRectGetWidth(gameOverView.bounds) - kButtonWidth) * 0.5f,
+    retryButton.frame = CGRectMake((CGRectGetWidth(overlayView.bounds) - kButtonWidth) * 0.5f,
                                    160.0f,
                                    kButtonWidth,
                                    kButtonHeight);
     retryButton.layer.cornerRadius = 3.0f;
     retryButton.showsTouchWhenHighlighted = YES;
-    [gameOverView addSubview:retryButton];
-    [self.view addSubview:gameOverView];
+    [overlayView addSubview:retryButton];
+    [self.view addSubview:overlayView];
     
     // helper functions
     RACSequence* (^mapTileViewsForPoint)(RTTPoint*) = ^RACSequence* (RTTPoint* point) {
@@ -147,7 +146,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
         
         UISwipeGestureRecognizer* gestureRecognizer = [UISwipeGestureRecognizer new];
         gestureRecognizer.direction = direction;
-        [self.view addGestureRecognizer:gestureRecognizer];
+        [gameView addGestureRecognizer:gestureRecognizer];
         
         RACSignal* gestureRecognizerSignal = [gestureRecognizer.rac_gestureSignal mapReplace:@(direction)];
         signalArray = [signalArray arrayByAddingObject:gestureRecognizerSignal];
@@ -246,10 +245,23 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     RACSignal* matrixChangedSignal = RACObserve(self, matrix);
     
     [[[[[matrixChangedSignal ignore:nil] map:^id(RTTMatrix* matrix) {
-        return @(matrix.isOver());
-    }] ignore:@NO] delay:kSlideAnimDuration + kScaleAnimDuration] subscribeNext:^(id x) {
+        return @(matrix.state());
+    }] ignore:@(RTTMatrixStateNormal)] delay:kSlideAnimDuration + kScaleAnimDuration] subscribeNext:^(NSNumber *stateValue) {
+        switch (stateValue.integerValue) {
+            case RTTMatrixStateLost:
+                titleLabel.text = @"Game Over!";
+                break;
+            case RTTMatrixStateWin:
+                titleLabel.text = @"You Win!";
+                break;
+            case RTTMatrixStateNormal:
+            default:
+                break;
+        }
+        
+        overlayView.userInteractionEnabled = YES;
         [UIView animateWithDuration:kSlideAnimDuration * 4.0f animations:^{
-            gameOverView.alpha = 1.0f;
+            overlayView.alpha = 1.0f;
         }];
     }];
     
@@ -352,14 +364,19 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
 
 - (void)recoverFromSnapshot:(NBTSnapshot *)snapshot {
     self.matrix = emptyMatrix();
-    self.gameOverView.alpha = snapshot.state.boolValue ? 1.0f : 0.0f;
     self.score = (int) snapshot.score.unsignedIntegerValue;
+    UIView *overlayView = self.overlayView;
+    BOOL playable = snapshot.state.integerValue == RTTMatrixStateNormal;
+    overlayView.alpha = playable ? 0.0f : 1.0f;
+    overlayView.userInteractionEnabled = playable;
 }
 
 - (void)reset {
     self.matrix = emptyMatrix();
-    self.gameOverView.alpha = 0.0f;
     self.score = 0;
+    UIView *overlayView = self.overlayView;
+    overlayView.alpha = 0.0f;
+    overlayView.userInteractionEnabled = NO;
     
     NSManagedObjectContext *moc = APP_DELEGATE.managedObjectContext;
     [NBTSnapshot deleteAllInMOC:moc];

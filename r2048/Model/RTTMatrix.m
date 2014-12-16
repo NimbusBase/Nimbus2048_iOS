@@ -156,6 +156,35 @@ RTTMatrix* emptyMatrix() {
     };
 }
 
+- (BOOL(^)())isWin {
+    return ^{
+        for (short y = 0; y < kMatrixSize; y++) {
+            for (short x = 0; x < kMatrixSize; x++) {
+                int valueAtXY = self.valueAt(point(x, y));
+                if (valueAtXY >= 2048) {
+                    return YES;
+                }
+            }
+        }
+        
+        return NO;
+    };
+}
+
+- (RTTMatrixState(^)())state {
+    return ^{
+        if (self.isOver()) {
+            return RTTMatrixStateLost;
+        }
+        else if (self.isWin()) {
+            return RTTMatrixStateWin;
+        }
+        else {
+            return RTTMatrixStateNormal;
+        }
+    };
+}
+
 - (RTTTile*(^)())getNewRandomTile {
     return ^{
         NSArray* emptyPoints = self.getEmptyPositions();

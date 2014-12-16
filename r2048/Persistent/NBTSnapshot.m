@@ -35,7 +35,7 @@ static NSString *const key_maxtrix = @"matrix";
     snapshot.createAt = @([[NSDate date] milliseconds]);
     snapshot.score = score;
     snapshot.size = @(kMatrixSize);
-    snapshot.state = @(matrix.isOver());
+    snapshot.state = @(matrix.state());
     snapshot.points = matrix.toString;
     
     return snapshot;
