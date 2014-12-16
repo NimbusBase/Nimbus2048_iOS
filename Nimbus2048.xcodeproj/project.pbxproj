@@ -60,6 +60,7 @@
 		BEB76F5A1A3ECBBA00BA551B /* NBTSyncButtonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB76F591A3ECBBA00BA551B /* NBTSyncButtonModel.m */; };
 		BEB76F5F1A3EEFF800BA551B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEB76F611A3EEFF800BA551B /* Localizable.strings */; };
 		BEC3F0401A39CB790015F3E7 /* UIAlertView+Lazy.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC3F03F1A39CB790015F3E7 /* UIAlertView+Lazy.m */; };
+		C022118CB312042D4BEACE4C /* libPods-Nimbus2048Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F6FDB1C6461487A1FA586 /* libPods-Nimbus2048Tests.a */; };
 		FB29F135505D40E38954771E /* libPods-r2048Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -76,7 +77,10 @@
 /* Begin PBXFileReference section */
 		1798708A0D3B0480935FD0C6 /* Pods-r2048Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-r2048Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-r2048Tests/Pods-r2048Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		1F6C99F2702B22989A3C0134 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		342D2BA7A97568DE9911337D /* Pods-Nimbus2048Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nimbus2048Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nimbus2048Tests/Pods-Nimbus2048Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		358EEC47FA65DEE5D841EB78 /* Pods-r2048Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-r2048Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-r2048Tests/Pods-r2048Tests.release.xcconfig"; sourceTree = "<group>"; };
+		48F5BFFE667635B21214FC57 /* libPods-Nimbus2048.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nimbus2048.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		736595BF3454415EC2446C25 /* Pods-Nimbus2048Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nimbus2048Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nimbus2048Tests/Pods-Nimbus2048Tests.release.xcconfig"; sourceTree = "<group>"; };
 		7992F07418E481E90020B45A /* RTTMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTMatrix.h; sourceTree = "<group>"; };
 		7992F07518E481E90020B45A /* RTTMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTMatrix.m; sourceTree = "<group>"; };
 		79B1DC1F18E469BB003BBBE7 /* Nimbus2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nimbus2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +96,7 @@
 		79B1DC3B18E469BB003BBBE7 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		79B1DC4318E469BB003BBBE7 /* Nimbus2048Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Nimbus2048Tests-Info.plist"; sourceTree = "<group>"; };
 		826EA994BA2347EDAC81FCE6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		836F6FDB1C6461487A1FA586 /* libPods-Nimbus2048Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nimbus2048Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADEAF0CA0A148E349E29D1AA /* RTTScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTScoreView.m; sourceTree = "<group>"; };
 		ADEAF0D1389957A097BDDEAA /* NSArray+RTTTiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+RTTTiles.m"; sourceTree = "<group>"; };
 		ADEAF11398EAA0106F731E3C /* RTTPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTPoint.m; sourceTree = "<group>"; };
@@ -185,6 +190,7 @@
 				79B1DC3E18E469BB003BBBE7 /* UIKit.framework in Frameworks */,
 				79B1DC3D18E469BB003BBBE7 /* Foundation.framework in Frameworks */,
 				FB29F135505D40E38954771E /* libPods-r2048Tests.a in Frameworks */,
+				C022118CB312042D4BEACE4C /* libPods-Nimbus2048Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +242,8 @@
 				79B1DC3B18E469BB003BBBE7 /* XCTest.framework */,
 				826EA994BA2347EDAC81FCE6 /* libPods.a */,
 				FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */,
+				48F5BFFE667635B21214FC57 /* libPods-Nimbus2048.a */,
+				836F6FDB1C6461487A1FA586 /* libPods-Nimbus2048Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -289,6 +297,8 @@
 				1F6C99F2702B22989A3C0134 /* Pods.release.xcconfig */,
 				1798708A0D3B0480935FD0C6 /* Pods-r2048Tests.debug.xcconfig */,
 				358EEC47FA65DEE5D841EB78 /* Pods-r2048Tests.release.xcconfig */,
+				342D2BA7A97568DE9911337D /* Pods-Nimbus2048Tests.debug.xcconfig */,
+				736595BF3454415EC2446C25 /* Pods-Nimbus2048Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -524,7 +534,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-r2048Tests/Pods-r2048Tests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Nimbus2048Tests/Pods-Nimbus2048Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5248EBE2679E49819F3B2F79 /* Check Pods Manifest.lock */ = {
@@ -763,7 +773,7 @@
 		};
 		79B1DC4F18E469BB003BBBE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1798708A0D3B0480935FD0C6 /* Pods-r2048Tests.debug.xcconfig */;
+			baseConfigurationReference = 342D2BA7A97568DE9911337D /* Pods-Nimbus2048Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/r2048.app/r2048";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -787,7 +797,7 @@
 		};
 		79B1DC5018E469BB003BBBE7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 358EEC47FA65DEE5D841EB78 /* Pods-r2048Tests.release.xcconfig */;
+			baseConfigurationReference = 736595BF3454415EC2446C25 /* Pods-Nimbus2048Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/r2048.app/r2048";
 				FRAMEWORK_SEARCH_PATHS = (

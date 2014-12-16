@@ -7,12 +7,12 @@ PODS:
   - Masonry (0.5.3)
   - NimbusBase (0.2.3)
   - Reachability (3.2)
-  - ReactiveCocoa (2.3):
-    - ReactiveCocoa/UI (= 2.3)
-  - ReactiveCocoa/Core (2.3):
+  - ReactiveCocoa (2.3.1):
+    - ReactiveCocoa/UI (= 2.3.1)
+  - ReactiveCocoa/Core (2.3.1):
     - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (2.3)
-  - ReactiveCocoa/UI (2.3):
+  - ReactiveCocoa/no-arc (2.3.1)
+  - ReactiveCocoa/UI (2.3.1):
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
@@ -27,6 +27,6 @@ SPEC CHECKSUMS:
   Masonry: 35368c2ca9577ca87722c12fc52c4bad9b1c1516
   NimbusBase: 02a662384df20020e9f869edb981d18ea2b472d8
   Reachability: 1ef8adf5c4e3d362f96515d4278f68dad3c26930
-  ReactiveCocoa: 2066583826c17dde8e90c41e489f682048cc57c9
+  ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
 
 COCOAPODS: 0.35.0
