@@ -10,6 +10,6 @@
 
 @interface NSDate (Lazy)
 
-@property (nonatomic, readonly) NSUInteger milliseconds;
+@property (nonatomic, readonly) unsigned long long milliseconds;
 
 @end

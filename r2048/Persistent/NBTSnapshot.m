@@ -32,7 +32,8 @@ static NSString *const key_maxtrix = @"matrix";
 + (instancetype)insertInMOC:(NSManagedObjectContext *)moc matrix:(RTTMatrix *)matrix score:(NSNumber *)score {
     NBTSnapshot *snapshot = [self insertInManagedObjectContext:moc];
     
-    snapshot.createAt = @([[NSDate date] milliseconds]);
+    unsigned long long milliseconds = [[NSDate date] milliseconds];
+    snapshot.createAt = @(milliseconds);
     snapshot.score = score;
     snapshot.size = @(kMatrixSize);
     snapshot.state = @(matrix.state());
@@ -43,8 +44,7 @@ static NSString *const key_maxtrix = @"matrix";
 
 + (NSUInteger)deleteAllInMOC:(NSManagedObjectContext *)moc exceptLast:(NSUInteger)capacity {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[self entityName]];
-    request.includesPropertyValues = NO;
-    request.includesPendingChanges = YES;
+    //request.includesPropertyValues = NO;
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NBTSnapshotAttributes.createAt ascending:NO]];
     
     NSError *error = nil;

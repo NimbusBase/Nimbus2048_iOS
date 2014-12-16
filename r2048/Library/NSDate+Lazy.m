@@ -10,7 +10,7 @@
 
 @implementation NSDate (Lazy)
 
-- (NSUInteger)milliseconds {
+- (unsigned long long)milliseconds {
     return self.timeIntervalSince1970 * 1000;
 }
 
