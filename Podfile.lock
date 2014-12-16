@@ -18,7 +18,7 @@ PODS:
 DEPENDENCIES:
   - Kiwi/XCTest
   - Masonry
-  - NimbusBase (~> 0.2.4)
+  - NimbusBase
   - Reachability
   - ReactiveCocoa
 

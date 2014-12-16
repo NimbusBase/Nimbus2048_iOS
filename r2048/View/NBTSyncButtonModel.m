@@ -25,6 +25,11 @@
         self.base = base;
         
         NMBServer *server = base.defaultServer;
+        
+        button.enabled = [self.class buttonEnableWithServer:server
+                                                initialized:server.isInitialized
+                                                    syncing:server.isSynchronizing];
+        
         NTLCloudSyncView *cloudView = button.cloudView;
         BOOL syncing = server != nil && server.isSynchronizing;
         cloudView.alpha = [self.class cloudViewAlphaWithServer:server initialized:server.isInitialized];

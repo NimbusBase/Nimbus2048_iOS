@@ -4,7 +4,7 @@ workspace 'Nimbus2048'
 
 pod 'ReactiveCocoa'
 pod 'Masonry'
-pod 'NimbusBase', '~> 0.2.4'
+pod 'NimbusBase'
 pod 'Reachability'
 
 target 'Nimbus2048Tests', :exclusive => false do
