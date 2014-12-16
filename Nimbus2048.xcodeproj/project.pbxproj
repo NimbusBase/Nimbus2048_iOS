@@ -738,6 +738,7 @@
 				GCC_PREFIX_HEADER = "r2048/Nimbus2048-Prefix.pch";
 				INFOPLIST_FILE = "r2048/Nimbus2048-Info.plist";
 				PRODUCT_NAME = Nimbus2048;
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -754,6 +755,7 @@
 				GCC_PREFIX_HEADER = "r2048/Nimbus2048-Prefix.pch";
 				INFOPLIST_FILE = "r2048/Nimbus2048-Info.plist";
 				PRODUCT_NAME = Nimbus2048;
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
 				WRAPPER_EXTENSION = app;
 			};
