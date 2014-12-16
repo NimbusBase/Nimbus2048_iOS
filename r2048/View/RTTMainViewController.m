@@ -69,16 +69,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [self.settingsButton addTarget:self
                             action:@selector(handleSettingsButtonClicked:)
                   forControlEvents:UIControlEventTouchUpInside];
-    /*
-    [self.syncButton addTarget:self
-                        action:@selector(handleSyncButtonClicked:)
-              forControlEvents:UIControlEventTouchUpInside];
-    [self.class configSyncButton:self.syncButton
-                      withServer:nil
-                       authState:0
-                     initialized:NO
-                         syncing:NO];
-    */
+
     self.resetButton.rac_command = self.matrixViewController.resetGameCommand;
     
     // Scores
@@ -109,20 +100,6 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                 selector:@selector(handleDidMergeCloudChangesNotification:)
                     name:NBTDidMergeCloudChangesNotification
                   object:APP_DELEGATE.managedObjectContext];
-    /*
-    [ntfCntr addObserver:self
-                selector:@selector(handleDefaultServerDidChangeNotification:)
-                    name:NMBNotiDefaultServerDidChange
-                  object:APP_DELEGATE.persistentStoreCoordinator.nimbusBase];
-    [ntfCntr addObserver:self
-                selector:@selector(handleNMBServerSyncDidFail:)
-                    name:NMBNotiSyncDidFail
-                  object:nil];
-    [ntfCntr addObserver:self
-                selector:@selector(handleNMBServerSyncDidSuccess:)
-                    name:NMBNotiSyncDidSucceed
-                  object:nil];
-     */
 }
 
 - (void)dealloc {
@@ -130,17 +107,6 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [ntfCntr removeObserver:self
                        name:NBTDidMergeCloudChangesNotification
                      object:APP_DELEGATE.managedObjectContext];
-    /*
-    [ntfCntr removeObserver:self
-                       name:NMBNotiDefaultServerDidChange
-                     object:APP_DELEGATE.persistentStoreCoordinator.nimbusBase];
-    [ntfCntr removeObserver:self
-                       name:NMBNotiSyncDidFail
-                     object:nil];
-    [ntfCntr removeObserver:self
-                       name:NMBNotiSyncDidSucceed
-                     object:nil];
-     */
 }
 
 #pragma mark - Model
@@ -193,45 +159,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
         self.bestScore = bestScore;
     }
 }
-/*
-- (void)handleDefaultServerDidChangeNotification:(NSNotification *)notification {
-    NMBServer *server = notification.userInfo[NSKeyValueChangeNewKey];
-    [self.class configSyncButton:self.settingsButton
-                      withServer:server
-                       authState:server.authState
-                     initialized:server.isInitialized
-                         syncing:server.isSynchronizing];
-    [RACObserve(server, isSynchronizing) subscribeNext:^(NSNumber *syncing) {
-        [self.class configSyncButton:self.syncButton
-                          withServer:server
-                           authState:server.authState
-                         initialized:server.isInitialized
-                             syncing:syncing.boolValue];
-    }];
-}
 
-- (void)handleNMBServerSyncDidSuccess:(NSNotification *)notification {
-    NMBServer *server = notification.object;
-    [self.class configSyncButton:self.settingsButton
-                      withServer:server
-                       authState:server.authState
-                     initialized:server.isInitialized
-                         syncing:server.isSynchronizing];
-}
-
-- (void)handleNMBServerSyncDidFail:(NSNotification *)notification {
-    NMBServer *server = notification.object;
-    [self.class configSyncButton:self.settingsButton
-                      withServer:server
-                       authState:server.authState
-                     initialized:server.isInitialized
-                         syncing:server.isSynchronizing];
-    
-    NSError *error = notification.userInfo[NKeyNotiError];
-    UIAlertView *alertView = [UIAlertView alertError:error];
-    [alertView show];
-}
-*/
 #pragma mark - UI
 
 - (void)loadSubviewsOnSuperview:(UIView *)superview {
@@ -373,9 +301,6 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     if (_syncButton != nil) return _syncButton;
     
     NBTSyncButton* button = [NBTSyncButton buttonWithType:UIButtonTypeCustom];
-    //[button setTitle:@"Sync" forState:UIControlStateNormal];
-    //[button setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
-    //button.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
     button.backgroundColor = [UIColor fromHex:0x8f7a66];
     button.layer.cornerRadius = 3.0f;
     button.showsTouchWhenHighlighted = YES;
@@ -411,17 +336,5 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     
     return _undoButton = button;
 }
-/*
-+ (void)configSyncButton:(UIButton *)button
-              withServer:(NMBServer *)server
-               authState:(NMBAuthState)authState
-             initialized:(BOOL)initialized
-                 syncing:(BOOL)syncing {
-    
-    BOOL enabled = server != nil && initialized && !syncing;
-    button.userInteractionEnabled = enabled;
-    button.alpha = initialized ? 1.0f : 0.5f;
-    [button setTitleColor:syncing ? [UIColor redColor] : [UIColor whiteColor] forState:UIControlStateNormal];
-}
-*/
+
 @end

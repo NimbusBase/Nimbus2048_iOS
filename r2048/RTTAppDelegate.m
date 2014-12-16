@@ -13,6 +13,7 @@
 #import "NMBase+NBT.h"
 #import "NSUserDefaults+NBT.h"
 #import "KVOUtilities.h"
+#import "NSManagedObjectContext+Lazy.h"
 
 #import <CoreData/CoreData.h>
 #import <Reachability/Reachability.h>
@@ -161,6 +162,7 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
     
     NSManagedObjectContext *moc = self.managedObjectContext;
     [moc mergeChangesFromContextDidSaveNotification:notification];
+    [moc save];
     
     NSNotificationCenter *ntfCntr = [NSNotificationCenter defaultCenter];
     [ntfCntr postNotificationName:NBTDidMergeCloudChangesNotification object:moc];
