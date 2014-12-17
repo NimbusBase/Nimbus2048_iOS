@@ -38,7 +38,7 @@
 
 - (void)initialize
 {
-    self.selectionStyle = UITableViewCellSelectionStyleDefault;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self loadConstraints];
 }
 

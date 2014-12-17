@@ -133,8 +133,9 @@ NSString *const NBTDidMergeCloudChangesNotification = @"NBTDidMergeCloudChangesN
                      @{
                          NCfgK_AppName: kAppName,
                          NCfgK_Cloud: NCfgV_GDrive,
-                         NCfgK_AppID: @"467471168650-9v08j5mruji6gcskp2ovam903o6g6nsc.apps.googleusercontent.com",
-                         NCfgK_AppSecret: @"HgyksCpZ9g7m2wdOJHbB0tOs",
+                         NCfgK_AppID: @"902906940059-3f8vq4f8sjiddqhddroc20gpblpg4u99.apps.googleusercontent.com",
+                         NCfgK_AppSecret: @"hyuLzhNno0zAXZJVQSNuMZTR",
+                         NCfgK_AuthScope: NCfgV_Root,
                          },
                      @{
                          NCfgK_AppName: kAppName,

@@ -199,7 +199,6 @@ UITableViewDelegate
     tableView.dataSource = self;
     tableView.rowHeight = kNTLSettingsCellHeight;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //tableView.backgroundColor = [UIColor tableViewBackgroundColor];
     tableView.clipsToBounds = NO;
     
     [@{
