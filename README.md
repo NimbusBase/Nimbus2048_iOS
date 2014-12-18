@@ -11,6 +11,6 @@ With the support from **NimbusBase**, your game progress can be backed up to per
 
 Other projects demostrate our awesome library.
 
-+ [Nimbus 2048 Android](https://github.com/jason1114/2048)
++ [Nimbus 2048 Android](https://github.com/NimbusBase/Nimbus2048_Android)
 + [NimbusBase iOS Tutorial](https://github.com/NimbusBase/NimbusBase_iOS_Tutorial)
 + [NimbusBase Android Tutorial](https://github.com/NimbusBase/NimbusBase_Android_Tutorial)
